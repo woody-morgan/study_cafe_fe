@@ -26,6 +26,8 @@ export default class MyDocument extends Document {
         <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
           <Main />
           <div id="modal" />
+          <div id="snackbar" />
+          <div id="dialog" />
           <NextScript />
         </body>
       </Html>
