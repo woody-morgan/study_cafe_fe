@@ -5,15 +5,15 @@ import Icon, { SVGTypes } from './Icon'
 interface IconButtonProps extends MotionProps {
   name: SVGTypes
   type?: 'button' | 'submit' | 'reset'
-  width?: number
-  height?: number
+  width: number
+  height: number
   onClick: () => void
 }
 
-const IconButton: FC<IconButtonProps> = ({ name, type = 'button', width, height, ...props }) => {
+const IconButton: FC<IconButtonProps> = ({ type = 'button', onClick, ...props }) => {
   return (
-    <motion.button type={type} {...props}>
-      <Icon name={name} width={width} height={height} />
+    <motion.button type={type} onClick={onClick}>
+      <Icon {...props} />
     </motion.button>
   )
 }

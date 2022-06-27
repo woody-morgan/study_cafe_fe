@@ -12,6 +12,7 @@ import ModalContainer from '@src/containers/modal/ModalContainer'
 import { CommonLayout } from '@src/components/layout'
 import { ThemeProvider } from 'next-themes'
 import siteMetadata from 'data/siteMetadata'
+import { NextPage } from 'next'
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -19,7 +20,7 @@ axios.defaults.paramsSerializer = (params) => {
   return qs.stringify(params)
 }
 
-function App({ Component, pageProps, router }: AppProps): JSX.Element {
+const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
   return (
     <>
       <Head>
@@ -32,13 +33,12 @@ function App({ Component, pageProps, router }: AppProps): JSX.Element {
       </Head>
       <RecoilRoot>
         <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
-          <CommonLayout headerFixed>
+          <CommonLayout headerTransparent>
             <AnimatePresence exitBeforeEnter>
               <Component {...pageProps} key={router.route} />
             </AnimatePresence>
           </CommonLayout>
         </ThemeProvider>
-
         <ModalContainer />
       </RecoilRoot>
     </>

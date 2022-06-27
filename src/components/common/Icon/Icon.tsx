@@ -8,8 +8,8 @@ export type SVGTypes = 'hamburger' | 'settings' | 'logo'
 type IconProps = {
   name: SVGTypes
   className?: string
-  width?: number
-  height?: number
+  width: number
+  height: number
 }
 
 const Icon: FC<IconProps> = ({ name, ...props }) => {

@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion'
-import { SVGMotionProps } from 'framer-motion/types/render/svg/types'
+import { motion, SVGMotionProps } from 'framer-motion'
 
 const Path = (
   props: JSX.IntrinsicAttributes &

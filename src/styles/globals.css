@@ -48,6 +48,13 @@
   }
 }
 
+:root {
+  --primary-color: #834d1e;
+  --secondary-color: #fcf2d9;
+  --background-color: #f8e3b6;
+  --background-dark-color: #e2c076;
+}
+
 html * {
   font-size: 16px;
   box-sizing: border-box;
