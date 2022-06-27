@@ -4,8 +4,8 @@ import Svg from '../SVG/Svg'
 
 const HamburgerSVG: FC<{
   className?: string
-  width?: number
-  height?: number
+  width: number
+  height: number
 }> = ({ className, ...props }) => {
   return (
     <Svg viewBox="0 0 20 20" {...props} className={className}>

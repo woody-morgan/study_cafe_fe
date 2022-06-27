@@ -23,7 +23,7 @@ export default class MyDocument extends Document {
           <meta content={appColor} name="apple-mobile-web-app-status-bar-style" />
           <meta content="yes" name="apple-mobile-web-app-capable" />
         </Head>
-        <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
+        <body className="bg-background text-black antialiased dark:bg-background_dark dark:text-white">
           <Main />
           <div id="modal" />
           <div id="snackbar" />

@@ -1,34 +1,37 @@
 import React, { FC, Fragment, useEffect, useRef } from 'react'
 import Footer from './Footer'
 import Header from './Header'
-import classNames from 'classnames'
+import cx from 'classnames'
 import { motion } from 'framer-motion'
 import { pageVars } from '@src/animations/page'
-interface Props {
+import {
+  headerHeight,
+  height,
+  bodyMarginTop,
+  maxWidth,
+  mobile_x_padding,
+} from '@src/utils/constants'
+
+type Props = {
   children: React.ReactNode
   fullWidth?: boolean
   fixedHeight?: boolean
   disableTransition?: boolean
 }
 
-const headerHeight = 'h-16'
-const headerNavPos = 'top-16'
-const height = 16
-const bodyMarginTop = 'mt-16'
-const maxWidth = 'max-w-screen-2xl'
-
 const CommonLayout: FC<{
   children: React.ReactNode
   headerTransparent?: boolean
   headerFixed?: boolean
-}> = ({ children, headerTransparent = false, headerFixed = false }) => {
+  bgColor?: string
+}> = ({ children, headerTransparent = false, headerFixed = false, bgColor }) => {
   return (
     <div id="page-layout">
       <Header
         headerHeight={headerHeight}
-        headerNavPos={headerNavPos}
         fixed={headerFixed}
         transparent={headerTransparent}
+        className={cx(bgColor, mobile_x_padding)}
       />
       <Fragment>{children}</Fragment>
     </div>
@@ -61,7 +64,7 @@ export const PageLayout: FC<Props> = ({
         animate="enter"
         exit="exit"
         transition={{ type: 'linear' }}
-        className={classNames(
+        className={cx(
           'z-0 flex flex-col mx-auto w-full',
           bodyMarginTop,
           fullWidth ? 'w-screen' : `${maxWidth}`,
