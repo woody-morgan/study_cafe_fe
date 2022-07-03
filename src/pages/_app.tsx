@@ -33,7 +33,7 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
       </Head>
       <RecoilRoot>
         <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
-          <CommonLayout headerTransparent>
+          <CommonLayout headerFixed>
             <AnimatePresence exitBeforeEnter>
               <Component {...pageProps} key={router.route} />
             </AnimatePresence>

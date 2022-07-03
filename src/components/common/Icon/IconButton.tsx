@@ -5,8 +5,7 @@ import Icon, { SVGTypes } from './Icon'
 interface IconButtonProps extends MotionProps {
   name: SVGTypes
   type?: 'button' | 'submit' | 'reset'
-  width: number
-  height: number
+  size?: number
   onClick: () => void
 }
 

@@ -9,7 +9,7 @@ type CardProps = {
 
 const MenuPriceCard: FC<CardProps> = ({ menu, price }) => {
   return (
-    <CardWrapper className="relative w-40 h-[13rem] overflow-hidden">
+    <CardWrapper className="relative w-40 h-[13rem]">
       <div className="relative w-full h-full -z-0">
         <ImageWrapper
           bgFilter="bg-gradient-to-b from-transparent via-transparent to-primary"
