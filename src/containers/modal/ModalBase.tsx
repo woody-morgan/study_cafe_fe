@@ -37,7 +37,7 @@ const ModalBase: FC<ModalBaseShape> = ({
             variants={modalVariants}
           >
             <div className="absolute -top-12 left-[calc(50%-50px)] rounded-full">
-              <Icon name="logo" width={100} height={100} />
+              <Icon name="logo" size={100} />
             </div>
             <h1 className="text-2xl text-center py-2">{title}</h1>
             <div className="py-5">{children}</div>

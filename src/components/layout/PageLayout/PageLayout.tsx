@@ -1,24 +1,18 @@
 import React, { FC, Fragment, useEffect, useRef } from 'react'
-import Footer from './Footer'
-import Header from './Header'
 import cx from 'classnames'
 import { motion } from 'framer-motion'
 import { pageVars } from '@src/animations/page'
 import {
-  headerHeight,
-  height,
-  bodyMarginTop,
+  bottomSheetHeightInt,
+  headerHeightInt,
   maxWidth,
-  mobile_x_padding,
+  mobileXPadding,
 } from '@src/utils/constants'
 
-type Props = {
-  children: React.ReactNode
-  fullWidth?: boolean
-  fixedHeight?: boolean
-  disableTransition?: boolean
-}
+import Header from './Header'
+import BottomSheet from './BottomSheet'
 
+// do not re-render when routing
 const CommonLayout: FC<{
   children: React.ReactNode
   headerTransparent?: boolean
@@ -28,29 +22,39 @@ const CommonLayout: FC<{
   return (
     <div id="page-layout">
       <Header
-        headerHeight={headerHeight}
         fixed={headerFixed}
         transparent={headerTransparent}
-        className={cx(bgColor, mobile_x_padding)}
+        className={cx(bgColor, mobileXPadding)}
       />
       <Fragment>{children}</Fragment>
+      <BottomSheet />
     </div>
   )
 }
 
 export const MemoizedCommonLayout = React.memo(CommonLayout)
 
-export const PageLayout: FC<Props> = ({
+export const PageLayout: FC<{
+  children: React.ReactNode
+  fullWidth?: boolean
+  fixedHeight?: boolean
+  disableTransition?: boolean
+  enableYPadding?: boolean
+}> = ({
   children,
   fullWidth = false,
   fixedHeight = false,
   disableTransition = false,
+  enableYPadding = false,
 }) => {
   const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (fixedHeight) {
-      mainRef.current.style.setProperty('height', `${window.innerHeight - height * 4}px`)
+      mainRef.current.style.setProperty(
+        'height',
+        `${window.innerHeight - headerHeightInt - bottomSheetHeightInt}px`
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fixedHeight])
@@ -66,16 +70,16 @@ export const PageLayout: FC<Props> = ({
         transition={{ type: 'linear' }}
         className={cx(
           'z-0 flex flex-col mx-auto w-full',
-          bodyMarginTop,
-          fullWidth ? 'w-screen' : `${maxWidth}`,
-          `${fixedHeight ? 'overflow-hidden' : 'min-h-screen'}`
+          fullWidth && `${maxWidth}`,
+          `${fixedHeight ? 'overflow-hidden' : 'min-h-screen'}`,
+          enableYPadding ? 'py-4' : 'py-0'
         )}
       >
         {children}
       </motion.main>
       {!fixedHeight && (
         <Fragment>
-          <Footer />
+          {/* <Footer /> */}
           {/* Insert more */}
         </Fragment>
       )}

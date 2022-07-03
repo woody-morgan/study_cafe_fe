@@ -19,7 +19,7 @@
     "src/**/*.{js,jsx,ts,tsx}": [
       "yarn lint-fix"
     ],
-    "./src/**": [
+    "./src/**/*.{js,jsx,ts,tsx}": [
       "prettier --write ."
     ],
     "./": [

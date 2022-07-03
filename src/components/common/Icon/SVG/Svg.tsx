@@ -1,26 +1,22 @@
 import React, { FC } from 'react'
 import { motion, SVGMotionProps } from 'framer-motion'
 
-const Svg: FC<{
-  className?: string
-  children: React.ReactNode
-  viewBox: string
-  fill?: string
-  width?: number
-  height?: number
-}> = ({
-  children,
-  width = 28,
-  height = 28,
-  ...props
-}: JSX.IntrinsicAttributes &
-  SVGMotionProps<SVGSVGElement> &
-  React.RefAttributes<SVGSVGElement>) => (
+const Svg: FC<
+  {
+    className?: string
+    children: React.ReactNode
+    viewBox: string
+    fill?: string
+    size?: number
+  } & JSX.IntrinsicAttributes &
+    SVGMotionProps<SVGSVGElement> &
+    React.RefAttributes<SVGSVGElement>
+> = ({ children, size = 28, ...props }) => (
   <motion.svg
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
-    width={width}
-    height={height}
+    width={size}
+    height={size}
     {...props}
   >
     {children}
