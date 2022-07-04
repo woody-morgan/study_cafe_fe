@@ -1,4 +1,4 @@
-import { modalInitialState, modalState } from '@src/atom/modal'
+import { modalInitialState, modalState } from '@src/atom/modalAtom'
 import { Portal } from '@src/components/common'
 import { ModalType } from '@src/core/interface/modal-type'
 import { FC } from 'react'
