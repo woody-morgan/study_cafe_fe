@@ -9,8 +9,8 @@ export const maxWidth = 'max-w-screen-2xl'
 export const mobileLeftPadding = 'pl-4 sm:pl-8'
 export const mobileXPadding = 'px-4 sm:px-8'
 // should be the same height & heightint
-export const bottomSheetHeight = 'h-16'
-export const bottomSheetHeightInt = 16 * 4
+export const bottomSheetHeight = 'h-20'
+export const bottomSheetHeightInt = 20 * 4
 
 export type btnSizes = 'large' | 'medium' | 'small' | 'xsmall'
 

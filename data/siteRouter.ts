@@ -8,22 +8,22 @@ export type SiteRouterType = {
 
 export const siteRouter: SiteRouterType[] = [
   {
-    path: 'https://www.google.com',
+    path: '/',
     name: 'Home',
     icon: 'home',
   },
   {
-    path: 'https://www.google.com',
+    path: '/menu',
     name: 'Drink Menu',
     icon: 'coffee',
   },
   {
-    path: 'https://www.google.com',
+    path: '/order',
     name: 'Your Order',
     icon: 'receipt',
   },
   {
-    path: 'https://www.google.com',
+    path: '/favorite',
     name: 'Favorites',
     icon: 'heart',
   },
