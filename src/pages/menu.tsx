@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { layoutState } from '@src/atom/layoutAtom'
 import { PageLayout } from '@src/components/layout'
 import { NextPage } from 'next'
 import { HorizontalItemList, SearchBar } from '@src/components/common'
 import { useInput } from '@src/hooks'
+import { sheetState } from '@src/atom/sheetAtom'
 
 export async function getServerSideProps(ctx) {
   return { props: { title: 'What would you drink?' } }
@@ -14,12 +15,14 @@ const MenuPage: NextPage<{
   title: string
 }> = ({ title }) => {
   const MenuList = useMemo(() => ['coffee', 'chocolate', 'others'], [])
+  const setUserLayoutState = useSetRecoilState(layoutState)
+  const [appSheet, setAppSheet] = useRecoilState(sheetState)
 
   const [searchInput, handleSearchInput] = useInput('')
-  const setUserLayoutState = useSetRecoilState(layoutState)
   const [selectedMenu, setSelectedMenu] = useState<typeof MenuList[number]>('coffee')
 
   useEffect(() => {
+    setAppSheet((prev) => ({ ...prev, isOpen: true, activeOverlay: false }))
     setUserLayoutState((prev) => ({ ...prev, title: title }))
   }, [])
 

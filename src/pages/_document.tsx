@@ -1,6 +1,7 @@
 import React from 'react'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import { appColor } from '@src/utils/constants'
+import { portalType } from '@src/core/interface/portal-type'
 
 export default class MyDocument extends Document {
   render() {
@@ -25,9 +26,9 @@ export default class MyDocument extends Document {
         </Head>
         <body className="bg-background text-black antialiased dark:bg-background_dark dark:text-white">
           <Main />
-          <div id="modal" />
-          <div id="snackbar" />
-          <div id="dialog" />
+          {portalType.map((item) => {
+            return <div key={item} id={item} />
+          })}
           <NextScript />
         </body>
       </Html>
