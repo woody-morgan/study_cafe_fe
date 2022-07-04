@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-function UseTimeout(callback: () => void, delay: number) {
+export default function UseTimeout(callback: () => void, delay: number) {
   useEffect(() => {
     const timeout = setTimeout(callback, delay)
     return () => {
@@ -8,5 +8,3 @@ function UseTimeout(callback: () => void, delay: number) {
     }
   }, [])
 }
-
-export default UseTimeout

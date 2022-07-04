@@ -8,6 +8,7 @@ const Portal: FC<{
 }> = ({ selectorId, children }) => {
   const [mounted, setMounted] = useState(false)
 
+  // prevent the portal from rendering on the server
   useEffect(() => {
     setMounted(true)
     return () => setMounted(false)
