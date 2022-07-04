@@ -72,3 +72,14 @@ html * ::-webkit-scrollbar {
   color: inherit;
   box-sizing: inherit;
 }
+
+/* for transition */
+body {
+  transition: all 0.25s linear;
+}
+
+/* https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
