@@ -16,6 +16,7 @@ import { ThemeProvider } from 'next-themes'
 import { authSelector } from '@src/atom/authAtom'
 import { useTimeout } from '@src/hooks'
 import withRecoilRoot from '@src/hoc/WithRecoilRoot'
+import SheetContainer from '@src/containers/sheet/SheetContainer'
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -53,8 +54,9 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
             <Component {...pageProps} key={router.route} />
           </AnimatePresence>
         </CommonLayout>
+        <ModalContainer />
+        <SheetContainer />
       </ThemeProvider>
-      <ModalContainer />
     </>
   )
 }

@@ -10,7 +10,7 @@ const BottomNavigation: FC<{
 }> = ({ fixed = true }) => {
   return (
     <Fragment>
-      <div className={cx('z-10 fixed bottom-0 w-full bg-primary', fixed ? 'fixed' : 'relative')}>
+      <div className={cx('z-50 fixed bottom-0 w-full bg-primary', fixed ? 'fixed' : 'relative')}>
         <div className={cx('w-full px-5 pb-2 flex justify-between text-white', bottomSheetHeight)}>
           {siteRouter.map((info, index) => {
             return (
