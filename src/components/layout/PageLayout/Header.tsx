@@ -1,6 +1,6 @@
 import { forwardRef, MutableRefObject, useState } from 'react'
 import cx from 'classnames'
-import { IconButton } from '@src/components/common'
+import { IconButton, ThemeSwitch } from '@src/components/common'
 import { VscBell, VscBellDot } from 'react-icons/vsc'
 import { headerHeight } from '@src/utils/constants'
 
@@ -30,12 +30,13 @@ const Header = (
         )}
       >
         <span>Good day, John Smith</span>
-        <span className="flex space-x-2">
-          {notiExist ? <VscBellDot size="20" /> : <VscBell size="20" />}
+        <span className="flex space-x-2 items-center">
+          <ThemeSwitch className="w-6 h-6" />
+          {notiExist ? <VscBellDot size="24" /> : <VscBell size="24" />}
           <IconButton
             name="hamburger"
             animate={show ? 'open' : 'close'}
-            size={20}
+            size={24}
             onClick={() => setShow((prev) => !prev)}
           />
         </span>
