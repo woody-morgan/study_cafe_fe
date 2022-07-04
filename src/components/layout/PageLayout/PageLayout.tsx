@@ -10,7 +10,7 @@ import {
 } from '@src/utils/constants'
 
 import Header from './Header'
-import BottomSheet from './BottomSheet'
+import BottomNavigation from './BottomNavigation'
 
 // do not re-render when routing
 const CommonLayout: FC<{
@@ -27,7 +27,7 @@ const CommonLayout: FC<{
         className={cx(bgColor, mobileXPadding)}
       />
       <Fragment>{children}</Fragment>
-      <BottomSheet />
+      <BottomNavigation />
     </div>
   )
 }
