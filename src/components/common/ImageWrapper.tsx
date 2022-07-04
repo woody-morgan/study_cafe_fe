@@ -15,7 +15,7 @@ const Image = ({ bgFilter, ...rest }: ImageProps & CustomImageProps) => (
     <div
       className={bgFilter ? classNames('absolute top-0 left-0 w-full h-full z-10', bgFilter) : ''}
     />
-    <NextImage onLoad={() => <div>abc</div>} {...rest} />
+    <NextImage {...rest} />
   </Fragment>
 )
 

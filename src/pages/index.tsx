@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC, ReactNode, useEffect } from 'react'
 import { NextPage } from 'next'
 import { PageLayout } from '@src/components/layout'
 import { mobileLeftPadding, mobileXPadding } from '@src/utils/constants'
@@ -10,6 +10,9 @@ import MenuPriceCard from '@src/components/common/Card/MenuPriceCard'
 import MenuInfoCard from '@src/components/common/Card/MenuInfoCard'
 
 import cx from 'classnames'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { layoutInitialState, layoutState } from '@src/atom/layoutAtom'
+import { authState } from '@src/atom/authAtom'
 
 const Section: FC<{
   title?: string
@@ -25,6 +28,18 @@ const Section: FC<{
 }
 
 const IndexPage: NextPage = () => {
+  const setUserLayoutState = useSetRecoilState(layoutState)
+  const userAuthState = useRecoilValue(authState)
+
+  useEffect(() => {
+    setUserLayoutState((prev) => ({
+      ...prev,
+      title: userAuthState.isLoggedIn
+        ? `Good day, ${userAuthState.userName}`
+        : layoutInitialState.title,
+    }))
+  }, [userAuthState.isLoggedIn])
+
   return (
     <PageLayout fullWidth enableYPadding>
       <div className="space-y-10">
