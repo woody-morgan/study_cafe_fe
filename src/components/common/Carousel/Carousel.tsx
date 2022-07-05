@@ -29,9 +29,10 @@ const Carousel: FC<{
   const imageIndex = wrap(0, childArray.length, page)
 
   const paginate = (newDirection: number) => {
-    const nextPage = (page + newDirection) % childArray.length
-    setPage([nextPage, newDirection])
-    onPageChange?.(nextPage)
+    const nextPage = page + newDirection
+    const nextPageIndex = nextPage < 0 ? childArray.length - 1 : nextPage % childArray.length
+    setPage([nextPageIndex, newDirection])
+    onPageChange?.(nextPageIndex)
   }
 
   useEffect(() => {
