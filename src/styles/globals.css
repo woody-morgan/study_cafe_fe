@@ -3,83 +3,95 @@
 @tailwind utilities;
 
 @layer components {
-  .translate-center-x {
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+    .translate-center-x {
+        top: 50%;
+        left: 0%;
+        transform: translateX(-50%);
+    }
 
-  .translate-center-y {
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%);
-  }
+    .-translate-center-x {
+        top: 0%;
+        right: 50%;
+        transform: translateX(50%);
+    }
 
-  .translate-center-xy {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+    .translate-center-y {
+        top: 50%;
+        left: 0%;
+        transform: translateY(-50%);
+    }
 
-  .hide-text-overflow {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-break: break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-  }
+    .-translate-center-y {
+        top: 50%;
+        right: 0%;
+        transform: translateY(-50%);
+    }
 
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+    .translate-center-xy {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
-  .text-shadow-md {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
-  }
+    .hide-text-overflow {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
 
-  .text-shadow-lg {
-    text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11), 0 5px 15px rgba(0, 0, 0, 0.08);
-  }
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-  .text-shadow-none {
-    text-shadow: none;
-  }
+    .text-shadow-md {
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .text-shadow-lg {
+        text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11), 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .text-shadow-none {
+        text-shadow: none;
+    }
 }
 
 :root {
-  --primary-color: #834d1e;
-  --secondary-color: #fcf2d9;
-  --background-color: #f8e3b6;
-  --background-dark-color: #e2c076;
+    --primary-color: #834d1e;
+    --secondary-color: #fcf2d9;
+    --background-color: #f8e3b6;
+    --background-dark-color: #e2c076;
 }
 
 html * {
-  font-size: 16px;
-  box-sizing: border-box;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+    font-size: 16px;
+    box-sizing: border-box;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 html * ::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 *,
 *:before,
 *:after {
-  color: inherit;
-  box-sizing: inherit;
+    color: inherit;
+    box-sizing: inherit;
 }
 
 /* for transition */
 body {
-  transition: all 0.25s linear;
+    transition: all 0.25s linear;
 }
 
 /* https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  transition: background-color 600000s 0s, color 600000s 0s;
+    transition: background-color 600000s 0s, color 600000s 0s;
 }

@@ -24,7 +24,7 @@ export default class MyDocument extends Document {
           <meta content={appColor} name="apple-mobile-web-app-status-bar-style" />
           <meta content="yes" name="apple-mobile-web-app-capable" />
         </Head>
-        <body className="bg-background text-black antialiased dark:bg-background_dark dark:text-white">
+        <body className="bg-background text-primary antialiased dark:bg-background_dark dark:text-white">
           <Main />
           {portalType.map((item) => {
             return <div key={item} id={item} />

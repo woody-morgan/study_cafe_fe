@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import Icon, { SVGTypes } from './Icon'
 
 interface IconButtonProps extends MotionProps {
+  className?: string
   name: SVGTypes
   type?: 'button' | 'submit' | 'reset'
   size?: number

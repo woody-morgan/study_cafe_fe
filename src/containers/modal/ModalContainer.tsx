@@ -8,13 +8,14 @@ import ModalBase from './ModalBase'
 import SignInModal from './content/SignInModal'
 import SignUpModal from './content/SignUpModal'
 
-const selectRenderingModal: { [keys in ModalType]: JSX.Element } = {
-  SIGNUP: <SignUpModal />,
-  SIGNIN: <SignInModal />,
+const _selectModal: { [key in ModalType]: FC } = {
+  SIGNUP: SignUpModal,
+  SIGNIN: SignInModal,
 }
 
 const ModalContainer: FC = () => {
   const [modal, setModal] = useRecoilState(modalState)
+  const ModalComponent = _selectModal[modal.name]
 
   return (
     <Portal selectorId="modal">
@@ -23,7 +24,7 @@ const ModalContainer: FC = () => {
         show={modal.name ? true : false}
         onClose={() => setModal({ ...modalInitialState })}
       >
-        {modal.name && selectRenderingModal[modal.name]}
+        {modal.name && <ModalComponent />}
       </ModalBase>
     </Portal>
   )

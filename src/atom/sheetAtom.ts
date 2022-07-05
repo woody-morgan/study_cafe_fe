@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil'
+import React from 'react'
 
 /**
  * @param {boolean} isOpen - Whether the sheet is open or not
@@ -8,12 +9,14 @@ import { atom, selector } from 'recoil'
 export type SheetShape = {
   isOpen: boolean
   activeOverlay: boolean
-  option?: unknown[] | null
+  children: React.ReactNode | null
+  option?: unknown | null
 }
 
 const sheetInitialState: SheetShape = {
   isOpen: false,
   activeOverlay: true,
+  children: null,
   option: null,
 }
 
