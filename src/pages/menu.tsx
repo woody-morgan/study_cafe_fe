@@ -20,7 +20,7 @@ const MenuPage: NextPage<{
   const [appSheet, setAppSheet] = useRecoilState(sheetState)
 
   const [searchInput, handleSearchInput] = useInput('')
-  const [[selectedIdx, prevIdx], setSelectedIdx] = useState([0, 0])
+  const [[page, pageDir], setPage] = useState([0, 0])
 
   useEffect(() => {
     setAppSheet((prev) => ({
@@ -40,13 +40,13 @@ const MenuPage: NextPage<{
       ...prev,
       children: (
         <SheetMenuList
-          selectedIdx={selectedIdx}
-          prevIdx={prevIdx}
-          onPageChange={(idx) => setSelectedIdx((prev) => [idx, prev[0]])}
+          selectedPage={page}
+          direction={pageDir}
+          onPageChange={(idx, pageDir) => setPage([idx, pageDir])}
         />
       ),
     }))
-  }, [selectedIdx])
+  }, [page])
 
   return (
     <PageLayout fullWidth enableYPadding fixedHeight>
@@ -54,8 +54,8 @@ const MenuPage: NextPage<{
         <SearchBar placeholder="Search.." value={searchInput} onChange={handleSearchInput} />
         <HorizontalItemList
           items={MenuList}
-          selectedIdx={selectedIdx}
-          onItemClick={(idx) => setSelectedIdx((prev) => [idx, prev[0]])}
+          selectedIdx={page}
+          onItemClick={(idx) => setPage((prev) => [idx, idx - prev[0] >= 0 ? 1 : -1])}
         />
       </div>
     </PageLayout>
