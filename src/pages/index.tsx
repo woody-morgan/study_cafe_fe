@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { PageLayout } from '@src/components/layout'
 import { mobileLeftPadding, mobileXPadding } from '@src/utils/constants'
 
-import ImageSlider from '@src/components/common/ImageSlider'
+import Slider from '@src/components/common/Slider'
 
 import NewMenuCard from '@src/components/common/Card/NewMenuCard'
 import MenuPriceCard from '@src/components/common/Card/MenuPriceCard'
@@ -52,11 +52,11 @@ const IndexPage: NextPage = () => {
           />
         </Section>
         <Section title={"This week's recommendations"} removePadding>
-          <ImageSlider divider="main-price">
+          <Slider divider="main-price" className="space-x-6">
             <MenuPriceCard menu="Iced Americano" price="2000W" />
             <MenuPriceCard menu="Iced Americano" price="2000W" />
             <MenuPriceCard menu="Iced Americano" price="2000W" />
-          </ImageSlider>
+          </Slider>
         </Section>
         <Section title={"What's in the shop"}>
           <NewMenuCard

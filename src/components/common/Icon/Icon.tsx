@@ -5,9 +5,17 @@ import SettingSVG from './assets/Setting'
 import CoffeeSVG from './assets/coffee.svg'
 import HeartSVG from './assets/heart.svg'
 import ReceiptSVG from './assets/receipt.svg'
-import { BsHouseDoor } from 'react-icons/bs'
+import { BsHouseDoor, BsPlus } from 'react-icons/bs'
 
-export type SVGTypes = 'hamburger' | 'settings' | 'logo' | 'coffee' | 'heart' | 'home' | 'receipt'
+export type SVGTypes =
+  | 'hamburger'
+  | 'settings'
+  | 'logo'
+  | 'coffee'
+  | 'heart'
+  | 'home'
+  | 'receipt'
+  | 'plus'
 
 type IconProps = {
   name: SVGTypes
@@ -15,23 +23,20 @@ type IconProps = {
   className?: string
 }
 
+const _Selector: { [key in SVGTypes]: FC<IconProps> } = {
+  hamburger: HamburgerSVG,
+  settings: SettingSVG,
+  logo: LogoSVG,
+  coffee: CoffeeSVG,
+  heart: HeartSVG,
+  home: BsHouseDoor,
+  receipt: ReceiptSVG,
+  plus: BsPlus,
+}
+
 const Icon: FC<IconProps> = ({ name, ...props }) => {
-  switch (name) {
-    case 'hamburger':
-      return <HamburgerSVG {...props} />
-    case 'settings':
-      return <SettingSVG {...props} />
-    case 'logo':
-      return <LogoSVG {...props} />
-    case 'coffee':
-      return <CoffeeSVG {...props} />
-    case 'heart':
-      return <HeartSVG {...props} />
-    case 'home':
-      return <BsHouseDoor {...props} />
-    case 'receipt':
-      return <ReceiptSVG {...props} />
-  }
+  const IconComponent = _Selector[name]
+  return <IconComponent name={name} {...props} />
 }
 
 export default memo(Icon)

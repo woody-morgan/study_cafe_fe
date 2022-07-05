@@ -1,5 +1,6 @@
 export { default as Icon } from './Icon/Icon'
 export { default as ImageWrapper } from './ImageWrapper'
+export { default as Carousel } from './Carousel/Carousel'
 
 export { default as Button } from './Button/Button'
 export { default as InputBox } from './InputBox/InputBox'

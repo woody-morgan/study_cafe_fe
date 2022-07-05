@@ -5,9 +5,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useRecoilState } from 'recoil'
 import cx from 'classnames'
 import { sheetVariants } from '@src/animations/sheet'
+import { bottomSheetPaddingBottom } from '@src/utils/constants'
 
 const SheetContainer: FC = () => {
-  const [{ isOpen, activeOverlay }, setAppSheetState] = useRecoilState(sheetState)
+  const [{ isOpen, activeOverlay, children }, setAppSheetState] = useRecoilState(sheetState)
 
   return (
     <Portal selectorId="sheet">
@@ -27,8 +28,14 @@ const SheetContainer: FC = () => {
                 onClick={() => setAppSheetState((prev) => ({ ...prev, isOpen: false }))}
               />
             )}
-            <div className="bg-secondary w-full h-full rounded-t-2xl border-x-2 border-t-2 border-primary p-10">
-              <div>abc</div>
+            <div
+              className={cx(
+                'bg-secondary w-full h-full rounded-t-2xl border-x-2 border-t-2 border-primary overflow-y-scroll overflow-x-hidden',
+                bottomSheetPaddingBottom
+              )}
+            >
+              {/*<SheetMenuList />*/}
+              {children}
             </div>
           </motion.div>
         ) : null}
