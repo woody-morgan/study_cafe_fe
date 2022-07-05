@@ -5,7 +5,7 @@ import { PageLayout } from '@src/components/layout'
 import { NextPage } from 'next'
 import { HorizontalItemList, SearchBar } from '@src/components/common'
 import { useInput } from '@src/hooks'
-import { sheetState } from '@src/atom/sheetAtom'
+import { sheetInitialState, sheetState } from '@src/atom/sheetAtom'
 
 export async function getServerSideProps(ctx) {
   return { props: { title: 'What would you drink?' } }
@@ -24,6 +24,10 @@ const MenuPage: NextPage<{
   useEffect(() => {
     setAppSheet((prev) => ({ ...prev, isOpen: true, activeOverlay: false }))
     setUserLayoutState((prev) => ({ ...prev, title: title }))
+
+    return () => {
+      setAppSheet({ ...sheetInitialState })
+    }
   }, [])
 
   return (

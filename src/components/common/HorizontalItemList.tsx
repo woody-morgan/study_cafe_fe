@@ -17,7 +17,7 @@ const HorizontalItemList: FC<{
           <motion.button
             key={`${menu}-select-${idx}`}
             layoutId={`menu-${menu}-${idx}`}
-            className={'z-0 relative flex-1 basis-1/3 h-9 px-3 py-1 rounded-lg'}
+            className={'z-0 relative flex-1 basis-1/3 h-9 px-3 py-1 rounded-xl overflow-visible'}
             onClick={() => onItemClick(menu)}
           >
             {idx % 2 == 1 && (
@@ -34,7 +34,7 @@ const HorizontalItemList: FC<{
             {isSelected && (
               <motion.div
                 layoutId="menu-selected"
-                className="z-10 absolute -inset-2 rounded-2xl bg-primary"
+                className="-z-1 absolute -inset-1 rounded-3xl bg-primary"
                 variants={HorizontalItemListVars}
                 animate="animate"
               />

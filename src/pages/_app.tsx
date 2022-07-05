@@ -4,7 +4,6 @@ import Head from 'next/head'
 import axios from 'axios'
 import qs from 'qs'
 import siteMetadata from 'data/siteMetadata'
-import { useSetRecoilState } from 'recoil'
 import { AnimatePresence } from 'framer-motion'
 
 import type { AppProps } from 'next/app'
@@ -13,8 +12,6 @@ import '@src/styles/globals.css'
 import ModalContainer from '@src/containers/modal/ModalContainer'
 import { CommonLayout } from '@src/components/layout'
 import { ThemeProvider } from 'next-themes'
-import { authSelector } from '@src/atom/authAtom'
-import { useTimeout } from '@src/hooks'
 import withRecoilRoot from '@src/hoc/WithRecoilRoot'
 import SheetContainer from '@src/containers/sheet/SheetContainer'
 
@@ -25,18 +22,18 @@ axios.defaults.paramsSerializer = (params) => {
 }
 
 const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
-  const setUserAuthSelector = useSetRecoilState(authSelector)
+  // const setUserAuthSelector = useSetRecoilState(authSelector)
 
   // Todo: need add auth checker by router
   // need to care about immutability
-  useTimeout(() => {
-    setUserAuthSelector((prev) => ({
-      ...prev,
-      userName: 'John Doe',
-      isLoggedIn: true,
-      userNotifications: [{ type: 'SUCCESS', id: 1, title: 'test', message: 'test' }],
-    }))
-  }, 5000)
+  // useTimeout(() => {
+  //   setUserAuthSelector((prev) => ({
+  //     ...prev,
+  //     userName: 'John Doe',
+  //     isLoggedIn: true,
+  //     userNotifications: [{ type: 'SUCCESS', id: 1, title: 'test', message: 'test' }],
+  //   }))
+  // }, 5000)
 
   return (
     <>

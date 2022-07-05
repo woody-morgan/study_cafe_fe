@@ -21,7 +21,7 @@ const ModalContainer: FC = () => {
       <ModalBase
         title={modal.title}
         show={modal.name ? true : false}
-        onClose={() => setModal(modalInitialState)}
+        onClose={() => setModal({ ...modalInitialState })}
       >
         {modal.name && selectRenderingModal[modal.name]}
       </ModalBase>
