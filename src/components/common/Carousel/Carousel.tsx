@@ -1,49 +1,44 @@
-import React, { Children, FC, Fragment, useEffect, useMemo, useState } from 'react'
+import React, { Children, FC, Fragment, useMemo } from 'react'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
-import { wrap } from 'popmotion'
 import { defaultCarouselVars } from '@src/animations/carousel'
 import cx from 'classnames'
 
-const swipeConfidenceThreshold = 5000
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity
 }
 
 const Carousel: FC<{
   children: React.ReactNode
-  selectedIdx: number
-  prevIdx: number
+  selectedPage: number
+  direction: number
+  swipeConfidenceThreshold?: number
+  draggable?: boolean
   removeArrow?: boolean
   animateVar?: Variants
-  onPageChange?: (idx: number) => void
+  onPageChange: (idx: number, pageDir: number) => void
 }> = ({
   children,
-  selectedIdx,
-  prevIdx,
+  selectedPage,
+  direction,
+  swipeConfidenceThreshold = 10000,
   removeArrow = false,
   animateVar = defaultCarouselVars,
+  draggable = false,
   onPageChange,
 }) => {
-  const [[page, direction], setPage] = useState([0, 0])
   const childArray = useMemo(() => Children.toArray(children), [children])
-  const imageIndex = wrap(0, childArray.length, page)
 
   const paginate = (newDirection: number) => {
-    const nextPage = page + newDirection
-    const nextPageIndex = nextPage < 0 ? childArray.length - 1 : nextPage % childArray.length
-    setPage([nextPageIndex, newDirection])
-    onPageChange?.(nextPageIndex)
+    const nextPage = (selectedPage + newDirection) % childArray.length
+    const nextPageIndex = nextPage < 0 ? childArray.length - 1 : nextPage
+    onPageChange(nextPageIndex, newDirection)
   }
-
-  useEffect(() => {
-    setPage((prev) => [selectedIdx, selectedIdx - prevIdx > 0 ? 1 : -1])
-  }, [selectedIdx])
 
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-scroll">
       <AnimatePresence initial={false} custom={direction} exitBeforeEnter>
         <motion.div
-          key={page}
+          key={selectedPage}
           className="absolute w-full h-full"
           custom={direction}
           variants={animateVar}
@@ -51,21 +46,26 @@ const Carousel: FC<{
           animate="center"
           exit="exit"
           transition={{
-            x: { type: 'spring', stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 },
+            x: { stiffness: 200, damping: 20 },
+            opacity: { duration: 0.3 },
           }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={(e, { offset, velocity }) => {
-            const swipe = swipePower(offset.x, velocity.x)
-            if (swipe < -swipeConfidenceThreshold) {
-              paginate(1)
-            } else if (swipe > swipeConfidenceThreshold) {
-              paginate(-1)
-            }
-          }}
+          {...(draggable && {
+            drag: 'x',
+            dragElastic: 0.5,
+            dragConstraints: { left: 0, right: 0 },
+            dragMomentum: false,
+            onDragEnd: (event, { offset, velocity }) => {
+              const swipe = swipePower(offset.x, velocity.x)
+              console.log(velocity)
+              if (swipe < -swipeConfidenceThreshold) {
+                paginate(1)
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(-1)
+              }
+            },
+          })}
         >
-          {childArray[imageIndex]}
+          {childArray[selectedPage]}
         </motion.div>
       </AnimatePresence>
       <Fragment>
