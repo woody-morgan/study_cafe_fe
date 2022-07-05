@@ -4,6 +4,7 @@ import { sheetState } from '@src/atom/sheetAtom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRecoilState } from 'recoil'
 import cx from 'classnames'
+import { sheetVariants } from '@src/animations/sheet'
 
 const SheetContainer: FC = () => {
   const [{ isOpen, activeOverlay }, setAppSheetState] = useRecoilState(sheetState)
@@ -13,7 +14,7 @@ const SheetContainer: FC = () => {
       <AnimatePresence>
         {isOpen ? (
           <motion.div
-            variants={SheetVars}
+            variants={sheetVariants}
             initial="enter"
             animate="center"
             exit="exit"
@@ -34,33 +35,6 @@ const SheetContainer: FC = () => {
       </AnimatePresence>
     </Portal>
   )
-}
-
-const SheetVars = {
-  enter: {
-    opacity: 0,
-    y: 1000,
-    transition: {
-      duration: 0.5,
-      ease: 'easeInOut',
-    },
-  },
-  center: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: 'easeInOut',
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: 1000,
-    transition: {
-      duration: 0.5,
-      ease: 'easeInOut',
-    },
-  },
 }
 
 export default SheetContainer
