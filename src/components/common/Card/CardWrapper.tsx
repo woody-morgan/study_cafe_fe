@@ -9,7 +9,7 @@ const CardWrapper: FC<{
   linkTo?: string
 }> = ({ children, linkTo, className }) => {
   return (
-    <div className={cx('bg-primary w-full rounded-2xl overflow-hidden max-w-md', className)}>
+    <div className={cx('w-full rounded-2xl overflow-hidden max-w-lg', 'bg-primary-500', className)}>
       {linkTo ? <Link href={linkTo}>{children}</Link> : children}
     </div>
   )

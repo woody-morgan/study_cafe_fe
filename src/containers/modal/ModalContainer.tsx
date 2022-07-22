@@ -1,12 +1,12 @@
-import { modalInitialState, modalState } from '@src/atom/modalAtom'
 import { Portal } from '@src/components/common'
-import { ModalType } from '@src/core/interface/modal-type'
+import { ModalType } from '@src/core/types/modal-type'
 import { FC } from 'react'
-import { useRecoilState } from 'recoil'
 
 import ModalBase from './ModalBase'
 import SignInModal from './content/SignInModal'
 import SignUpModal from './content/SignUpModal'
+import { useRootDispatch, useRootState } from '@src/hooks'
+import { closeModal } from '@src/store/modules/modal'
 
 const _selectModal: { [key in ModalType]: FC } = {
   SIGNUP: SignUpModal,
@@ -14,7 +14,8 @@ const _selectModal: { [key in ModalType]: FC } = {
 }
 
 const ModalContainer: FC = () => {
-  const [modal, setModal] = useRecoilState(modalState)
+  const modal = useRootState((state) => state.modal)
+  const dispatch = useRootDispatch()
   const ModalComponent = _selectModal[modal.name]
 
   return (
@@ -22,7 +23,7 @@ const ModalContainer: FC = () => {
       <ModalBase
         title={modal.title}
         show={modal.name ? true : false}
-        onClose={() => setModal({ ...modalInitialState })}
+        onClose={() => dispatch(closeModal())}
       >
         {modal.name && <ModalComponent />}
       </ModalBase>

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { modalOverlayVariants, modalVariants } from '@src/animations/modal'
 import { Icon } from '@src/components/common'
 
-interface ModalBaseShape {
+type ModalBaseShape = {
   show: boolean
   title?: string
   children: React.ReactNode
@@ -12,7 +12,7 @@ interface ModalBaseShape {
 
 const ModalBase: FC<ModalBaseShape> = ({
   show,
-  title = process.env.NEXT_PUBLIC_APP_TITLE,
+  title = process.env.APP_TITLE,
   children,
   onClose,
 }) => {

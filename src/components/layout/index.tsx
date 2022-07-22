@@ -1,2 +1,2 @@
-export { PageLayout } from './PageLayout/PageLayout'
-export { MemoizedCommonLayout as CommonLayout } from './PageLayout/PageLayout'
+export { default as CommonLayout } from './CommonLayout'
+export { default as PageLayout } from './PageLayout'

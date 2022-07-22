@@ -3,7 +3,7 @@ import { Variants } from 'framer-motion'
 export const defaultCarouselVars: Variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 500 : -500,
+      x: direction > 0 ? 750 : -750,
       opacity: 0,
       transition: {
         delay: 0.05,
@@ -18,7 +18,7 @@ export const defaultCarouselVars: Variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 500 : -500,
+      x: direction < 0 ? 750 : -750,
       opacity: 0,
       transition: {
         delay: 0.05,

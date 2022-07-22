@@ -22,7 +22,7 @@ const MenuItemAddSection: FC<{
         </div>
       </div>
       <div className="absolute -translate-center-y">
-        <div className="relative w-8 h-8 bg-primary rounded-xl">
+        <div className="relative w-8 h-8 bg-primary-500 rounded-xl">
           <IconButton
             className="absolute text-white translate-center-xy"
             name="plus"
