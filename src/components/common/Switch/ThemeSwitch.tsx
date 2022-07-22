@@ -24,7 +24,7 @@ const ThemeSwitch: FC<{
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className="text-secondary dark:text-gray-300"
+          className="text-secondary-500 dark:text-gray-300"
           variants={themeVariants}
           initial="hidden"
           animate="visible"

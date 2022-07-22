@@ -1,39 +1,39 @@
-import { forwardRef, MutableRefObject, useState } from 'react'
+import { forwardRef, MutableRefObject, ReactNode, useState } from 'react'
 import cx from 'classnames'
 import { IconButton, ThemeSwitch } from '@src/components/common'
 import { VscBell, VscBellDot } from 'react-icons/vsc'
-import { headerHeight } from '@src/utils/constants'
-import { useRecoilState } from 'recoil'
-import { authState } from '@src/atom/authAtom'
-import { layoutState } from '@src/atom/layoutAtom'
+import { useRootState } from '@src/hooks'
 
 type Props = {
+  className?: string
   fixed?: boolean
   transparent?: boolean
-  className?: string
+  content: ReactNode
 }
 
 const Header = (
-  { fixed = false, transparent = false, className }: Props,
+  { className, fixed = false, transparent = false, content }: Props,
   ref: MutableRefObject<HTMLDivElement>
 ) => {
   const [show, setShow] = useState(false)
-  const [userAuth, setUserAuth] = useRecoilState(authState)
-  const [userLayout, setUserLayout] = useRecoilState(layoutState)
+  const userAuth = useRootState((state) => state.auth)
 
   return (
-    <header>
+    <header className="relative">
       <div
         ref={ref}
         className={cx(
-          `z-20 flex justify-between items-center align-middle w-full top-0 py-2 text-secondary font-bold`,
-          headerHeight,
+          'z-20 w-full max-w-mobile-app h-gb-header top-0',
+          'px-side-padding py-2',
+          'flex justify-between items-center align-middle',
+          'text-secondary-500 font-bold',
+          'rounded-b-md',
           fixed ? 'fixed' : 'absolute',
-          transparent ? 'bg-transparent' : 'bg-primary',
+          transparent ? 'bg-transparent' : 'bg-primary-500',
           className
         )}
       >
-        <span>{userLayout.title ?? 'Welcome to Study Cafe'}</span>
+        {content}
         <span className="flex space-x-2 items-center">
           <ThemeSwitch className="w-6 h-6" />
           {userAuth.userNotifications && userAuth.userNotifications.length > 0 ? (
@@ -49,7 +49,6 @@ const Header = (
           />
         </span>
       </div>
-      <div className={headerHeight} />
     </header>
   )
 }

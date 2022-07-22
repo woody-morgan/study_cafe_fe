@@ -1,159 +1,78 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
+const appConfig = require('./src/config/appConfig')
 
 module.exports = {
   mod: 'jit',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
-    fontFamily: {
-      sans: ['Roboto', 'Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
+    screens: {
+      md: appConfig.mobileAppMaxWidth,
     },
     extend: {
-      flex: {
-        0: '0 0 0%',
+      margin: {
+        center: '0 auto',
       },
+      spacing: {
+        'gb-header': appConfig.headerHeight,
+        'bt-nav': appConfig.bottomNavigationHeight,
+        'side-padding': appConfig.sidePadding,
+      },
+      maxWidth: {
+        'mobile-app': appConfig.mobileAppMaxWidth,
+      },
+
       colors: {
-        primary: 'var(--primary-color)',
-        secondary: 'var(--secondary-color)',
-        main: '#718096',
-        background: 'var(--background-color)',
-        background_dark: 'var(--background-dark-color)',
-        link: '#00b1d2',
-        accent: '#2d3748',
+        primary_bg: {
+          50: '#FEFBF6',
+          100: '#FEFAF1',
+          200: '#FCF4E3',
+          300: '#FBEFD5',
+          400: '#F9E8C3',
+          500: '#F8E3B6',
+          600: '#E1C076',
+          700: '#E2C076',
+          800: '#9E710F',
+          900: '#4F3808',
+        },
+        primary: {
+          50: '#F8ECE2',
+          100: '#F2DAC5',
+          200: '#E5B78F',
+          300: '#D89255',
+          400: '#BB6E2B',
+          500: '#834D1E',
+          600: '#683D18',
+          700: '#4F2E12',
+          800: '#36200C',
+          900: '#190F06',
+        },
+        secondary: {
+          50: '#FFFDFA',
+          100: '#FEFCF6',
+          200: '#FEFAF1',
+          300: '#FDF7E7',
+          400: '#FDF5E3',
+          500: '#FCF2D9',
+          600: '#F5D584',
+          700: '#EEB72A',
+          800: '#AF810E',
+          900: '#553F07',
+        },
+        link: {
+          50: '#35f0ff',
+          100: '#2be6ff',
+          200: '#21dcff',
+          300: '#17d2ff',
+          400: '#0dc8ff',
+          500: '#03befc',
+          600: '#00b4f2',
+          700: '#00aae8',
+          800: '#00a0de',
+          900: '#0096d4',
+        },
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            color: theme('colors.gray.700'),
-            a: {
-              color: theme('colors.primary.500'),
-              '&:hover': {
-                color: `${theme('colors.primary.600')} !important`,
-              },
-              code: { color: theme('colors.primary.400') },
-            },
-            h1: {
-              fontWeight: '700',
-              letterSpacing: theme('letterSpacing.tight'),
-              color: theme('colors.gray.900'),
-            },
-            h2: {
-              fontWeight: '700',
-              letterSpacing: theme('letterSpacing.tight'),
-              color: theme('colors.gray.900'),
-            },
-            h3: {
-              fontWeight: '600',
-              color: theme('colors.gray.900'),
-            },
-            'h4,h5,h6': {
-              color: theme('colors.gray.900'),
-            },
-            pre: {
-              backgroundColor: theme('colors.gray.800'),
-            },
-            code: {
-              color: theme('colors.pink.500'),
-              backgroundColor: theme('colors.gray.100'),
-              paddingLeft: '4px',
-              paddingRight: '4px',
-              paddingTop: '2px',
-              paddingBottom: '2px',
-              borderRadius: '0.25rem',
-            },
-            'code::before': {
-              content: 'none',
-            },
-            'code::after': {
-              content: 'none',
-            },
-            details: {
-              backgroundColor: theme('colors.gray.100'),
-              paddingLeft: '4px',
-              paddingRight: '4px',
-              paddingTop: '2px',
-              paddingBottom: '2px',
-              borderRadius: '0.25rem',
-            },
-            hr: { borderColor: theme('colors.gray.200') },
-            'ol li::marker': {
-              fontWeight: '600',
-              color: theme('colors.gray.500'),
-            },
-            'ul li::marker': {
-              backgroundColor: theme('colors.gray.500'),
-            },
-            strong: { color: theme('colors.gray.600') },
-            blockquote: {
-              color: theme('colors.gray.900'),
-              borderLeftColor: theme('colors.gray.200'),
-            },
-          },
-        },
-        dark: {
-          css: {
-            color: theme('colors.gray.300'),
-            a: {
-              color: theme('colors.primary.500'),
-              '&:hover': {
-                color: `${theme('colors.primary.400')} !important`,
-              },
-              code: { color: theme('colors.primary.400') },
-            },
-            h1: {
-              fontWeight: '700',
-              letterSpacing: theme('letterSpacing.tight'),
-              color: theme('colors.gray.100'),
-            },
-            h2: {
-              fontWeight: '700',
-              letterSpacing: theme('letterSpacing.tight'),
-              color: theme('colors.gray.100'),
-            },
-            h3: {
-              fontWeight: '600',
-              color: theme('colors.gray.100'),
-            },
-            'h4,h5,h6': {
-              color: theme('colors.gray.100'),
-            },
-            pre: {
-              backgroundColor: theme('colors.gray.800'),
-            },
-            code: {
-              backgroundColor: theme('colors.gray.800'),
-            },
-            details: {
-              backgroundColor: theme('colors.gray.800'),
-            },
-            hr: { borderColor: theme('colors.gray.700') },
-            'ol li::marker': {
-              fontWeight: '600',
-              color: theme('colors.gray.400'),
-            },
-            'ul li::marker': {
-              backgroundColor: theme('colors.gray.400'),
-            },
-            strong: { color: theme('colors.gray.100') },
-            thead: {
-              th: {
-                color: theme('colors.gray.100'),
-              },
-            },
-            tbody: {
-              tr: {
-                borderBottomColor: theme('colors.gray.700'),
-              },
-            },
-            blockquote: {
-              color: theme('colors.gray.100'),
-              borderLeftColor: theme('colors.gray.700'),
-            },
-          },
-        },
-      }),
     },
   },
 }

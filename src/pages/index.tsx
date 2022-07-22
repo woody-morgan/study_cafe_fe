@@ -1,7 +1,6 @@
-import React, { FC, ReactNode, useEffect } from 'react'
+import React, { FC, ReactNode } from 'react'
 import { NextPage } from 'next'
 import { PageLayout } from '@src/components/layout'
-import { mobileLeftPadding, mobileXPadding } from '@src/utils/constants'
 
 import Slider from '@src/components/common/Slider'
 
@@ -10,40 +9,25 @@ import MenuPriceCard from '@src/components/common/Card/MenuPriceCard'
 import MenuInfoCard from '@src/components/common/Card/MenuInfoCard'
 
 import cx from 'classnames'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { layoutInitialState, layoutState } from '@src/atom/layoutAtom'
-import { authState } from '@src/atom/authAtom'
 
 const Section: FC<{
   title?: string
-  removePadding?: boolean
   children: ReactNode
-}> = ({ title, removePadding = false, children }) => {
+  className?: string
+}> = ({ title, children, className }) => {
   return (
-    <div className={'space-y-2'}>
-      {title && <h1 className={cx('text-primary font-bold', mobileXPadding)}>{title}</h1>}
-      <div className={removePadding ? mobileLeftPadding : mobileXPadding}>{children}</div>
+    <div className={className}>
+      {title && <h1 className={cx('text-primary-500 font-bold')}>{title}</h1>}
+      <div>{children}</div>
     </div>
   )
 }
 
 const IndexPage: NextPage = () => {
-  const setUserLayoutState = useSetRecoilState(layoutState)
-  const userAuthState = useRecoilValue(authState)
-
-  useEffect(() => {
-    setUserLayoutState((prev) => ({
-      ...prev,
-      title: userAuthState.isLoggedIn
-        ? `Good day, ${userAuthState.userName}`
-        : layoutInitialState.title,
-    }))
-  }, [userAuthState.isLoggedIn])
-
   return (
-    <PageLayout fullWidth enableYPadding>
-      <div className="space-y-10">
-        <Section>
+    <PageLayout fullWidth>
+      <div className="space-y-4 py-2">
+        <Section className="px-side-padding">
           <MenuInfoCard
             title="Best seller of the week"
             description="Iced Coffee Sweet Heaven"
@@ -51,18 +35,18 @@ const IndexPage: NextPage = () => {
             image="/coffee.png"
           />
         </Section>
-        <Section title={"This week's recommendations"} removePadding>
+        <Section className="pl-side-padding" title={"This week's recommendations"}>
           <Slider divider="main-price" className="space-x-6">
             <MenuPriceCard menu="Iced Americano" price="2000W" />
             <MenuPriceCard menu="Iced Americano" price="2000W" />
             <MenuPriceCard menu="Iced Americano" price="2000W" />
           </Slider>
         </Section>
-        <Section title={"What's in the shop"}>
+        <Section className="px-side-padding" title={"What's in the shop"}>
           <NewMenuCard
             title="Introducing our new lemonade menu"
             description="Try our refreshing lemonade, strawberry lemonade, and orange lemonade"
-            linkTo="https://google.com"
+            linkTo="/"
             image="/lemonade.png"
           />
         </Section>

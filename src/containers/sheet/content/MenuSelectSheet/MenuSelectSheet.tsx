@@ -1,15 +1,16 @@
 import React, { FC } from 'react'
-import MenuItemAddSection from '@src/components/pages/MenuPage/MenuItemAddSection'
 import { Carousel } from '@src/components/common'
+import MenuItemAddSection from '@src/containers/sheet/content/MenuSelectSheet/MenuItemAddSection'
 
 //Todo Apply Api Call
-const SheetMenuList: FC<{
+
+const MenuSelectSheet: FC<{
   selectedPage: number
   direction: number
   onPageChange: (idx: number, pageDir) => void
 }> = ({ ...props }) => {
   return (
-    <Carousel {...props}>
+    <Carousel {...props} removeArrow>
       {Array(3)
         .fill(0)
         .map((_, idx) => {
@@ -30,4 +31,4 @@ const SheetMenuList: FC<{
   )
 }
 
-export default SheetMenuList
+export default MenuSelectSheet

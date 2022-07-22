@@ -7,7 +7,7 @@ const HamburgerSVG: FC<{
   size?: number
 }> = ({ className, ...props }) => {
   return (
-    <Svg viewBox="0 0 20 20" {...props} className={className}>
+    <Svg viewBox={`0 0 20 20`} {...props} className={className}>
       <Path
         variants={{
           close: { d: 'M 2 2.5 L 20 2.5' },

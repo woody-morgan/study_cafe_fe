@@ -1,4 +1,4 @@
-import { PortalType } from '@src/core/interface/portal-type'
+import { PortalType } from '@src/core/types/portal-type'
 import React, { FC, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 

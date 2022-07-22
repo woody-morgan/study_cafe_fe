@@ -9,10 +9,9 @@ const HorizontalItemList: FC<{
   onItemClick: (idx: number) => void
 }> = ({ items, selectedIdx, onItemClick }) => {
   return (
-    <div className="flex bg-secondary text-center rounded-xl border-2 overflow-hidden border-primary">
+    <div className="flex bg-secondary-500 text-center rounded-xl border-2 overflow-hidden border-primary-500">
       {items.map((menu, idx) => {
         const isSelected = selectedIdx === idx
-
         return (
           <motion.button
             key={`${menu}-select-${idx}`}
@@ -21,20 +20,20 @@ const HorizontalItemList: FC<{
             onClick={() => onItemClick(idx)}
           >
             {idx % 2 == 1 && (
-              <span className="absolute top-1/2 left-0 translate-center-y border-x-2 border-primary w-full h-1/2" />
+              <span className="absolute top-1/2 left-0 translate-center-y border-x-2 border-primary-500 w-full h-1/2" />
             )}
-            <text
+            <p
               className={cx(
-                'z-20 absolute left-1/2 top-1/2 translate-center-xy text-primary ease-out duration-500',
-                isSelected && 'text-white'
+                'z-20 absolute left-1/2 top-1/2 translate-center-xy ease-out duration-500',
+                isSelected ? 'text-white' : 'text-primary-500'
               )}
             >
               {menu}
-            </text>
+            </p>
             {isSelected && (
               <motion.div
                 layoutId="menu-selected"
-                className="-z-1 absolute -inset-1 rounded-3xl bg-primary"
+                className="-z-1 absolute -inset-1 rounded-xl bg-primary-500"
                 variants={HorizontalItemListVars}
                 animate="animate"
               />

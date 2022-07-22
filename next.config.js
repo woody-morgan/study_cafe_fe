@@ -6,6 +6,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = withBundleAnalyzer({
+  env: {
+    BASE_URL: process.env.BASE_URL,
+    API_BASE_URL: process.env.API_BASE_URL,
+    GOOGLE_MAP_KEY: process.env.GOOGLE_MAP_KEY,
+    APP_TITLE: process.env.APP_TITLE,
+  },
   compress: true,
   sassOptions: {
     includePaths: [path.join(__dirname, './src/styles')],

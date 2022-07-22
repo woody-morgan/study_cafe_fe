@@ -12,33 +12,20 @@ import '@src/styles/globals.css'
 import ModalContainer from '@src/containers/modal/ModalContainer'
 import { CommonLayout } from '@src/components/layout'
 import { ThemeProvider } from 'next-themes'
-import withRecoilRoot from '@src/hoc/WithRecoilRoot'
 import SheetContainer from '@src/containers/sheet/SheetContainer'
+import { wrapper } from '@src/store'
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL
+axios.defaults.baseURL = process.env.API_BASE_URL
 axios.defaults.paramsSerializer = (params) => {
   return qs.stringify(params)
 }
 
 const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
-  // const setUserAuthSelector = useSetRecoilState(authSelector)
-
-  // Todo: need add auth checker by router
-  // need to care about immutability
-  // useTimeout(() => {
-  //   setUserAuthSelector((prev) => ({
-  //     ...prev,
-  //     userName: 'John Doe',
-  //     isLoggedIn: true,
-  //     userNotifications: [{ type: 'SUCCESS', id: 1, title: 'test', message: 'test' }],
-  //   }))
-  // }, 5000)
-
   return (
     <>
       <Head>
-        <title>{process.env.NEXT_PUBLIC_APP_TITLE}</title>
+        <title>{process.env.APP_TITLE}</title>
         <link rel="icon" href="/logo.ico" />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -59,4 +46,4 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
 }
 
 // hoc for recoil root
-export default withRecoilRoot(App)
+export default wrapper.withRedux(App)

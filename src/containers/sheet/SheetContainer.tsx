@@ -1,45 +1,29 @@
 import { Portal } from '@src/components/common'
-import { FC } from 'react'
-import { sheetState } from '@src/atom/sheetAtom'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useRecoilState } from 'recoil'
-import cx from 'classnames'
-import { sheetVariants } from '@src/animations/sheet'
-import { bottomSheetPaddingBottom } from '@src/utils/constants'
+import React, { FC } from 'react'
+import { useRootDispatch, useRootState } from '@src/hooks'
+import { closeBottomSheet } from '@src/store/modules/bottom-sheet'
+import SheetBase from '@src/containers/sheet/SheetBase'
+import { SheetType } from '@src/core/types/bottom-sheet-type'
+import MenuSelectSheet from '@src/containers/sheet/content/MenuSelectSheet/MenuSelectSheet'
+
+const _selectSheet: { [key in SheetType]: FC } = {
+  MENUSELECT: MenuSelectSheet,
+}
 
 const SheetContainer: FC = () => {
-  const [{ isOpen, activeOverlay, children }, setAppSheetState] = useRecoilState(sheetState)
+  const dispatch = useRootDispatch()
+  const { isOpen, name, activeOverlay } = useRootState((state) => state.bottomSheet)
+  const SheetComponent = _selectSheet[name]
 
   return (
     <Portal selectorId="sheet">
-      <AnimatePresence>
-        {isOpen ? (
-          <motion.div
-            variants={sheetVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className={cx('fixed z-30', activeOverlay ? 'inset-0' : 'inset-x-0 top-48 bottom-0')}
-          >
-            {/* create overlay when activeOverlay is active */}
-            {activeOverlay && (
-              <div
-                className="w-full h-48"
-                onClick={() => setAppSheetState((prev) => ({ ...prev, isOpen: false }))}
-              />
-            )}
-            <div
-              className={cx(
-                'bg-secondary w-full h-full rounded-t-2xl border-x-2 border-t-2 border-primary overflow-y-scroll overflow-x-hidden',
-                bottomSheetPaddingBottom
-              )}
-            >
-              {/*<SheetMenuList />*/}
-              {children}
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <SheetBase
+        show={isOpen}
+        isActiveOverLay={activeOverlay}
+        onClose={() => dispatch(closeBottomSheet())}
+      >
+        {name && <SheetComponent />}
+      </SheetBase>
     </Portal>
   )
 }

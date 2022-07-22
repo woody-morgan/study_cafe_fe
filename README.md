@@ -13,7 +13,7 @@
 ## ADVANCED
 
 ```bash
-cp .env.example .env.local <- for development
+cp .env.example .env.development.local <- for development
 cp .env.example .env.production.local <- for production
 ```
 

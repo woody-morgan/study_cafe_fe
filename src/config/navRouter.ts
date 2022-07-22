@@ -6,7 +6,7 @@ export type SiteRouterType = {
   icon: SVGTypes
 }
 
-export const siteRouter: SiteRouterType[] = [
+export const navRouter: SiteRouterType[] = [
   {
     path: '/',
     name: 'Home',
