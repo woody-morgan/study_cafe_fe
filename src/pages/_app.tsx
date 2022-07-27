@@ -14,9 +14,10 @@ import { CommonLayout } from '@src/components/layout'
 import { ThemeProvider } from 'next-themes'
 import SheetContainer from '@src/containers/sheet/SheetContainer'
 import { wrapper } from '@src/store'
+import { envConfig } from '@src/config/envConfig.js'
 
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = process.env.API_BASE_URL
+axios.defaults.baseURL = envConfig.apiUrl
 axios.defaults.paramsSerializer = (params) => {
   return qs.stringify(params)
 }
@@ -25,7 +26,7 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
   return (
     <>
       <Head>
-        <title>{process.env.APP_TITLE}</title>
+        <title>{envConfig.appTitle}</title>
         <link rel="icon" href="/logo.ico" />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
