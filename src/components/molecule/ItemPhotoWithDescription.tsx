@@ -1,8 +1,8 @@
 import React, { FC, memo } from 'react'
-import { IconButton, ImageWrapper } from '@src/components/common'
+import { IconButton, ImageWrapper } from '@src/components/atom'
 import cx from 'classnames'
 
-const MenuItemAddSection: FC<{
+const ItemPhotoWithDescription: FC<{
   className?: string
 }> = ({ className }) => {
   return (
@@ -37,4 +37,4 @@ const MenuItemAddSection: FC<{
   )
 }
 
-export default memo(MenuItemAddSection)
+export default memo(ItemPhotoWithDescription)

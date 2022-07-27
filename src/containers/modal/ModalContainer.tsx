@@ -1,4 +1,4 @@
-import { Portal } from '@src/components/common'
+import { Portal } from '@src/components/atom'
 import { ModalType } from '@src/core/types/modal-type'
 import { FC } from 'react'
 

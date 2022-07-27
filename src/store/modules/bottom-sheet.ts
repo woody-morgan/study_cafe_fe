@@ -18,13 +18,11 @@ const bottomSheetSlice = createSlice({
   name: 'bottomSheet',
   initialState: bottomSheetInitialState,
   reducers: {
-    setBottomSheet: (state, action: PayloadAction<BottomSheetInfoType>) => {
-      state.isOpen = action.payload.isOpen
+    openBottomSheet: (state, action: PayloadAction<Omit<BottomSheetInfoType, 'isOpen'>>) => {
+      state.isOpen = true
+      state.name = action.payload.name
       state.activeOverlay = action.payload.activeOverlay
       state.option = action.payload.option
-    },
-    openBottomSheet: (state) => {
-      state.isOpen = true
     },
     closeBottomSheet: (state) => {
       state.isOpen = false
@@ -35,6 +33,6 @@ const bottomSheetSlice = createSlice({
 })
 
 // Create Action
-export const { setBottomSheet, openBottomSheet, closeBottomSheet } = bottomSheetSlice.actions
+export const { openBottomSheet, closeBottomSheet } = bottomSheetSlice.actions
 // Reducer
 export default bottomSheetSlice.reducer

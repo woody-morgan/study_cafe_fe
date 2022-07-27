@@ -1,8 +1,8 @@
 import React from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import MenuInfoCard from './MenuInfoCard'
-import MenuPriceCard from './MenuPriceCard'
+import MenuInfoCard from '../../molecule/Cards/MenuInfoCard'
+import MenuPriceCard from '../../molecule/Cards/MenuPriceCard'
 
 export default {
   title: 'Components/Card',
