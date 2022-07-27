@@ -58,7 +58,7 @@ const PageLayout: FC<{
   // it should be pb-0 on desktop size because bottom nav will not be shown
   return (
     <motion.div
-      className="relative transition-all duration-1000 ease-linear"
+      className="relative"
       variants={disableTransition ? {} : pageVars}
       custom={pageDirectionCustom}
       initial="hidden"
