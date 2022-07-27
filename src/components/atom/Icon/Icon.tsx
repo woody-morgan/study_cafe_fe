@@ -36,7 +36,7 @@ const _Selector: { [key in SVGTypes]: FC<IconProps> } = {
 
 const Icon: FC<IconProps> = ({ name, ...props }) => {
   const IconComponent = _Selector[name]
-  return <IconComponent name={name} {...props} />
+  return <IconComponent className="pointer-events-none" name={name} {...props} />
 }
 
 export default memo(Icon)
