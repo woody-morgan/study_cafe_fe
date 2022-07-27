@@ -14,7 +14,7 @@ import { PageCommonLayout } from '@src/components/layout'
 import { ThemeProvider } from 'next-themes'
 import SheetContainer from '@src/containers/sheet/SheetContainer'
 import { wrapper } from '@src/store'
-import { envConfig } from '@src/config/envConfig.js'
+import { envConfig } from '@src/core/config/envConfig.js'
 
 axios.defaults.withCredentials = true
 axios.defaults.baseURL = envConfig.apiUrl
@@ -35,7 +35,7 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
       </Head>
       <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
         <PageCommonLayout headerFixed>
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence initial={false} exitBeforeEnter>
             <Component {...pageProps} key={router.route} />
           </AnimatePresence>
         </PageCommonLayout>

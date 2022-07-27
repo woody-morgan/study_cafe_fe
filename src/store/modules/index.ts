@@ -3,17 +3,17 @@ import { UserAuthInfoType } from '@src/core/types/auth-type'
 import { HYDRATE } from 'next-redux-wrapper'
 
 import auth from './auth'
-import history from './history'
 import modal from './modal'
+import layout from './layout'
 import bottomSheet from './bottom-sheet'
 import { ModalInfoType } from '@src/core/types/modal-type'
-import { HistoryInfoType } from '@src/core/types/history-type'
 import { BottomSheetInfoType } from '@src/core/types/bottom-sheet-type'
+import { LayoutInfoType } from '@src/core/types/layout-type'
 
 export type RootStateType = CombinedState<{
-  history: HistoryInfoType
   auth: UserAuthInfoType
   modal: ModalInfoType
+  layout: LayoutInfoType
   bottomSheet: BottomSheetInfoType
 }>
 export type RootDispatchType = ReturnType<typeof reducer>['dispatch']
@@ -28,8 +28,8 @@ const reducer = (state: RootStateType, action: AnyAction) => {
   }
   return combineReducers({
     auth,
-    history,
     modal,
+    layout,
     bottomSheet,
   })(state, action)
 }

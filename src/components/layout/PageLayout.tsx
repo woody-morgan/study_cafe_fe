@@ -1,14 +1,13 @@
 import { pageVars } from '@src/animations/page'
-import { useHandleOnRoutingStart, useRootDispatch, useRootState } from '@src/hooks'
+import { useBrowserBackward, useRootDispatch, useRootState } from '@src/hooks'
 import useWindowResize from '@src/hooks/useWindowResize'
-import { addHistory, modTransDirection } from '@src/store/modules/history'
+import { pageTransitionForward } from '@src/store/modules/layout'
 import cx from 'classnames'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
 import React, { FC, useEffect, useMemo, useRef } from 'react'
 
 import Header from './PageLayout/Header'
-import { envConfig } from '@src/config/envConfig.js'
+import { envConfig } from '@src/core/config/envConfig.js'
 
 const PageLayout: FC<{
   children: React.ReactNode
@@ -29,19 +28,14 @@ const PageLayout: FC<{
   headerBackgroundColor,
   headerContent = <h2 className="uppercase w-full">{envConfig.appTitle}</h2>,
 }) => {
-  const router = useRouter()
   const mainRef = useRef<HTMLDivElement>(null)
   const dispatch = useRootDispatch()
-  const history = useRootState((state) => state.history)
+  const layoutState = useRootState((state) => state.layout)
 
-  // enroll
-  useHandleOnRoutingStart(() => {
-    dispatch(addHistory({ history: router.asPath }))
-  })
+  useBrowserBackward()
 
-  // make transition direction forward when layout component mounted on react-tree
   useEffect(() => {
-    dispatch(modTransDirection('forward'))
+    dispatch(pageTransitionForward())
   }, [])
 
   // to recalculate height when mobile browser search bar appeared and disappeared
@@ -55,8 +49,8 @@ const PageLayout: FC<{
 
   // pageDirection is used to determine the direction of the page transition
   const pageDirectionCustom = useMemo(
-    () => (history.transDirection === 'forward' ? 1 : -1),
-    [history.transDirection]
+    () => (layoutState.pageTransitionDir === 'forward' ? 1 : -1),
+    [layoutState.pageTransitionDir]
   )
 
   // do not remove pt-gb-header pb-bt-nav on motion.main
@@ -64,7 +58,7 @@ const PageLayout: FC<{
   // it should be pb-0 on desktop size because bottom nav will not be shown
   return (
     <motion.div
-      className="relative"
+      className="relative transition-all duration-1000 ease-linear"
       variants={disableTransition ? {} : pageVars}
       custom={pageDirectionCustom}
       initial="hidden"
