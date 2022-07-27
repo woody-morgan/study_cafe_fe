@@ -1,6 +1,6 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
-const appConfig = require('./src/config/appConfig')
+const appConfig = require('./src/core/config/appConfig')
 
 module.exports = {
   mod: 'jit',
