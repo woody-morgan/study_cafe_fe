@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Button, InputBox } from '@src/components/common'
+import { Button, InputBox } from '@src/components/atom'
 
 const SignInModal = () => {
   const [Inputs, setInputs] = useState({

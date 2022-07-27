@@ -1,13 +1,14 @@
-import { Portal } from '@src/components/common'
+import { Portal } from '@src/components/atom'
 import React, { FC } from 'react'
 import { useRootDispatch, useRootState } from '@src/hooks'
-import { closeBottomSheet } from '@src/store/modules/bottom-sheet'
-import SheetBase from '@src/containers/sheet/SheetBase'
 import { SheetType } from '@src/core/types/bottom-sheet-type'
-import MenuSelectSheet from '@src/containers/sheet/content/MenuSelectSheet/MenuSelectSheet'
+import MenuSelectBottomSheet from '@src/components/template/MenuSelectBottomSheet'
+import { AnimatePresence } from 'framer-motion'
+import { BottomSheetLayout } from '@src/components/layout'
+import { closeBottomSheet } from '@src/store/modules/bottom-sheet'
 
 const _selectSheet: { [key in SheetType]: FC } = {
-  MENUSELECT: MenuSelectSheet,
+  MENUSELECT: MenuSelectBottomSheet,
 }
 
 const SheetContainer: FC = () => {
@@ -17,13 +18,16 @@ const SheetContainer: FC = () => {
 
   return (
     <Portal selectorId="sheet">
-      <SheetBase
-        show={isOpen}
-        isActiveOverLay={activeOverlay}
-        onClose={() => dispatch(closeBottomSheet())}
-      >
-        {name && <SheetComponent />}
-      </SheetBase>
+      <AnimatePresence exitBeforeEnter>
+        {isOpen && (
+          <BottomSheetLayout
+            isActiveOverLay={activeOverlay}
+            onClose={() => dispatch(closeBottomSheet())}
+          >
+            {name && <SheetComponent />}
+          </BottomSheetLayout>
+        )}
+      </AnimatePresence>
     </Portal>
   )
 }

@@ -10,7 +10,7 @@ import type { AppProps } from 'next/app'
 
 import '@src/styles/globals.css'
 import ModalContainer from '@src/containers/modal/ModalContainer'
-import { CommonLayout } from '@src/components/layout'
+import { PageCommonLayout } from '@src/components/layout'
 import { ThemeProvider } from 'next-themes'
 import SheetContainer from '@src/containers/sheet/SheetContainer'
 import { wrapper } from '@src/store'
@@ -34,11 +34,11 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
       </Head>
       <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
-        <CommonLayout headerFixed>
+        <PageCommonLayout headerFixed>
           <AnimatePresence exitBeforeEnter>
             <Component {...pageProps} key={router.route} />
           </AnimatePresence>
-        </CommonLayout>
+        </PageCommonLayout>
         <ModalContainer />
         <SheetContainer />
       </ThemeProvider>

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React, { FC } from 'react'
-import ImageWrapper from '../ImageWrapper'
-import CardWrapper from './CardWrapper'
+import ImageWrapper from '../../atom/ImageWrapper'
+import CardWrapper from '../../atom/Card/CardWrapper'
 
 type MenuCardProps = {
   title: string

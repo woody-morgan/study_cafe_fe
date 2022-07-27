@@ -1,4 +1,4 @@
-import { SVGTypes } from '@src/components/common/Icon/Icon'
+import { SVGTypes } from '@src/components/atom/Icon/Icon'
 
 export type SiteRouterType = {
   path: string

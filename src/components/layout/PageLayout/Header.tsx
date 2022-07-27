@@ -1,6 +1,6 @@
 import { forwardRef, MutableRefObject, ReactNode, useState } from 'react'
 import cx from 'classnames'
-import { IconButton, ThemeSwitch } from '@src/components/common'
+import { IconButton, ThemeSwitch } from '@src/components/atom'
 import { VscBell, VscBellDot } from 'react-icons/vsc'
 import { useRootState } from '@src/hooks'
 

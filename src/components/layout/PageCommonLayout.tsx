@@ -3,7 +3,7 @@ import cx from 'classnames'
 
 import Navigation from './PageLayout/Navigation'
 
-const CommonLayout: FC<{
+const PageCommonLayout: FC<{
   children: React.ReactNode
   headerTransparent?: boolean
   headerFixed?: boolean
@@ -24,4 +24,4 @@ const CommonLayout: FC<{
   )
 }
 
-export default memo(CommonLayout)
+export default memo(PageCommonLayout)

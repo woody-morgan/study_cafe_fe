@@ -1,4 +1,4 @@
-import { IconButton } from '@src/components/common'
+import { IconButton } from '@src/components/atom'
 import { navRouter } from '@src/config/navRouter'
 import cx from 'classnames'
 import Link from 'next/link'

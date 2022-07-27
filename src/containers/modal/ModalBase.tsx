@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { modalOverlayVariants, modalVariants } from '@src/animations/modal'
-import { Icon } from '@src/components/common'
+import { Icon } from '@src/components/atom'
 import { envConfig } from '@src/config/envConfig.js'
 
 type ModalBaseShape = {

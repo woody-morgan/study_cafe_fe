@@ -1,4 +1,4 @@
-import { Button } from '@src/components/common'
+import { Button } from '@src/components/atom'
 import { PageLayout } from '@src/components/layout'
 import Link from 'next/link'
 import React from 'react'

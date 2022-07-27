@@ -1,10 +1,9 @@
 import React, { useMemo, useState } from 'react'
 import { PageLayout } from '@src/components/layout'
 import { NextPage } from 'next'
-import { HorizontalItemList, SearchBar } from '@src/components/common'
+import { HorizontalItemList, SearchBar } from '@src/components/atom'
 import { useInput } from '@src/hooks'
-import SheetBase from '@src/containers/sheet/SheetBase'
-import MenuSelectSheet from '@src/containers/sheet/content/MenuSelectSheet/MenuSelectSheet'
+import MenuSelectBottomSheet from '@src/components/template/MenuSelectBottomSheet'
 
 const MenuPage: NextPage = () => {
   const MenuList = useMemo(() => ['coffee', 'chocolate', 'others'], [])
@@ -21,13 +20,12 @@ const MenuPage: NextPage = () => {
           selectedIdx={page}
           onItemClick={(idx) => setPage((prev) => [idx, idx - prev[0] >= 0 ? 1 : -1])}
         />
-        <SheetBase show={true}>
-          <MenuSelectSheet
-            selectedPage={page}
-            direction={pageDir}
-            onPageChange={(idx, pageDir) => setPage([idx, pageDir])}
-          />
-        </SheetBase>
+        <MenuSelectBottomSheet
+          sheetPosition="top-40"
+          selectedPage={page}
+          direction={pageDir}
+          onPageChange={(idx, pageDir) => setPage([idx, pageDir])}
+        />
       </div>
     </PageLayout>
   )
