@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import React, { FC, useEffect, useMemo, useRef } from 'react'
 
 import Header from './PageLayout/Header'
+import { envConfig } from '@src/config/envConfig.js'
 
 const PageLayout: FC<{
   children: React.ReactNode
@@ -26,7 +27,7 @@ const PageLayout: FC<{
   headerFixed = false,
   headerTransparent = false,
   headerBackgroundColor,
-  headerContent = <h2 className="uppercase w-full">{process.env.APP_TITLE}</h2>,
+  headerContent = <h2 className="uppercase w-full">{envConfig.appTitle}</h2>,
 }) => {
   const router = useRouter()
   const mainRef = useRef<HTMLDivElement>(null)

@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { modalOverlayVariants, modalVariants } from '@src/animations/modal'
 import { Icon } from '@src/components/common'
+import { envConfig } from '@src/config/envConfig.js'
 
 type ModalBaseShape = {
   show: boolean
@@ -10,12 +11,7 @@ type ModalBaseShape = {
   onClose: () => void
 }
 
-const ModalBase: FC<ModalBaseShape> = ({
-  show,
-  title = process.env.APP_TITLE,
-  children,
-  onClose,
-}) => {
+const ModalBase: FC<ModalBaseShape> = ({ show, title = envConfig.appTitle, children, onClose }) => {
   return (
     <AnimatePresence exitBeforeEnter>
       {show && (
