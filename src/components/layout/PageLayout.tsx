@@ -4,7 +4,6 @@ import cx from 'classnames';
 import React, { FC, useRef } from 'react';
 
 import HeaderWrapper from './PageLayout/HeaderWrapper';
-import { envConfig } from '@src/core/config/envConfig.js';
 
 const PageLayout: FC<{
   children: React.ReactNode;
@@ -24,7 +23,7 @@ const PageLayout: FC<{
   headerFixed = false,
   headerTransparent = false,
   headerBackgroundColor,
-  headerContent = <h2 className="uppercase w-full">{envConfig.appTitle}</h2>,
+  headerContent,
   showNavigation = false,
 }) => {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -50,7 +49,7 @@ const PageLayout: FC<{
         transparent={headerTransparent}
         className={headerBackgroundColor}
         content={headerContent}
-      ></HeaderWrapper>
+      />
       <main
         ref={mainRef}
         className={cx(

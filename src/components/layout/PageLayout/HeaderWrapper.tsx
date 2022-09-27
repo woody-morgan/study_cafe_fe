@@ -1,9 +1,5 @@
-import { forwardRef, MutableRefObject, ReactNode, useState } from 'react';
+import { forwardRef, MutableRefObject, ReactNode } from 'react';
 import cx from 'classnames';
-import { IconButton } from '@src/components/ui/atom';
-import { VscBell, VscBellDot } from 'react-icons/vsc';
-import { useRecoilValue } from 'recoil';
-import { loginSelector } from '@src/atom/auth';
 
 type Props = {
   className?: string;
@@ -16,9 +12,6 @@ const HeaderWrapper = (
   { className, fixed = false, transparent = false, content }: Props,
   ref: MutableRefObject<HTMLDivElement>
 ) => {
-  const [show, setShow] = useState(false);
-  const { notifications } = useRecoilValue(loginSelector);
-
   return (
     <header className="relative">
       <div
@@ -35,19 +28,6 @@ const HeaderWrapper = (
         )}
       >
         {content}
-        <span className="flex space-x-2 items-center">
-          {notifications && notifications.length > 0 ? (
-            <VscBellDot size="24" />
-          ) : (
-            <VscBell size="24" />
-          )}
-          <IconButton
-            name="hamburger"
-            animate={show ? 'open' : 'close'}
-            size={24}
-            onClick={() => setShow((prev) => !prev)}
-          />
-        </span>
       </div>
     </header>
   );

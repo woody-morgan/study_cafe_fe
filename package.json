@@ -25,6 +25,10 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^12.3.1",
+    "@react-three/cannon": "^6.4.0",
+    "@react-three/drei": "^9.32.3",
+    "@react-three/fiber": "^8.8.6",
+    "@react-three/postprocessing": "^2.6.2",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
     "compression": "^1.7.4",
@@ -45,7 +49,8 @@
     "react-icons": "^4.4.0",
     "react-reveal": "^1.2.2",
     "recoil": "^0.7.5",
-    "sharp": "^0.31.0"
+    "sharp": "^0.31.0",
+    "three": "^0.144.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
