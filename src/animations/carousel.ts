@@ -1,4 +1,4 @@
-import { Variants } from 'framer-motion'
+import { Variants } from 'framer-motion';
 
 export const defaultCarouselVars: Variants = {
   enter: (direction: number) => {
@@ -8,7 +8,7 @@ export const defaultCarouselVars: Variants = {
       transition: {
         delay: 0.05,
       },
-    }
+    };
   },
   center: {
     zIndex: 1,
@@ -23,15 +23,15 @@ export const defaultCarouselVars: Variants = {
       transition: {
         delay: 0.05,
       },
-    }
+    };
   },
-}
+};
 
 export const defaultReverseCarouselVars: Variants = {
   enter: (direction: number) => {
     return {
       x: direction > 0 ? -1000 : 1000,
-    }
+    };
   },
   center: {
     zIndex: 1,
@@ -43,9 +43,9 @@ export const defaultReverseCarouselVars: Variants = {
     return {
       zIndex: 0,
       x: direction < 0 ? -1000 : 1000,
-    }
+    };
   },
-}
+};
 
 export const carouselVars: Variants = {
   enter: (direction: number) => {
@@ -56,7 +56,7 @@ export const carouselVars: Variants = {
       transition: {
         delay: 0,
       },
-    }
+    };
   },
   center: {
     zIndex: 1,
@@ -73,16 +73,16 @@ export const carouselVars: Variants = {
       transition: {
         delay: 0,
       },
-    }
+    };
   },
-}
+};
 
 export const multiCarouselVars: Variants = {
   enter: (idx: number) => {
     return {
       x: idx > 0 ? 1000 : -1000,
       opacity: 0,
-    }
+    };
   },
   center: {
     zIndex: 1,
@@ -94,6 +94,6 @@ export const multiCarouselVars: Variants = {
       zIndex: 0,
       x: idx < 0 ? 1000 : -1000,
       opacity: 0,
-    }
+    };
   },
-}
+};

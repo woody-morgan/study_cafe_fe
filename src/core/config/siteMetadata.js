@@ -15,6 +15,6 @@ const siteMetadata = {
     email: 'sample@sample.com',
     github: 'https://github.com/TeamOneWayTicket',
   },
-}
+};
 
-module.exports = siteMetadata
+module.exports = siteMetadata;

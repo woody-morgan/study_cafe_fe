@@ -1,17 +1,15 @@
-import React, { FC } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { modalOverlayVariants, modalVariants } from '@src/animations/modal'
-import { Icon } from '@src/components/atom'
-import { envConfig } from '@src/core/config/envConfig.js'
+import React, { FC } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { modalOverlayVariants, modalVariants } from '@src/animations/modal';
+import { Icon } from '@src/components/ui/atom';
 
 type ModalBaseShape = {
-  show: boolean
-  title?: string
-  children: React.ReactNode
-  onClose: () => void
-}
+  show: boolean;
+  children: React.ReactNode;
+  onClose: () => void;
+};
 
-const ModalBase: FC<ModalBaseShape> = ({ show, title = envConfig.appTitle, children, onClose }) => {
+const ModalBase: FC<ModalBaseShape> = ({ show, children, onClose }) => {
   return (
     <AnimatePresence exitBeforeEnter>
       {show && (
@@ -25,7 +23,7 @@ const ModalBase: FC<ModalBaseShape> = ({ show, title = envConfig.appTitle, child
             className="absolute top-0 left-0 z-[998] w-full h-full bg-black/50 dark:bg-gray/50"
             variants={modalOverlayVariants}
             onClick={() => {
-              onClose()
+              onClose();
             }}
           />
           <motion.div
@@ -35,13 +33,12 @@ const ModalBase: FC<ModalBaseShape> = ({ show, title = envConfig.appTitle, child
             <div className="absolute -top-12 left-[calc(50%-50px)] rounded-full">
               <Icon name="logo" size={100} />
             </div>
-            <h1 className="text-2xl text-center py-2">{title}</h1>
             <div className="py-5">{children}</div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default ModalBase
+export default ModalBase;

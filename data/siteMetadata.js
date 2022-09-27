@@ -12,6 +12,6 @@ const siteMetadata = {
     email: 'mircat.daily@gmail.com',
     github: 'https://github.com/woodi97',
   },
-}
+};
 
-module.exports = siteMetadata
+module.exports = siteMetadata;

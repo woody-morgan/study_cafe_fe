@@ -1,9 +1,7 @@
-import React from 'react'
-import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { appColor } from '@src/utils/constants'
-import { portalType } from '@src/core/types/portal-type'
-
-import cx from 'classnames'
+import React from 'react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { appColor } from '@src/utils/constants';
+import { portalType } from '@src/core/types/portal-type';
 
 export default class MyDocument extends Document {
   render() {
@@ -26,20 +24,14 @@ export default class MyDocument extends Document {
           <meta content={appColor} name="apple-mobile-web-app-status-bar-style" />
           <meta content="yes" name="apple-mobile-web-app-capable" />
         </Head>
-        <body
-          className={cx(
-            'antialiasing',
-            'bg-primary_bg-400 dark:bg-primary_bg-700',
-            'text-primary-400 dark:text-primary-600'
-          )}
-        >
+        <body className="z-0 bg-primary_bg-400 dark:bg-primary_bg-700 text-primary-400 dark:text-primary-600 antialiased">
           <Main />
           {portalType.map((item) => {
-            return <div key={item} id={item} />
+            return <div key={item} id={item} />;
           })}
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }

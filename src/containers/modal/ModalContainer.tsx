@@ -1,34 +1,33 @@
-import { Portal } from '@src/components/atom'
-import { ModalType } from '@src/core/types/modal-type'
-import { FC } from 'react'
+import { Portal } from '@src/components/ui/atom';
+import { FC } from 'react';
 
-import ModalBase from './ModalBase'
-import SignInModal from './content/SignInModal'
-import SignUpModal from './content/SignUpModal'
-import { useRootDispatch, useRootState } from '@src/hooks'
-import { closeModal } from '@src/store/modules/modal'
+import ModalBase from './ModalBase';
+import SignInModal from './content/SignInModal';
+import SignUpModal from './content/SignUpModal';
+import { closeModal, modalStateAtom, ModalType } from '@src/atom/modal';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const _selectModal: { [key in ModalType]: FC } = {
   SIGNUP: SignUpModal,
   SIGNIN: SignInModal,
-}
+};
 
 const ModalContainer: FC = () => {
-  const modal = useRootState((state) => state.modal)
-  const dispatch = useRootDispatch()
-  const ModalComponent = _selectModal[modal.name]
+  const closeModalCB = useSetRecoilState(closeModal);
+  const { type } = useRecoilValue(modalStateAtom);
+  let ModalComponent = null;
+
+  if (type) {
+    ModalComponent = _selectModal[type];
+  }
 
   return (
     <Portal selectorId="modal">
-      <ModalBase
-        title={modal.title}
-        show={modal.name ? true : false}
-        onClose={() => dispatch(closeModal())}
-      >
-        {modal.name && <ModalComponent />}
+      <ModalBase show={type ? true : false} onClose={() => closeModalCB()}>
+        {ModalComponent && <ModalComponent />}
       </ModalBase>
     </Portal>
-  )
-}
+  );
+};
 
-export default ModalContainer
+export default ModalContainer;

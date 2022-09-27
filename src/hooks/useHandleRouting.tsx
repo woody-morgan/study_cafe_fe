@@ -1,32 +1,32 @@
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export function useHandleOnRoutingStart(handleOnLoad: () => void) {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    router.events.on('routeChangeStart', handleOnLoad)
+    router.events.on('routeChangeStart', handleOnLoad);
     return () => {
-      router.events.off('routeChangeStart', handleOnLoad)
-    }
-  }, [])
+      router.events.off('routeChangeStart', handleOnLoad);
+    };
+  }, []);
 }
 
 export function useHandleOnRoutingFinish(handleOnLoad: () => void) {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    router.events.on('routeChangeComplete', handleOnLoad)
+    router.events.on('routeChangeComplete', handleOnLoad);
     return () => {
-      router.events.off('routeChangeComplete', handleOnLoad)
-    }
-  }, [])
+      router.events.off('routeChangeComplete', handleOnLoad);
+    };
+  }, []);
 }
 
 export function useHandleOnRoutingError(handleOnLoad: () => void) {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    router.events.on('routeChangeError', handleOnLoad)
+    router.events.on('routeChangeError', handleOnLoad);
     return () => {
-      router.events.off('routeChangeError', handleOnLoad)
-    }
-  }, [])
+      router.events.off('routeChangeError', handleOnLoad);
+    };
+  }, []);
 }

@@ -1,8 +1,8 @@
-import React from 'react'
-import siteMetadata from 'data/siteMetadata'
+import React from 'react';
+import siteMetadata from 'data/siteMetadata';
 
 const Footer = () => {
-  const com = siteMetadata.company
+  const com = siteMetadata.company;
 
   return (
     <div className="bg-transparent border-t-2 border-solid border-black/50">
@@ -15,7 +15,7 @@ const Footer = () => {
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
