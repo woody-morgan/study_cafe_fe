@@ -3,4 +3,4 @@ export const envConfig = {
   apiUrl: process.env.API_BASE_URL,
   googleMapKey: process.env.GOOGLE_MAP_KEY,
   appTitle: process.env.APP_TITLE,
-}
+};

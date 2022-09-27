@@ -1,27 +1,17 @@
-import React, { FC, Fragment, memo } from 'react'
-import cx from 'classnames'
+import React, { FC, memo } from 'react';
 
-import Navigation from './PageLayout/Navigation'
-
-const PageCommonLayout: FC<{
-  children: React.ReactNode
-  headerTransparent?: boolean
-  headerFixed?: boolean
+const CommonLayout: FC<{
+  children: React.ReactNode;
 }> = ({ children }) => {
   return (
     //  overflow hidden to prevent text on background on transition
     <div
-      id="page-layout"
-      className={cx(
-        'w-full max-w-mobile-app',
-        'overflow-hidden bg-primary_bg-500 dark:bg-primary_bg-600',
-        'm-center'
-      )}
+      id="common-layout"
+      className="overflow-hidden w-full max-w-mobile-app m-center bg-primary_bg-500 dark:bg-primary_bg-600"
     >
-      <Fragment>{children}</Fragment>
-      <Navigation />
+      {children}
     </div>
-  )
-}
+  );
+};
 
-export default memo(PageCommonLayout)
+export default memo(CommonLayout);

@@ -1,10 +1,10 @@
-import { SVGTypes } from '@src/components/atom/Icon/Icon'
+import { SVGTypes } from '@src/components/ui/atom/Icon/Icon';
 
 export type SiteRouterType = {
-  path: string
-  name: string
-  icon: SVGTypes
-}
+  path: string;
+  name: string;
+  icon: SVGTypes;
+};
 
 export const navRouter: SiteRouterType[] = [
   {
@@ -27,4 +27,4 @@ export const navRouter: SiteRouterType[] = [
     name: 'Favorites',
     icon: 'heart',
   },
-]
+];

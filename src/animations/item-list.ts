@@ -1,4 +1,4 @@
-import { Variants } from 'framer-motion'
+import { Variants } from 'framer-motion';
 
 export const HorizontalItemListVars: Variants = {
   animate: {
@@ -8,4 +8,4 @@ export const HorizontalItemListVars: Variants = {
       damping: 20,
     },
   },
-}
+};

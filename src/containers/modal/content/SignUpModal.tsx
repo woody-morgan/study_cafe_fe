@@ -1,24 +1,24 @@
-import React, { useCallback, useState } from 'react'
-import { Button, InputBox } from '@src/components/atom'
+import React, { useCallback, useState } from 'react';
+import { Button, InputBox } from '@src/components/ui/atom';
 
 const SignUpModal = () => {
   const [Inputs, setInputs] = useState({
     email: '',
     username: '',
     password: '',
-  })
+  });
 
   const handleOnChange = useCallback((e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }, [])
+    }));
+  }, []);
 
   const handleSubmit = useCallback(() => {
     // do something
-  }, [])
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -50,7 +50,7 @@ const SignUpModal = () => {
         Sign Up
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpModal
+export default SignUpModal;

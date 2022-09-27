@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import BottomSheetBaseLayout from './BottomSheetLayout/BottomSheetBaseLayout'
-import BottomSheetBaseOverlay from './BottomSheetLayout/BottomSheetBaseOverlay'
-import BottomSheetBaseDesign from './BottomSheetLayout/BottomSheetBaseDesign'
+import React, { FC } from 'react';
+import BottomSheetBaseLayout from './BottomSheetLayout/BottomSheetBaseLayout';
+import BottomSheetBaseOverlay from './BottomSheetLayout/BottomSheetBaseOverlay';
+import BottomSheetBaseDesign from './BottomSheetLayout/BottomSheetBaseDesign';
 
 export type SheetBaseShape = {
-  isActiveOverLay?: boolean
-  sheetPosition?: string
-  children?: React.ReactNode
-  onClose?: () => void
-}
+  isActiveOverLay?: boolean;
+  sheetPosition?: string;
+  children?: React.ReactNode;
+  onClose?: () => void;
+};
 
 const BottomSheetLayout: FC<SheetBaseShape> = ({
   isActiveOverLay = false,
@@ -21,7 +21,7 @@ const BottomSheetLayout: FC<SheetBaseShape> = ({
       <BottomSheetBaseOverlay isActiveOverLay={isActiveOverLay} onClose={onClose} />
       <BottomSheetBaseDesign>{children}</BottomSheetBaseDesign>
     </BottomSheetBaseLayout>
-  )
-}
+  );
+};
 
-export default BottomSheetLayout
+export default BottomSheetLayout;

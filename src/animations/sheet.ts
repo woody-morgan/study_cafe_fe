@@ -8,15 +8,8 @@ export const sheetVariants = {
     y: 0,
     transition: {
       duration: 0.8,
-      ease: 'easeInOut',
+      stiffness: 100,
+      ease: 'easeIn',
     },
   },
-  exit: {
-    opacity: 0,
-    y: 1000,
-    transition: {
-      duration: 0.8,
-      ease: 'easeInOut',
-    },
-  },
-}
+};

@@ -1,7 +1,7 @@
-import React from 'react'
-import { MenuInfoCard, MenuPriceCard, NewMenuCard } from '@src/components/molecule/Cards'
-import { Slider } from '@src/components/atom'
-import { Section } from '@src/components/molecule'
+import React from 'react';
+import { MenuInfoCard, MenuPriceCard, NewMenuCard } from '@src/components/ui/molecule/Cards';
+import { Slider } from '@src/components/ui/atom';
+import { Section } from '@src/components/ui/molecule';
 
 const HomePageTemplate = () => {
   return (
@@ -30,7 +30,7 @@ const HomePageTemplate = () => {
         />
       </Section>
     </div>
-  )
-}
+  );
+};
 
-export default HomePageTemplate
+export default HomePageTemplate;

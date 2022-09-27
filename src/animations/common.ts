@@ -5,4 +5,4 @@ export const buttonSettings = {
   whileTap: {
     scale: 0.98,
   },
-}
+};

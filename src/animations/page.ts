@@ -1,4 +1,4 @@
-import { Variants } from 'framer-motion'
+import { Variants } from 'framer-motion';
 
 export const pageVars: Variants = {
   hidden: (direction: number) => {
@@ -7,7 +7,7 @@ export const pageVars: Variants = {
       y: 0,
       opacity: 0,
       transition: { duration: 0.1 },
-    }
+    };
   },
   enter: { opacity: 1, x: 0, y: 0, transition: { duration: 0.2 } },
   exit: (direction: number) => {
@@ -16,6 +16,6 @@ export const pageVars: Variants = {
       y: 0,
       opacity: 0,
       transition: { duration: 0.4 },
-    }
+    };
   },
-}
+};
