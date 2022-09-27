@@ -6,8 +6,13 @@ import CoffeeSVG from './assets/coffee.svg';
 import HeartSVG from './assets/heart.svg';
 import ReceiptSVG from './assets/receipt.svg';
 import { BsHouseDoor, BsPlus } from 'react-icons/bs';
+import { BiDownArrow, BiLeftArrow, BiRightArrow, BiUpArrow } from 'react-icons/bi';
 
 export type SVGTypes =
+  | 'leftArrow'
+  | 'rightArrow'
+  | 'upArrow'
+  | 'downArrow'
   | 'hamburger'
   | 'settings'
   | 'logo'
@@ -24,6 +29,10 @@ type IconProps = {
 };
 
 const _Selector: { [key in SVGTypes]: FC<IconProps> } = {
+  leftArrow: BiLeftArrow,
+  rightArrow: BiRightArrow,
+  upArrow: BiUpArrow,
+  downArrow: BiDownArrow,
   hamburger: HamburgerSVG,
   settings: SettingSVG,
   logo: LogoSVG,

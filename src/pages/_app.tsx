@@ -14,6 +14,7 @@ import { ThemeProvider } from 'next-themes';
 import SheetContainer from '@src/containers/sheet/SheetContainer';
 import { envConfig } from '@src/core/config/envConfig.js';
 import { RecoilRoot } from 'recoil';
+import { useLocalStorage } from '@src/hooks';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = envConfig.apiUrl;
@@ -22,6 +23,9 @@ axios.defaults.paramsSerializer = (params) => {
 };
 
 const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
+  // set to initial item
+  const [storedValue, setStoredValue] = useLocalStorage('item_cart', []);
+
   return (
     <>
       <Head>
