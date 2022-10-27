@@ -18,7 +18,7 @@ MenuInfoEX.args = {
   title: 'Best seller of the Week',
   description: 'Iced Coffee Sweet Heaven',
   infoUrl: 'https://www.google.com',
-  image: '/coffee.png',
+  image: '/static/coffee.png',
 };
 
 const MenuPriceTemplate: ComponentStory<typeof MenuPriceCard> = (args) => (

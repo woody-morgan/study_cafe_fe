@@ -1,4 +1,3 @@
-import { buttonSettings } from '@src/animations/common';
 import { btnSizes, btnStyles } from '@src/utils/constants';
 import cx from 'classnames';
 import { motion } from 'framer-motion';
@@ -8,7 +7,6 @@ interface ButtonShape {
   type?: 'button' | 'submit' | 'reset';
   size?: btnSizes;
   styles?: btnStyles;
-  activeHover?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
   children?: React.ReactNode;
@@ -38,7 +36,6 @@ const Button = (
     type = 'button',
     size = 'medium',
     styles = 'primary',
-    activeHover = false,
     disabled = false,
     fullWidth = false,
     children,
@@ -49,7 +46,6 @@ const Button = (
 ) => {
   return (
     <motion.button
-      {...(!disabled && activeHover && buttonSettings)}
       ref={ref}
       type={type}
       className={cx(

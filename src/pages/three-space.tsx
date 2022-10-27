@@ -3,8 +3,7 @@ import { PageLayout } from '@src/components/layout';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Physics, usePlane, useSphere } from '@react-three/cannon';
 import { Bloom, EffectComposer, SSAO } from '@react-three/postprocessing';
-import GameController from '@src/components/three/GameController';
-import CommonHeaderContent from '@src/components/layout/PageLayout/CommonHeaderContent';
+import GameController from '@src/components/ui/three/GameController';
 
 function InstancedSpheres({ count = 50 }) {
   const { viewport } = useThree();
@@ -57,7 +56,7 @@ function Mouse() {
 
 const CafeGame = () => {
   return (
-    <PageLayout fullWidth fixedHeight headerContent={<CommonHeaderContent />}>
+    <PageLayout fullWidth fixedHeight>
       <Canvas
         shadows
         gl={{ stencil: false, antialias: false }}

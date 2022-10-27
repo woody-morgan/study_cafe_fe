@@ -1,7 +1,7 @@
 import React from 'react';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { appColor } from '@src/utils/constants';
-import { portalType } from '@src/core/types/portal-type';
+import { portalType } from '@src/core/interface/portal-type';
 
 export default class MyDocument extends Document {
   render() {

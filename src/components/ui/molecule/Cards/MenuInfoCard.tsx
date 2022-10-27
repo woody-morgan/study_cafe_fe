@@ -17,9 +17,7 @@ const MenuInfoCard: FC<MenuCardProps> = ({ title, description, linkTo, image }) 
         <div className="flex flex-col w-3/5 justify-between text-white">
           <span className="text-sm">{title}</span>
           <h2 className="text-lg font-bold">{description}</h2>
-          <Link href={linkTo}>
-            <a className="text-sm text-white">More info {'->'}</a>
-          </Link>
+          <span>More Info</span>
         </div>
         <div className="relative w-24 h-full">
           <ImageWrapper src={image} alt="coffee" layout="fill" />

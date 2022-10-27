@@ -1,2 +1,2 @@
 export { default as MenuSelectBottomSheet } from './MenuSelectBottomSheet';
-export { default as HomePageTemplate } from './HomePageTemplate';
+export { default as CafePageTemplate } from './CafePageTemplate';

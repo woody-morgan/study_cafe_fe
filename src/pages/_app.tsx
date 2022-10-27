@@ -1,31 +1,22 @@
 import React from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import axios from 'axios';
-import qs from 'qs';
-import siteMetadata from 'data/siteMetadata';
 
 import type { AppProps } from 'next/app';
 
 import '@src/styles/globals.css';
-import ModalContainer from '@src/containers/modal/ModalContainer';
-import { PageCommonLayout } from '@src/components/layout';
+import ModalContainer from '@src/components/containers/modal/ModalContainer';
 import { ThemeProvider } from 'next-themes';
-import SheetContainer from '@src/containers/sheet/SheetContainer';
+import SheetContainer from '@src/components/containers/sheet/SheetContainer';
 import { envConfig } from '@src/core/config/envConfig.js';
 import { RecoilRoot } from 'recoil';
-import { useLocalStorage } from '@src/hooks';
+import { customAxios } from '@src/core/lib/customAxios';
+import { getAuthToken } from '@src/utils/authUtil';
+import { siteMetadata } from '@src/core/config/siteMetadata';
 
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = envConfig.apiUrl;
-axios.defaults.paramsSerializer = (params) => {
-  return qs.stringify(params);
-};
+customAxios().defaults.headers.common.Authorization = `Bearer ${getAuthToken()}`;
 
 const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
-  // set to initial item
-  const [storedValue, setStoredValue] = useLocalStorage('item_cart', []);
-
   return (
     <>
       <Head>
@@ -38,9 +29,7 @@ const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
       </Head>
       <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
         <RecoilRoot>
-          <PageCommonLayout>
-            <Component {...pageProps} key={router.route} />
-          </PageCommonLayout>
+          <Component {...pageProps} key={router.route} />
           <ModalContainer />
           <SheetContainer />
         </RecoilRoot>

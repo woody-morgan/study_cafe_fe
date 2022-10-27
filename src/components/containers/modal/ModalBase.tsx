@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { modalOverlayVariants, modalVariants } from '@src/animations/modal';
+import { modalOverlayVariants, modalVariants } from '@src/framer/modal';
 import { Icon } from '@src/components/ui/atom';
 
 type ModalBaseShape = {

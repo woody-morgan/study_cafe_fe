@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { VscBell, VscBellDot } from 'react-icons/vsc';
-import { IconButton } from '@src/components/ui/atom';
+import { IconButton, ThemeSwitch } from '@src/components/ui/atom';
 import { useRecoilValue } from 'recoil';
 import { loginSelector } from '@src/atom/auth';
 import { envConfig } from '@src/core/config/envConfig.js';
 import Link from 'next/link';
 
-const CommonHeaderContent = () => {
+const CommonHeader = () => {
   const [show, setShow] = useState(false);
   const { notifications } = useRecoilValue(loginSelector);
 
@@ -18,6 +18,7 @@ const CommonHeaderContent = () => {
         </a>
       </Link>
       <span className="flex space-x-2 items-center">
+        <ThemeSwitch />
         {notifications && notifications.length > 0 ? (
           <VscBellDot size="24" />
         ) : (
@@ -34,4 +35,4 @@ const CommonHeaderContent = () => {
   );
 };
 
-export default CommonHeaderContent;
+export default CommonHeader;
