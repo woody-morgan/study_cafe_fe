@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import BottomSheetBaseLayout from './BottomSheetLayout/BottomSheetBaseLayout';
-import BottomSheetBaseOverlay from './BottomSheetLayout/BottomSheetBaseOverlay';
-import BottomSheetBaseDesign from './BottomSheetLayout/BottomSheetBaseDesign';
+import BottomSheetBaseLayout from './BottomSheetBaseLayout';
+import BottomSheetBaseOverlay from './BottomSheetBaseOverlay';
+import BottomSheetBaseDesign from './BottomSheetBaseDesign';
 
 export type SheetBaseShape = {
   isActiveOverLay?: boolean;

@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
-import { Carousel } from '@src/components/ui/atom';
 import MenuItemAddSection from '@src/components/ui/molecule/ItemPhotoWithDescription';
 import { BottomSheetLayout } from '@src/components/layout';
-
-//Todo Apply Api Call
+import { Carousel } from '../ui/organism';
 
 const MenuSelectBottomSheet: FC<{
   sheetPosition?: string;
@@ -13,7 +11,7 @@ const MenuSelectBottomSheet: FC<{
 }> = ({ sheetPosition, ...props }) => {
   return (
     <BottomSheetLayout sheetPosition={sheetPosition}>
-      <Carousel {...props} removeArrow>
+      <Carousel {...props}>
         {Array(3)
           .fill(0)
           .map((_, idx) => {
@@ -22,7 +20,7 @@ const MenuSelectBottomSheet: FC<{
                 key={`sheet-item-container-${idx}`}
                 className="flex flex-col flex-shrink-0 w-full px-8 py-4 space-y-4 overflow-y-scroll"
               >
-                {Array(5)
+                {Array(6)
                   .fill(0)
                   .map((_, idx) => {
                     return <MenuItemAddSection key={`sheet-item-${idx}`} />;

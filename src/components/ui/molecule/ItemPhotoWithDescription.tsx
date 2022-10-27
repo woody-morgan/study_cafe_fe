@@ -9,7 +9,7 @@ const ItemPhotoWithDescription: FC<{
     <div className={cx('relative w-full', className)}>
       <div className="w-5/6 h-28 flex">
         <div className="relative w-20 h-full flex-shrink-0">
-          <ImageWrapper src="/coffee.png" layout="fill" />
+          <ImageWrapper src="/static/coffee.png" layout="fill" />
         </div>
         <div className="pl-3 flex flex-col justify-between">
           <div>

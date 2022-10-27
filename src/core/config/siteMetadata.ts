@@ -1,4 +1,4 @@
-const siteMetadata = {
+export const siteMetadata = {
   title: 'Study Cafe',
   description: 'Online study platform for students',
   siteUrl: 'https://studycafe.com',
@@ -13,5 +13,3 @@ const siteMetadata = {
     github: 'https://github.com/woodi97',
   },
 };
-
-module.exports = siteMetadata;

@@ -1,21 +1,23 @@
 import React from 'react';
 import { MenuInfoCard, MenuPriceCard, NewMenuCard } from '@src/components/ui/molecule/Cards';
-import { Slider } from '@src/components/ui/atom';
-import { Section } from '@src/components/ui/molecule';
 
-const HomePageTemplate = () => {
+import { Section } from '@src/components/ui/molecule';
+import { Slider } from '../ui/organism';
+
+const CafePageTemplate = () => {
   return (
     <div className="space-y-4 py-2">
       <Section className="px-side-padding">
         <MenuInfoCard
           title="Best seller of the week"
           description="Iced Coffee Sweet Heaven"
-          linkTo="https://google.com"
-          image="/coffee.png"
+          linkTo="/menu"
+          image="/static/coffee.png"
         />
       </Section>
       <Section className="pl-side-padding" title={"This week's recommendations"}>
         <Slider divider="main-price" className="space-x-6">
+          <MenuPriceCard menu="Iced Americano" price="2000W" />
           <MenuPriceCard menu="Iced Americano" price="2000W" />
           <MenuPriceCard menu="Iced Americano" price="2000W" />
           <MenuPriceCard menu="Iced Americano" price="2000W" />
@@ -26,11 +28,11 @@ const HomePageTemplate = () => {
           title="Introducing our new lemonade menu"
           description="Try our refreshing lemonade, strawberry lemonade, and orange lemonade"
           linkTo="/"
-          image="/lemonade.png"
+          image="/static/lemonade.png"
         />
       </Section>
     </div>
   );
 };
 
-export default HomePageTemplate;
+export default CafePageTemplate;

@@ -1,6 +1,6 @@
 import { Portal } from '@src/components/ui/atom';
 import React, { FC } from 'react';
-import { SheetType } from '@src/core/types/bottom-sheet-type';
+import { SheetType } from '@src/core/interface/bottom-sheet-type';
 import MenuSelectBottomSheet from '@src/components/template/MenuSelectBottomSheet';
 import { AnimatePresence } from 'framer-motion';
 

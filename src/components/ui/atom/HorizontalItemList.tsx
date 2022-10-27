@@ -1,9 +1,9 @@
-import React, { FC, memo } from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import { motion } from 'framer-motion';
 import cx from 'classnames';
-import { HorizontalItemListVars } from '@src/animations/item-list';
+import { HorizontalItemListVars } from '@src/framer/item-list';
 
-const HorizontalItemList: FC<{
+const HorizontalItemList: FunctionComponent<{
   items: string[];
   selectedIdx: number;
   onItemClick: (idx: number) => void;

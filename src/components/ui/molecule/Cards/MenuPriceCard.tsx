@@ -13,7 +13,7 @@ const MenuPriceCard: FC<CardProps> = ({ menu, price }) => {
       <div className="relative w-full h-full -z-0">
         <ImageWrapper
           bgFilter="bg-gradient-to-b from-transparent via-transparent to-primary-500"
-          src="/coffee.png"
+          src="/static/coffee.png"
           alt="coffee"
           layout="fill"
           objectFit="cover"
