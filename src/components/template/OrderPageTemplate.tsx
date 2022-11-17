@@ -1,30 +1,32 @@
 import { IMenuInfo } from '@src/core/interface/menu-info';
 import { usePagination } from '@src/hooks';
-import { useRouter } from 'next/router';
-import React, { Fragment, FunctionComponent, useEffect, useMemo } from 'react';
+import dynamic from 'next/dynamic';
+import React, { Fragment, FunctionComponent, useMemo } from 'react';
+import { Button } from '../ui/atom';
 import { OrderInfoCard } from '../ui/molecule/Cards';
 import { HorizontalItemList } from '../ui/wrapper';
 
 const OrderPageTemplate: FunctionComponent<{
   storedMenu: IMenuInfo;
-}> = ({ storedMenu }) => {
-  const router = useRouter();
+  onOrderRecents: (newMenu: IMenuInfo) => void;
+}> = ({ storedMenu, onOrderRecents }) => {
   const orderTapList = useMemo(() => ['장바구니', '최근 주문'], []);
   const [[page], setPage] = usePagination();
 
-  useEffect(() => {
-    console.log(router.query);
-  }, [router]);
+  const handleOrder = async () => {
+    // TODO: call order api
+    alert('주문이 완료되었습니다.');
+  };
 
   const RenderOrderItems = () => {
     if (page === 0) {
       return storedMenu ? (
-        <OrderInfoCard
-          linkTo={`/order?id=${storedMenu.name}`}
-          image="/static/coffee.png"
-          menuName={storedMenu.name}
-          orderDate="2022:01:01"
-        />
+        <Fragment>
+          <OrderInfoCard image="/static/coffee.png" menuName={storedMenu.name} />
+          <Button fullWidth onClick={handleOrder}>
+            주문하기
+          </Button>
+        </Fragment>
       ) : (
         <div>
           <p className="text-center">장바구니에 담긴 상품이 없습니다.</p>
@@ -33,15 +35,24 @@ const OrderPageTemplate: FunctionComponent<{
     } else if (page === 1) {
       return (
         <Fragment>
-          {Array(3)
+          {Array(5)
             .fill(0)
             .map((_, idx) => (
               <OrderInfoCard
                 key={`order-info-card-${idx}`}
-                linkTo={`/order?id=${idx}`}
                 image="/static/coffee.png"
-                menuName="Iced Coffee Sweet Heaven"
-                orderDate="2022:01:01"
+                menuName="아이스 아메리카노"
+                orderDate="2021:12:24"
+                onAddToCart={() => {
+                  alert('장바구니에 담겼습니다.');
+                  onOrderRecents({
+                    id: 'alksdjflaksdjf',
+                    name: '아이스 아메리카노',
+                    description: '차갑게 즐기는 아메리카노',
+                    price: '1000원',
+                    image: '/static/coffee.png',
+                  });
+                }}
               />
             ))}
         </Fragment>
@@ -68,4 +79,4 @@ const OrderPageTemplate: FunctionComponent<{
   );
 };
 
-export default OrderPageTemplate;
+export default dynamic(() => Promise.resolve(OrderPageTemplate), { ssr: false });
