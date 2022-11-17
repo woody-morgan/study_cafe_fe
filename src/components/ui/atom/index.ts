@@ -6,7 +6,6 @@ export { default as InputBox } from './InputBox/InputBox';
 export { default as IconButton } from './Icon/IconButton';
 
 export { default as SearchBar } from './SearchBar';
-export { default as HorizontalItemList } from './HorizontalItemList';
 export { default as HotizontalLine } from './HorizontalLine';
 
 export { default as Portal } from './Portal';
