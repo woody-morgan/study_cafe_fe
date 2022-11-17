@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
-import cx from 'classnames'
+import React, { FC } from 'react';
+import cx from 'classnames';
 
 const BottomSheetBaseDesign: FC<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }> = ({ children }) => {
   return (
     <div
@@ -13,7 +13,7 @@ const BottomSheetBaseDesign: FC<{
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default BottomSheetBaseDesign
+export default BottomSheetBaseDesign;
