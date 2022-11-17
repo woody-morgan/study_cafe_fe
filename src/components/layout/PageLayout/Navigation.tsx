@@ -2,12 +2,15 @@ import { IconButton } from '@src/components/ui/atom';
 import { navRouter } from '@src/core/config/navRouter';
 import cx from 'classnames';
 import Link from 'next/link';
-import React, { FC } from 'react';
+import { useRouter } from 'next/router';
+import React, { FunctionComponent } from 'react';
 
-const Navigation: FC<{
+const Navigation: FunctionComponent<{
   transparent?: boolean;
   className?: string;
 }> = ({ className, transparent = false }) => {
+  const router = useRouter();
+
   return (
     <div className="relative">
       <div

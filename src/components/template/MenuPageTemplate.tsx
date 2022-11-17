@@ -19,7 +19,6 @@ const MenuPageTemplate = () => {
         onItemClick={(idx) => setPage((prev) => [idx, idx - prev[0] >= 0 ? 1 : -1])}
       />
       <MenuSelectBottomSheet
-        sheetPosition="top-40"
         selectedPage={page}
         direction={pageDir}
         onPageChange={(idx, pageDir) => setPage([idx, pageDir])}

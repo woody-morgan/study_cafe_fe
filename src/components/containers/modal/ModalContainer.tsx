@@ -1,18 +1,20 @@
 import { Portal } from '@src/components/ui/atom';
-import { FC } from 'react';
+import { FunctionComponent } from 'react';
 
 import ModalBase from './ModalBase';
 import SignInModal from './content/SignInModal';
 import SignUpModal from './content/SignUpModal';
+import CafeInfoModal from './content/CafeInfoModal';
 import { closeModal, modalStateAtom, ModalType } from '@src/atom/modal';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-const _selectModal: { [key in ModalType]: FC } = {
+const _selectModal: { [key in ModalType]: FunctionComponent } = {
   SIGNUP: SignUpModal,
   SIGNIN: SignInModal,
+  CAFEINFO: CafeInfoModal,
 };
 
-const ModalContainer: FC = () => {
+const ModalContainer: FunctionComponent = () => {
   const closeModalCB = useSetRecoilState(closeModal);
   const { type } = useRecoilValue(modalStateAtom);
   let ModalComponent = null;
