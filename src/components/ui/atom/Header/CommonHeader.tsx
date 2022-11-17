@@ -22,7 +22,7 @@ const CommonHeader: FunctionComponent<Props> = ({
   const { notifications } = useRecoilValue(loginSelector);
 
   return (
-    <div className="w-full flex justify-between">
+    <div className="w-full flex justify-between items-center">
       <Link href="/">
         <a>
           <h2 className={cx('w-full', titleUpperCase ? 'uppercase' : 'capitalize', titleStyle)}>

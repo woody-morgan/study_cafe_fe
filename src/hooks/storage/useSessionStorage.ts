@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
+export type SessionStorageKey = 'order';
+
 export default function useSessionStorage<T>({
   key,
   initialValue,
 }: {
-  key: string;
+  key: SessionStorageKey;
   initialValue: T;
 }) {
   const [storedValue, _setStoredValue] = useState<T>(() => {

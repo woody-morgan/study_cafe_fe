@@ -12,7 +12,7 @@ const SearchBar: FC<{
       className={cx('border-2 border-primary-500 rounded-xl px-2 py-1 bg-secondary-500', className)}
     >
       <input
-        className="w-full bg-transparent text-primary-500 text-xl outline-0"
+        className="w-full bg-transparent text-primary-500 text-base outline-0"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e)}

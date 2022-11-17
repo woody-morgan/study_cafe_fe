@@ -8,16 +8,9 @@ interface Props {
   image: string;
   menuName: string;
   orderDate: string;
-  quantity: number;
 }
 
-const OrderInfoCard: FunctionComponent<Props> = ({
-  linkTo,
-  image,
-  menuName,
-  orderDate,
-  quantity,
-}) => {
+const OrderInfoCard: FunctionComponent<Props> = ({ linkTo, image, menuName, orderDate }) => {
   return (
     <CardWrapper
       className="bg-secondary-400 border-[1px] border-solid border-secondary-800"
@@ -35,7 +28,6 @@ const OrderInfoCard: FunctionComponent<Props> = ({
             date: orderDate,
           })}
         </div>
-        <div className="absolute right-4 -translate-center-y">x{quantity}</div>
       </div>
     </CardWrapper>
   );

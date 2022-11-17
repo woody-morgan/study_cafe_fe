@@ -1,10 +1,16 @@
-import React, { FC, memo } from 'react';
+import React, { FunctionComponent } from 'react';
 import { IconButton, ImageWrapper } from '@src/components/ui/atom';
 import cx from 'classnames';
+import { IMenuInfo } from '@src/core/interface/menu-info';
 
-const ItemPhotoWithDescription: FC<{
+interface Props {
   className?: string;
-}> = ({ className }) => {
+  menuInfo: IMenuInfo;
+  onAddToCart: () => void;
+}
+
+const MenuSelectCard: FunctionComponent<Props> = ({ className, menuInfo, onAddToCart }) => {
+  const { name, description, price } = menuInfo;
   return (
     <div className={cx('relative w-full', className)}>
       <div className="w-5/6 h-28 flex">
@@ -13,11 +19,11 @@ const ItemPhotoWithDescription: FC<{
         </div>
         <div className="pl-3 flex flex-col justify-between">
           <div>
-            <div className="text-bold text-md">Iced Americano</div>
-            <div className="text-xs py-2">Double Espresso and water, served cold</div>
+            <div className="text-bold text-md">{name}</div>
+            <div className="text-xs py-2">{description}</div>
           </div>
           <div>
-            <div className="text-bold text-md">$1.00</div>
+            <div className="text-bold text-md">{price}</div>
           </div>
         </div>
       </div>
@@ -27,9 +33,7 @@ const ItemPhotoWithDescription: FC<{
             className="absolute text-white translate-center-xy"
             name="plus"
             size={28}
-            onClick={() => {
-              alert('need to implement');
-            }}
+            onClick={onAddToCart}
           />
         </div>
       </div>
@@ -37,4 +41,4 @@ const ItemPhotoWithDescription: FC<{
   );
 };
 
-export default memo(ItemPhotoWithDescription);
+export default MenuSelectCard;
