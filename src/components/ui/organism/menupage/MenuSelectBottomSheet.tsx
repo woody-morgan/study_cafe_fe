@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import MenuItemAddSection from '@src/components/ui/molecule/ItemPhotoWithDescription';
 import { BottomSheetLayout } from '@src/components/layout';
-import { Carousel } from '../ui/organism';
+import { Carousel } from '../../wrapper';
 
 const MenuSelectBottomSheet: FC<{
   sheetPosition?: string;

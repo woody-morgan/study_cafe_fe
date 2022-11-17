@@ -1,15 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { PageLayout } from '@src/components/layout';
 import { NextPage } from 'next';
 import { HorizontalItemList, SearchBar } from '@src/components/ui/atom';
-import { useInput } from '@src/hooks';
-import MenuSelectBottomSheet from '@src/components/template/MenuSelectBottomSheet';
+import { useInput, usePagination } from '@src/hooks';
+import { MenuSelectBottomSheet } from '@src/components/ui/organism';
 
 const MenuPage: NextPage = () => {
   const MenuList = useMemo(() => ['coffee', 'chocolate', 'others'], []);
 
   const [searchInput, handleSearchInput] = useInput('');
-  const [[page, pageDir], setPage] = useState([0, 0]);
+  const [[page, pageDir], setPage] = usePagination();
 
   return (
     <PageLayout showNavigation fixedHeight headerContent={<span>Would you like to drink</span>}>

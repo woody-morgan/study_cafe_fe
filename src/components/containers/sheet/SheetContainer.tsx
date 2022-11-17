@@ -1,7 +1,7 @@
 import { Portal } from '@src/components/ui/atom';
 import React, { FC } from 'react';
 import { SheetType } from '@src/core/interface/bottom-sheet-type';
-import MenuSelectBottomSheet from '@src/components/template/MenuSelectBottomSheet';
+import MenuSelectBottomSheet from '@src/components/ui/organism/menupage/MenuSelectBottomSheet';
 import { AnimatePresence } from 'framer-motion';
 
 const _selectSheet: { [key in SheetType]: FC } = {

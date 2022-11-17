@@ -1,8 +1,8 @@
-import React, { Children, FunctionComponent, useMemo } from 'react';
+import React, { Children, FC, useMemo } from 'react';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { defaultCarouselVars } from '@src/framer/carousel';
 
-const Carousel: FunctionComponent<{
+const Carousel: FC<{
   children: React.ReactNode;
   selectedPage: number;
   direction: number;

@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { VscBell, VscBellDot } from 'react-icons/vsc';
 import { IconButton, ThemeSwitch } from '@src/components/ui/atom';
 import { useRecoilValue } from 'recoil';
 import { loginSelector } from '@src/atom/auth';
 import { envConfig } from '@src/core/config/envConfig.js';
 import Link from 'next/link';
+import cx from 'classnames';
 
-const CommonHeader = () => {
+interface Props {
+  titleStyle?: string;
+  title?: string;
+  titleUpperCase?: boolean;
+}
+
+const CommonHeader: FunctionComponent<Props> = ({
+  titleStyle = 'uppercase',
+  title = envConfig.appTitle,
+  titleUpperCase,
+}) => {
   const [show, setShow] = useState(false);
   const { notifications } = useRecoilValue(loginSelector);
 
@@ -14,7 +25,9 @@ const CommonHeader = () => {
     <div className="w-full flex justify-between">
       <Link href="/">
         <a>
-          <h2 className="uppercase w-full">{envConfig.appTitle}</h2>
+          <h2 className={cx('w-full', titleUpperCase ? 'uppercase' : 'capitalize', titleStyle)}>
+            {title}
+          </h2>
         </a>
       </Link>
       <span className="flex space-x-2 items-center">

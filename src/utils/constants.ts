@@ -1,7 +1,9 @@
 // for button component
 export const appColor = '#f8e3b6';
 
-export type btnSizes = 'large' | 'medium' | 'small' | 'xsmall';
+export type commonSize = 'large' | 'medium' | 'small' | 'xsmall';
+
+export type btnSizes = commonSize;
 
 export type btnStyles =
   | 'primary'

@@ -9,11 +9,11 @@ type HeaderProps = {
 };
 
 const HeaderWrapper: ForwardRefRenderFunction<HTMLDivElement, HeaderProps> = (
-  { className, fixed = false, transparent = false, children },
+  { fixed = false, transparent = false, children },
   ref
 ) => {
   return (
-    <header className="relative text-white">
+    <header className="relative">
       <div
         ref={ref}
         className={cx(
@@ -22,8 +22,9 @@ const HeaderWrapper: ForwardRefRenderFunction<HTMLDivElement, HeaderProps> = (
           'flex justify-between items-center align-middle',
           'font-bold',
           fixed ? 'fixed' : 'absolute',
-          transparent ? 'bg-transparent' : 'bg-primary-500',
-          className
+          transparent
+            ? 'bg-transparent text-primary-500 dark:text-white'
+            : 'bg-primary-500 text-white dark:text-white'
         )}
       >
         {children}

@@ -1,14 +1,13 @@
-import Link from 'next/link';
 import React, { FC } from 'react';
 import ImageWrapper from '../../atom/ImageWrapper';
 import CardWrapper from '../../atom/Card/CardWrapper';
 
-type MenuCardProps = {
+interface MenuCardProps {
   title: string;
   description: string;
   linkTo: string;
   image: string;
-};
+}
 
 const MenuInfoCard: FC<MenuCardProps> = ({ title, description, linkTo, image }) => {
   return (
