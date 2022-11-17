@@ -6,11 +6,10 @@ import { IMenuInfo } from '@src/core/interface/menu-info';
 import { useSessionStorage } from '@src/hooks';
 
 const MenuSelectBottomSheet: FC<{
-  sheetPosition?: string;
   selectedPage: number;
   direction: number;
   onPageChange: (idx: number, pageDir) => void;
-}> = ({ sheetPosition, ...props }) => {
+}> = ({ ...props }) => {
   const sampleMenuInfo = useMemo<IMenuInfo>(
     () => ({
       id: 'alksdjflaksdjf',
@@ -28,7 +27,7 @@ const MenuSelectBottomSheet: FC<{
   });
 
   return (
-    <BottomSheetLayout sheetPosition={sheetPosition}>
+    <BottomSheetLayout open translateTo="translate-y-40">
       <Carousel {...props}>
         {Array(3)
           .fill(0)
@@ -36,7 +35,7 @@ const MenuSelectBottomSheet: FC<{
             return (
               <div
                 key={`sheet-item-container-${idx}`}
-                className="flex flex-col flex-shrink-0 w-full px-8 py-4 space-y-4 overflow-y-scroll"
+                className="flex flex-col flex-shrink-0 w-full px-8 pt-4 pb-12 space-y-4 overflow-y-scroll"
               >
                 {Array(6)
                   .fill(0)

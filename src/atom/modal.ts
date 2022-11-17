@@ -2,8 +2,9 @@ import { atom, DefaultValue, selector } from 'recoil';
 
 export type SignInModal = 'SIGNIN';
 export type SignUpModal = 'SIGNUP';
+export type CafeInfoModal = 'CAFEINFO';
 
-export type ModalType = SignInModal | SignUpModal;
+export type ModalType = SignInModal | SignUpModal | CafeInfoModal;
 
 export interface ModalInfoType {
   type: ModalType | null;
@@ -62,6 +63,24 @@ const openSignUpModal = selector<Pick<ModalInfoType, 'fullScreen'>>({
   },
 });
 
+const openCafeInfoModal = selector<Pick<ModalInfoType, 'fullScreen'>>({
+  key: 'modalStateAtom/open/cafeInfo',
+  get: ({ get }) => {
+    return get(modalStateAtom);
+  },
+  set: ({ set }, newValue) => {
+    if (newValue instanceof DefaultValue) {
+      set(modalStateAtom, defaultState);
+    } else {
+      set(modalStateAtom, {
+        type: 'CAFEINFO',
+        fullScreen: newValue.fullScreen,
+        option: newValue,
+      });
+    }
+  },
+});
+
 const closeModal = selector<void>({
   key: 'modalStateAtom/close',
   get: ({ get }) => {
@@ -72,4 +91,4 @@ const closeModal = selector<void>({
   },
 });
 
-export { closeModal, modalStateAtom, openSignInModal, openSignUpModal };
+export { closeModal, modalStateAtom, openSignInModal, openSignUpModal, openCafeInfoModal };
