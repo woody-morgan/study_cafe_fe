@@ -1,89 +1,75 @@
-import { pageVars } from '@src/animations/page'
-import { useBrowserBackward, useRootDispatch, useRootState } from '@src/hooks'
-import useWindowResize from '@src/hooks/useWindowResize'
-import { pageTransitionForward } from '@src/store/modules/layout'
-import cx from 'classnames'
-import { motion } from 'framer-motion'
-import React, { FC, useEffect, useMemo, useRef } from 'react'
+import Navigation from '@src/components/layout/PageLayout/Navigation';
+import CommonHeader from '@src/components/ui/atom/Header/CommonHeader';
+import useWindowResize from '@src/hooks/useWindowResize';
+import cx from 'classnames';
+import React, { FC, useRef } from 'react';
 
-import Header from './PageLayout/Header'
-import { envConfig } from '@src/core/config/envConfig.js'
+import HeaderWrapper from './PageLayout/HeaderWrapper';
 
 const PageLayout: FC<{
-  children: React.ReactNode
-  fullWidth?: boolean
-  fixedHeight?: boolean
-  disableTransition?: boolean
-  headerFixed?: boolean
-  headerTransparent?: boolean
-  headerBackgroundColor?: string
-  headerContent?: React.ReactNode
+  children: React.ReactNode;
+  className?: string;
+  fullWidth?: boolean;
+  fixedHeight?: boolean;
+  headerFixed?: boolean;
+  headerTransparent?: boolean;
+  headerBackgroundColor?: string;
+  headerContent?: React.ReactNode;
+  overflowVisible?: boolean;
+  showNavigation?: boolean;
 }> = ({
   children,
+  className,
   fullWidth = false,
   fixedHeight = false,
-  disableTransition = false,
   headerFixed = false,
   headerTransparent = false,
   headerBackgroundColor,
-  headerContent = <h2 className="uppercase w-full">{envConfig.appTitle}</h2>,
+  headerContent = <CommonHeader titleUpperCase />,
+  overflowVisible = false,
+  showNavigation = false,
 }) => {
-  const mainRef = useRef<HTMLDivElement>(null)
-  const dispatch = useRootDispatch()
-  const layoutState = useRootState((state) => state.layout)
+  const mainRef = useRef<HTMLDivElement>(null);
 
-  useBrowserBackward()
-
-  useEffect(() => {
-    dispatch(pageTransitionForward())
-  }, [])
-
-  // to recalculate height when mobile browser search bar appeared and disappeared
   useWindowResize(() => {
     if (fixedHeight) {
-      mainRef.current.style.setProperty('height', `${window.innerHeight}px`)
+      mainRef.current.style.setProperty('height', `${window.innerHeight}px`);
+      document.body.style.overflow = 'hidden';
     } else {
-      mainRef.current.style.setProperty('height', 'h-full')
+      mainRef.current.style.setProperty('height', 'h-full');
+      document.body.style.overflow = 'auto';
     }
-  }, 0)
+  }, 0);
 
-  // pageDirection is used to determine the direction of the page transition
-  const pageDirectionCustom = useMemo(
-    () => (layoutState.pageTransitionDir === 'forward' ? 1 : -1),
-    [layoutState.pageTransitionDir]
-  )
-
-  // do not remove pt-gb-header pb-bt-nav on motion.main
-  // it is for showing content on the top of bottom nav
-  // it should be pb-0 on desktop size because bottom nav will not be shown
   return (
-    <motion.div
-      className="relative"
-      variants={disableTransition ? {} : pageVars}
-      custom={pageDirectionCustom}
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      transition={{ type: 'linear' }}
+    <div
+      className={cx(
+        'relative w-full max-w-mobile-app m-center',
+        overflowVisible ? 'overflow-visible' : 'overflow-hidden'
+      )}
     >
-      <Header
+      <HeaderWrapper
         fixed={headerFixed}
         transparent={headerTransparent}
         className={headerBackgroundColor}
-        content={headerContent}
-      />
+      >
+        {headerContent}
+      </HeaderWrapper>
       <main
         ref={mainRef}
         className={cx(
-          'relative m-center w-full pt-gb-header pb-bt-nav',
+          className,
+          'relative m-center w-full pt-gb-header',
+          showNavigation ? 'pb-bt-nav' : 'pb-0',
           fullWidth ? null : `max-w-mobile-app px-side-padding`,
           fixedHeight ? 'overflow-hidden h-screen' : 'min-h-screen'
         )}
       >
         {children}
       </main>
-    </motion.div>
-  )
-}
+      {showNavigation && <Navigation />}
+    </div>
+  );
+};
 
-export default PageLayout
+export default PageLayout;

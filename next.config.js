@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path')
+const path = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
-const CompressionPlugin = require('compression-webpack-plugin')
+});
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = withBundleAnalyzer({
   env: {
@@ -19,25 +19,25 @@ module.exports = withBundleAnalyzer({
   images: {
     domains: [],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   webpack(config) {
-    const prod = process.env.NODE_ENV === 'production'
+    const prod = process.env.NODE_ENV === 'production';
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
-    const plugins = [...config.plugins]
+    });
+    const plugins = [...config.plugins];
     if (prod) {
-      plugins.push(new CompressionPlugin())
+      plugins.push(new CompressionPlugin());
     }
     return {
       ...config,
       mode: prod ? 'production' : 'development',
       plugins: plugins,
-    }
+    };
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
-})
+});
