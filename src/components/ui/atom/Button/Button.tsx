@@ -1,6 +1,5 @@
 import { btnSizes, btnStyles } from '@src/utils/constants';
 import cx from 'classnames';
-import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
 interface ButtonShape {
@@ -22,7 +21,7 @@ const selectSize: { [keys in btnSizes]: string } = {
 };
 
 const selectStyle: { [keys in btnStyles]: string } = {
-  primary: 'bg-primary-500 hover:bg-primary-700 focus:bg-primary-900',
+  primary: 'bg-primary-500 hover:bg-primary-700 focus:bg-primary-900 text-white',
   secondary: 'bg-secondary-500 hover:bg-secondary-700 focus:bg-secondary-900',
   tertiary: 'bg-slate-100 hover:bg-slate-200 focus:bg-slate-200',
   link: 'bg-link-500 hover:bg-link-700 hover:text-link-400 focus:text-link-300',
@@ -45,13 +44,12 @@ const Button = (
   ref: React.Ref<HTMLButtonElement>
 ) => {
   return (
-    <motion.button
+    <button
       ref={ref}
       type={type}
       className={cx(
         selectSize[size],
         selectStyle[styles],
-        'transition-colors bg-slate focus:shadow-outline duration-150',
         disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
         fullWidth ? 'w-full' : '',
         className
@@ -59,7 +57,7 @@ const Button = (
       onClick={onClick}
     >
       {children}
-    </motion.button>
+    </button>
   );
 };
 

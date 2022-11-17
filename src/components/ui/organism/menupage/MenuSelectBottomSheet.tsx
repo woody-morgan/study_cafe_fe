@@ -13,11 +13,11 @@ const MenuSelectBottomSheet: FC<{
 }> = ({ sheetPosition, ...props }) => {
   const sampleMenuInfo = useMemo<IMenuInfo>(
     () => ({
+      id: 'alksdjflaksdjf',
       name: '아이스 아메리카노',
       description: '차갑게 즐기는 아메리카노',
       price: '1000원',
       image: '/static/coffee.png',
-      orderedAt: '2022:01:01',
     }),
     []
   );
