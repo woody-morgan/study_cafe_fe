@@ -31,12 +31,7 @@ const ThemeSwitch: FunctionComponent<{
       className={cx('h-6 w-6', className)}
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        className="text-secondary-500 dark:text-gray-300"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         {mounted && (
           <Fragment>
             <MoonPath className={theme === 'dark' ? '' : 'hidden'} />

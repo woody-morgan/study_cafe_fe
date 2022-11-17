@@ -25,7 +25,7 @@ const PageLayout: FC<{
   headerFixed = false,
   headerTransparent = false,
   headerBackgroundColor,
-  headerContent = <CommonHeader />,
+  headerContent = <CommonHeader titleUpperCase />,
   overflowVisible = false,
   showNavigation = false,
 }) => {

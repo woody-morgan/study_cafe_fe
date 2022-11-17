@@ -1,8 +1,6 @@
 import React from 'react';
 import { MenuInfoCard, MenuPriceCard, NewMenuCard } from '@src/components/ui/molecule/Cards';
-
-import { Section } from '@src/components/ui/molecule';
-import { Slider } from '../ui/organism';
+import { Section, Slider } from '../ui/wrapper';
 
 const CafePageTemplate = () => {
   return (

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development PORT=10000 node server.js",
+    "dev": "cross-env NODE_ENV=development node server.js",
     "dev:secure": "cross-env ENABLE_HTTPS=true yarn dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3000",
     "analyze": "cross-env ANALYZE=true next build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
