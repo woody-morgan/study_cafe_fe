@@ -1,8 +1,8 @@
 import { usePagination } from '@src/hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
-import { HorizontalItemList } from '../ui/atom';
 import { OrderInfoCard } from '../ui/molecule/Cards';
+import { HorizontalItemList } from '../ui/wrapper';
 
 const OrderPageTemplate = () => {
   const router = useRouter();

@@ -1,7 +1,6 @@
 import React, { FunctionComponent, memo } from 'react';
 import { motion } from 'framer-motion';
 import cx from 'classnames';
-import { HorizontalItemListVars } from '@src/framer/item-list';
 import { commonSize } from '@src/utils/constants';
 
 const _selectSize: { [keys in commonSize]: string } = {
@@ -39,10 +38,9 @@ const HorizontalItemList: FunctionComponent<{
             </p>
             {isSelected && (
               <motion.div
+                transition={{ duration: 0 }}
                 layoutId="menu-selected"
-                className="-z-1 absolute -inset-1 rounded-xl bg-primary-500"
-                variants={HorizontalItemListVars}
-                animate="animate"
+                className="absolute inset-0 rounded-lg bg-primary-500"
               />
             )}
           </motion.button>

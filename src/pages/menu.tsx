@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import { PageLayout } from '@src/components/layout';
 import { NextPage } from 'next';
-import { HorizontalItemList, SearchBar } from '@src/components/ui/atom';
+import { SearchBar } from '@src/components/ui/atom';
 import { useInput, usePagination } from '@src/hooks';
 import { MenuSelectBottomSheet } from '@src/components/ui/organism';
+import { HorizontalItemList } from '@src/components/ui/wrapper';
 
 const MenuPage: NextPage = () => {
   const MenuList = useMemo(() => ['coffee', 'chocolate', 'others'], []);

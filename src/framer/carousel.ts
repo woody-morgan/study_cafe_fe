@@ -6,7 +6,7 @@ export const defaultCarouselVars: Variants = {
       x: direction > 0 ? 750 : -750,
       opacity: 0,
       transition: {
-        delay: 0.05,
+        duration: 0.5,
       },
     };
   },
@@ -21,7 +21,7 @@ export const defaultCarouselVars: Variants = {
       x: direction < 0 ? 750 : -750,
       opacity: 0,
       transition: {
-        delay: 0.05,
+        duration: 0.5,
       },
     };
   },
@@ -54,7 +54,7 @@ export const carouselVars: Variants = {
       opacity: 0,
       scale: 0.05,
       transition: {
-        delay: 0,
+        duration: 0,
       },
     };
   },
@@ -71,7 +71,7 @@ export const carouselVars: Variants = {
       opacity: 0,
       scale: 0.05,
       transition: {
-        delay: 0,
+        duration: 0,
       },
     };
   },
