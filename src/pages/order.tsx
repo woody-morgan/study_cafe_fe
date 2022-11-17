@@ -3,22 +3,23 @@ import { PageLayout } from '@src/components/layout';
 import CommonHeader from '@src/components/ui/atom/Header/CommonHeader';
 import { useSessionStorage } from '@src/hooks';
 import { OrderPageTemplate } from '@src/components/template';
+import { IMenuInfo } from '@src/core/interface/menu-info';
 
 const OrderPageHeader = () => <CommonHeader title="Your orders" titleStyle="bg-transparent" />;
 
 const OrderPage = () => {
-  const [value, setValue] = useSessionStorage({
+  const [value, _] = useSessionStorage<IMenuInfo>({
     key: 'order',
-    initialValue: 'order',
+    initialValue: null,
   });
 
   useEffect(() => {
-    setValue('order1');
-  }, [setValue, value]);
+    console.log(value);
+  }, []);
 
   return (
     <PageLayout showNavigation headerTransparent headerContent={<OrderPageHeader />}>
-      <OrderPageTemplate />
+      <OrderPageTemplate storedMenu={value} />
     </PageLayout>
   );
 };
