@@ -58,8 +58,23 @@ const GoogleMapsWrapper: FunctionComponent<GoogleMapsProps> = ({
     ));
   }, [pins]);
 
-  const RenderBottomSheet = useMemo(() => {
-    const _Wrapper = () => (
+  return (
+    <div className="w-full h-full">
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: envConfig.googleMapKey }}
+        defaultCenter={center}
+        defaultZoom={zoom}
+        options={{
+          fullscreenControl: false,
+          mapTypeControl: false,
+          streetViewControl: false,
+          zoomControl: false,
+          keyboardShortcuts: false,
+          gestureHandling: 'greedy',
+        }}
+      >
+        {renderMarkers}
+      </GoogleMapReact>
       <BottomSheetLayout
         open={open}
         isActiveOverLay
@@ -83,28 +98,6 @@ const GoogleMapsWrapper: FunctionComponent<GoogleMapsProps> = ({
           </div>
         </div>
       </BottomSheetLayout>
-    );
-    return _Wrapper;
-  }, [open]);
-
-  return (
-    <div className="w-full h-full">
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: envConfig.googleMapKey }}
-        defaultCenter={center}
-        defaultZoom={zoom}
-        options={{
-          fullscreenControl: false,
-          mapTypeControl: false,
-          streetViewControl: false,
-          zoomControl: false,
-          keyboardShortcuts: false,
-          gestureHandling: 'greedy',
-        }}
-      >
-        {renderMarkers}
-      </GoogleMapReact>
-      <RenderBottomSheet />
     </div>
   );
 };
