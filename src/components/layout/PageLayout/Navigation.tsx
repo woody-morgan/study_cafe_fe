@@ -9,7 +9,7 @@ const Navigation: FunctionComponent<{
   transparent?: boolean;
   className?: string;
 }> = ({ className, transparent = false }) => {
-  const router = useRouter();
+  const { pathname } = useRouter();
 
   return (
     <div className="relative">

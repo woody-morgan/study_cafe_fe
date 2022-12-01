@@ -1,2 +1,1 @@
-export { default as PhyPlane } from './PhyPlane';
-export { default as PhyCube } from './PhyCube';
+export { default as GameController } from './GameController';

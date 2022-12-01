@@ -3,11 +3,11 @@ import HamburgerSVG from './assets/Hamburger';
 import LogoSVG from './assets/Logo';
 import SettingSVG from './assets/Setting';
 import CoffeeSVG from './assets/coffee.svg';
-import HeartSVG from './assets/heart.svg';
 import ReceiptSVG from './assets/receipt.svg';
 import { BsHouseDoor, BsPlus } from 'react-icons/bs';
 import { BiDownArrow, BiLeftArrow, BiRightArrow, BiUpArrow } from 'react-icons/bi';
 import { IoCafe } from 'react-icons/io5';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 export type SVGTypes =
   | 'cafe'
@@ -19,7 +19,8 @@ export type SVGTypes =
   | 'settings'
   | 'logo'
   | 'coffee'
-  | 'heart'
+  | 'heartEmpty'
+  | 'heartFull'
   | 'home'
   | 'receipt'
   | 'plus';
@@ -40,7 +41,8 @@ const _Selector: { [key in SVGTypes]: FC<IconProps> } = {
   settings: SettingSVG,
   logo: LogoSVG,
   coffee: CoffeeSVG,
-  heart: HeartSVG,
+  heartEmpty: AiOutlineHeart,
+  heartFull: AiFillHeart,
   home: BsHouseDoor,
   receipt: ReceiptSVG,
   plus: BsPlus,
