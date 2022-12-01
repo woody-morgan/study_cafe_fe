@@ -11,6 +11,7 @@ const CafeGame = () => {
 
   useEffect(() => {
     if (canvasRef.current) {
+      document.body.style.overflow = 'hidden';
       // Texture
       const textureLoader = new THREE.TextureLoader();
       const floorTexture = textureLoader.load('/static/grid.png');
@@ -293,6 +294,35 @@ const CafeGame = () => {
       });
 
       draw();
+
+      return () => {
+        document.body.style.overflow = 'auto';
+        window.removeEventListener('resize', setSize);
+        canvas.removeEventListener('mousedown', (e) => {
+          isPressed = true;
+          calculateMousePosition(e);
+        });
+        canvas.removeEventListener('mouseup', () => {
+          isPressed = false;
+        });
+        canvas.removeEventListener('mousemove', (e) => {
+          if (isPressed) {
+            calculateMousePosition(e);
+          }
+        });
+        canvas.removeEventListener('touchstart', (e) => {
+          isPressed = true;
+          calculateMousePosition(e.touches[0]);
+        });
+        canvas.removeEventListener('touchend', () => {
+          isPressed = false;
+        });
+        canvas.removeEventListener('touchmove', (e) => {
+          if (isPressed) {
+            calculateMousePosition(e.touches[0]);
+          }
+        });
+      };
     }
   }, []);
 
