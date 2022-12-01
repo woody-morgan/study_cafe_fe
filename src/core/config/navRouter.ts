@@ -25,6 +25,6 @@ export const navRouter: SiteRouterType[] = [
   {
     path: '/favorite',
     name: 'Favorites',
-    icon: 'heart',
+    icon: 'heartEmpty',
   },
 ];
