@@ -11,7 +11,7 @@ const GameController: FunctionComponent<{
     <div className="relative">
       <div
         className={cx(
-          'z-50 w-full max-w-mobile-app h-bt-nav bottom-0',
+          'z-50 w-full h-bt-nav bottom-0',
           'px-side-padding py-2',
           'flex justify-between items-center align-middle',
           'font-bold text-white',
