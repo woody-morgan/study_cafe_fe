@@ -1,5 +1,5 @@
 import { motion, MotionProps } from 'framer-motion';
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import Icon, { SVGTypes } from './Icon';
 
 interface IconButtonProps extends MotionProps {
@@ -10,7 +10,7 @@ interface IconButtonProps extends MotionProps {
   onClick: () => void;
 }
 
-const IconButton: FC<IconButtonProps> = ({ type = 'button', onClick, ...props }) => {
+const IconButton: FunctionComponent<IconButtonProps> = ({ type = 'button', onClick, ...props }) => {
   return (
     <motion.button type={type} onClick={onClick}>
       <Icon {...props} />

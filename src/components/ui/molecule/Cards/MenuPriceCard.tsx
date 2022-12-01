@@ -1,13 +1,12 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import { ImageWrapper } from '../../atom';
 import CardWrapper from '../../atom/Card/CardWrapper';
 
-type CardProps = {
+export interface MenuPriceCardProps {
   menu: string;
   price: string;
-};
-
-const MenuPriceCard: FC<CardProps> = ({ menu, price }) => {
+}
+const MenuPriceCard: FunctionComponent<MenuPriceCardProps> = ({ menu, price }) => {
   return (
     <CardWrapper className="relative w-40 h-[13rem]">
       <div className="relative w-full h-full -z-0">
