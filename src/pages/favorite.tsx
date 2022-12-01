@@ -4,7 +4,7 @@ import React from 'react';
 
 const FavoritePage = () => {
   return (
-    <PageLayout>
+    <PageLayout showNavigation>
       <div className="py-8">
         <div className="flex basis-1/2 flex-wrap justify-evenly gap-4">
           <FavoriteMenuCard
