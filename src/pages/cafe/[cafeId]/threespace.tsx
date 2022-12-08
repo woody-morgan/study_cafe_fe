@@ -1,13 +1,166 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { House, Player } from '@src/utils/three';
 import gsap from 'gsap';
 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { GameController } from '@src/components/ui/three';
+import { useRouter } from 'next/router';
+import { NextPage } from 'next';
+import { socketConfig } from '@src/core/config/envConfig.js';
+import useSocketIo from '@src/hooks/media/useSocketIO';
+import { usePeerClient, useUserMedia } from '@src/hooks/media';
+import useRemoteStreams from '@src/hooks/media/useRemoteStream';
+import { SocketMessagePayloadType } from '@src/core/interface/message';
+import { ToastError } from '@src/utils/toast';
+import { debounce } from 'lodash-es';
+import dynamic from 'next/dynamic';
+import { UserVoiceView } from '@src/components/ui/molecule';
 
-const CafeGame = () => {
+interface Props {
+  cafeId: string;
+}
+
+const sampleMovePoints = [
+  {
+    x: 1.044268310189719,
+    y: -1.006936568787798e-15,
+    z: 4.534839155978453,
+  },
+  {
+    x: 2.9209137391503512,
+    y: -5.589260442145498e-16,
+    z: 2.517179124452312,
+  },
+  {
+    x: 4.534839155978453,
+    y: -1.006936568787798e-15,
+    z: 1.044268310189719,
+  },
+  {
+    x: 2.517179124452312,
+    y: -5.589260442145498e-16,
+    z: -2.9209137391503512,
+  },
+];
+
+export const getServerSideProps = async (ctx) => {
+  const cafeId = ctx.query.cafeId;
+
+  return {
+    props: {
+      cafeId,
+    },
+  };
+};
+
+const CafeGame: NextPage<Props> = ({ cafeId }) => {
+  const router = useRouter();
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const myPeerIdRef = useRef<string>(null);
+  const otherPlayersRef = useRef<Player[]>([]);
+  const gltfLoaderRef = useRef<GLTFLoader>(null);
+  const sceneRef = useRef<THREE.Scene>(null);
+  const meshesRef = useRef<THREE.Mesh[]>([]);
+
+  const onNewPeer = useCallback((peerId: string) => {
+    const otherPlayer = new Player({
+      id: peerId,
+      scene: sceneRef.current,
+      meshes: meshesRef.current,
+      gltfLoader: gltfLoaderRef.current,
+      modelSrc: '/models/ilbuni.glb',
+    });
+    otherPlayersRef.current.push(otherPlayer);
+  }, []);
+
+  const onRemovePeer = useCallback((peerId: string) => {
+    const otherPlayer = otherPlayersRef.current.find((player) => player.id === peerId);
+    if (otherPlayer) {
+      otherPlayer.dispose();
+      otherPlayersRef.current = otherPlayersRef.current.filter(
+        (player) => player.id !== otherPlayer.id
+      );
+      console.log('otherPlayersRef.current', otherPlayersRef.current);
+    }
+  }, []);
+
+  const [
+    socket,
+    initSocket,
+    disconnected,
+    sendSocketMessage,
+    recvSocketMessage,
+    sendCoordinate,
+    recvCoordinate,
+    sendJoinMessage,
+    recvJoinMessage,
+    recvLeaveMessage,
+    recvErrorMessage,
+    disconnectSocket,
+  ] = useSocketIo(socketConfig.url + cafeId);
+
+  // Init peerclient with usermedia
+  const localStream = useUserMedia();
+  const [remoteStreams, addRemoteStream, removeRemoteStream] = useRemoteStreams();
+  usePeerClient({
+    myPeerIdRef,
+    localStream,
+    addRemoteStream,
+    removeRemoteStream,
+    sendJoinMessage,
+    recvJoinMessage,
+    recvLeaveMessage,
+    recvErrorMessage,
+    disconnectSocket,
+    onNewPeer,
+    onRemovePeer,
+  });
+
+  const sendMyPostXZ = (x, z) => {
+    sendCoordinate({
+      clientId: myPeerIdRef.current,
+      x,
+      z,
+    });
+  };
+  // message send & recv handler
+  useEffect(() => {
+    if (disconnected) {
+      ToastError('서버와 연결이 끊어졌습니다.');
+      router.push(`/cafe/${cafeId}`);
+      return;
+    }
+    initSocket();
+    recvCoordinate((payload) => {
+      const { clientId, x, z } = payload;
+      const otherPlayer = otherPlayersRef.current.find((player) => player.id === clientId);
+      if (otherPlayer) {
+        otherPlayer.setDestinationPoint(x, z);
+      }
+    });
+    return () => {
+      disconnectSocket();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disconnected]);
+
+  useEffect(() => {
+    router.replace(`/cafe/${cafeId}/threespace`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     if (otherPlayersRef.current.length > 0) {
+  //       otherPlayersRef.current.forEach((otherPlayer) => {
+  //         const getRandomPoint = Math.floor(Math.random() * sampleMovePoints.length);
+  //         const randomPoint = sampleMovePoints[getRandomPoint];
+  //         otherPlayer.setDestinationPoint(randomPoint.x, randomPoint.z);
+  //       });
+  //     }
+  //   }, 10000);
+  // }, []);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -33,6 +186,7 @@ const CafeGame = () => {
 
       // Scene
       const scene = new THREE.Scene();
+      sceneRef.current = scene;
 
       // Camera
       const camera = new THREE.OrthographicCamera(
@@ -46,7 +200,7 @@ const CafeGame = () => {
 
       const cameraPosition = new THREE.Vector3(1, 5, 5);
       camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-      camera.zoom = 0.2;
+      camera.zoom = 0.16;
       camera.updateProjectionMatrix();
       scene.add(camera);
 
@@ -75,6 +229,7 @@ const CafeGame = () => {
 
       // Mesh
       const meshes = [];
+      meshesRef.current = meshes;
       const floorMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(100, 100),
         new THREE.MeshStandardMaterial({
@@ -114,6 +269,7 @@ const CafeGame = () => {
       scene.add(spotMesh);
 
       const gltfLoader = new GLTFLoader();
+      gltfLoaderRef.current = gltfLoader;
 
       const house = new House({
         gltfLoader,
@@ -125,27 +281,42 @@ const CafeGame = () => {
       });
 
       const player = new Player({
+        id: socket.id,
         scene,
         meshes,
-        gltfLoader,
+        gltfLoader: gltfLoaderRef.current,
         modelSrc: '/models/ilbuni.glb',
       });
 
       const raycaster = new THREE.Raycaster();
       const mouse = new THREE.Vector2();
-      const destinationPoint = new THREE.Vector3();
-      let angle = 0;
-      let isPressed = false; // 마우스를 누르고 있는 상태
 
+      let isPressed = false; // 마우스를 누르고 있는 상태
       const clock = new THREE.Clock();
 
       function draw() {
         const delta = clock.getDelta();
 
+        if (otherPlayersRef.current.length > 0) {
+          otherPlayersRef.current.forEach((otherPlayer) => {
+            if (otherPlayer.mixer) otherPlayer.mixer.update(delta);
+          });
+        }
+
         if (player.mixer) player.mixer.update(delta);
 
         if (player.modelMesh) {
           camera.lookAt(player.modelMesh.position);
+        }
+
+        if (otherPlayersRef.current.length > 0) {
+          otherPlayersRef.current.forEach((otherPlayer) => {
+            if (otherPlayer.moving) {
+              otherPlayer.move();
+            } else {
+              otherPlayer.stop();
+            }
+          });
         }
 
         if (player.modelMesh) {
@@ -155,26 +326,10 @@ const CafeGame = () => {
 
           if (player.moving) {
             // 걸어가는 상태
-            angle = Math.atan2(
-              destinationPoint.z - player.modelMesh.position.z,
-              destinationPoint.x - player.modelMesh.position.x
-            );
-            player.modelMesh.position.x += Math.cos(angle) * 0.05;
-            player.modelMesh.position.z += Math.sin(angle) * 0.05;
+            player.move();
 
             camera.position.x = cameraPosition.x + player.modelMesh.position.x;
             camera.position.z = cameraPosition.z + player.modelMesh.position.z;
-
-            player.actions[0].stop();
-            player.actions[1].play();
-
-            if (
-              Math.abs(destinationPoint.x - player.modelMesh.position.x) < 0.03 &&
-              Math.abs(destinationPoint.z - player.modelMesh.position.z) < 0.03
-            ) {
-              player.moving = false;
-              console.log('멈춤');
-            }
 
             if (
               Math.abs(spotMesh.position.x - player.modelMesh.position.x) < 1.5 &&
@@ -209,8 +364,7 @@ const CafeGame = () => {
             }
           } else {
             // 서 있는 상태
-            player.actions[1].stop();
-            player.actions[0].play();
+            player.stop();
           }
         }
 
@@ -224,17 +378,13 @@ const CafeGame = () => {
         const intersects = raycaster.intersectObjects(meshes);
         for (const item of intersects) {
           if (item.object.name === 'floor') {
-            destinationPoint.x = item.point.x;
-            destinationPoint.y = 0.3;
-            destinationPoint.z = item.point.z;
-            player.modelMesh.lookAt(destinationPoint);
+            player.setDestinationPoint(item.point.x, item.point.z);
 
-            // console.log(item.point)
+            // send this point to other players
+            sendMyPostXZ(item.point.x, item.point.z);
 
-            player.moving = true;
-
-            pointerMesh.position.x = destinationPoint.x;
-            pointerMesh.position.z = destinationPoint.z;
+            pointerMesh.position.x = player.destinationPoint.x;
+            pointerMesh.position.z = player.destinationPoint.z;
           }
           break;
         }
@@ -265,7 +415,7 @@ const CafeGame = () => {
         checkIntersects();
       }
 
-      // 마우스 이벤트
+      // Mouse Event
       canvas.addEventListener('mousedown', (e) => {
         isPressed = true;
         calculateMousePosition(e);
@@ -279,7 +429,7 @@ const CafeGame = () => {
         }
       });
 
-      // 터치 이벤트
+      // Touch Event
       canvas.addEventListener('touchstart', (e) => {
         isPressed = true;
         calculateMousePosition(e.touches[0]);
@@ -296,6 +446,7 @@ const CafeGame = () => {
       draw();
 
       return () => {
+        // prevent scroll
         document.body.style.overflow = 'auto';
         window.removeEventListener('resize', setSize);
         canvas.removeEventListener('mousedown', (e) => {
@@ -329,9 +480,12 @@ const CafeGame = () => {
   return (
     <Fragment>
       <canvas ref={canvasRef} className="fixed left-0 top-0" />
-      <GameController />
+      <div className="invisible">
+        <UserVoiceView localStream={localStream} remoteStreams={remoteStreams} />
+      </div>
+      {/* <GameController /> */}
     </Fragment>
   );
 };
 
-export default CafeGame;
+export default dynamic(() => Promise.resolve(CafeGame), { ssr: false });

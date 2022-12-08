@@ -25,7 +25,13 @@ const OrderInfoCard: FunctionComponent<Props> = ({
     >
       <div className="relative flex p-3 h-36">
         <div className="relative w-20 h-full mr-8">
-          <ImageWrapper src={image} alt="coffee" layout="fill" />
+          <ImageWrapper
+            className="rounded-md"
+            src={image}
+            alt="coffee"
+            layout="fill"
+            objectFit="cover"
+          />
         </div>
         <div className="flex flex-col w-3/5 justify-center">
           <h3>{menuName}</h3>

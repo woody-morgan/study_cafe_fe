@@ -5,7 +5,6 @@ export { default as useTimeout } from './useTimeout';
 export * from './useHandleRouting';
 export { default as useWindowResize } from './useWindowResize';
 export { default as useValidateInput } from './useValidateInput';
-export { default as useValidateUser } from './useValidateUser';
 export { default as usePagination } from './usePagination';
 
 // Storage

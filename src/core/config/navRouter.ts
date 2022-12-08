@@ -8,23 +8,18 @@ export type SiteRouterType = {
 
 export const navRouter: SiteRouterType[] = [
   {
-    path: '/cafe/1',
-    name: 'Home',
+    path: '',
+    name: 'Cafe Home',
     icon: 'home',
   },
   {
-    path: '/menu',
+    path: 'menu',
     name: 'Drink Menu',
     icon: 'coffee',
   },
   {
-    path: '/order',
+    path: 'order',
     name: 'Your Order',
     icon: 'receipt',
-  },
-  {
-    path: '/favorite',
-    name: 'Favorites',
-    icon: 'heartEmpty',
   },
 ];
