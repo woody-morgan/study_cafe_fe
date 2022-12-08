@@ -11,7 +11,7 @@ type ModalBaseShape = {
 
 const ModalBase: FC<ModalBaseShape> = ({ show, children, onClose }) => {
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {show && (
         <motion.div
           className="fixed flex justify-center items-center top-0 left-0 z-[1000] w-full h-full"

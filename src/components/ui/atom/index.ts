@@ -11,3 +11,4 @@ export { default as HotizontalLine } from './HorizontalLine';
 export { default as Portal } from './Portal';
 export { default as ThemeSwitch } from './Switch/ThemeSwitch';
 export { default as GoogleMaps } from './GoogleMaps';
+export { default as Video } from './Video';
