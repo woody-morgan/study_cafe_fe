@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef } from 'react';
 import { House, Player } from '@src/utils/three';
 import gsap from 'gsap';
 
@@ -10,38 +10,13 @@ import { socketConfig } from '@src/core/config/envConfig.js';
 import useSocketIo from '@src/hooks/media/useSocketIO';
 import { usePeerClient, useUserMedia } from '@src/hooks/media';
 import useRemoteStreams from '@src/hooks/media/useRemoteStream';
-import { SocketMessagePayloadType } from '@src/core/interface/message';
 import { ToastError } from '@src/utils/toast';
-import { debounce } from 'lodash-es';
 import dynamic from 'next/dynamic';
 import { UserVoiceView } from '@src/components/ui/molecule';
 
 interface Props {
   cafeId: string;
 }
-
-const sampleMovePoints = [
-  {
-    x: 1.044268310189719,
-    y: -1.006936568787798e-15,
-    z: 4.534839155978453,
-  },
-  {
-    x: 2.9209137391503512,
-    y: -5.589260442145498e-16,
-    z: 2.517179124452312,
-  },
-  {
-    x: 4.534839155978453,
-    y: -1.006936568787798e-15,
-    z: 1.044268310189719,
-  },
-  {
-    x: 2.517179124452312,
-    y: -5.589260442145498e-16,
-    z: -2.9209137391503512,
-  },
-];
 
 export const getServerSideProps = async (ctx) => {
   const cafeId = ctx.query.cafeId;
