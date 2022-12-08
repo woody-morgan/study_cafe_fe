@@ -13,7 +13,7 @@ const SheetContainer: FC = () => {
 
   return (
     <Portal selectorId="sheet">
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         {/*{isOpen && (*/}
         {/*  <BottomSheetLayout isActiveOverLay={activeOverlay}>*/}
         {/*    {name && <SheetComponent />}*/}

@@ -27,6 +27,7 @@
     "@leecheuk/react-google-login": "^5.4.1",
     "@next/bundle-analyzer": "^12.3.1",
     "@react-three/drei": "^9.32.3",
+    "@tosspayments/payment-sdk": "^1.2.3",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
     "compression": "^1.7.4",
