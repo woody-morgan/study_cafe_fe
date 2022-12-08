@@ -7,6 +7,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = withBundleAnalyzer({
   env: {
+    APP_BASE_URL: process.env.APP_BASE_URL,
     BASE_URL: process.env.BASE_URL,
     API_BASE_URL: process.env.API_BASE_URL,
     GOOGLE_MAP_KEY: process.env.GOOGLE_MAP_KEY,

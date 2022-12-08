@@ -7,7 +7,9 @@ export interface IMenu {
   cafeName: string;
   beverageId: number;
   beverageName: string;
+  price: number;
   mainImageUrl: string;
+  isPremium: boolean;
   createdDate: string;
   modifiedDate: string;
 }

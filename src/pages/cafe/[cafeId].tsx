@@ -3,6 +3,7 @@ import { CafePageTemplate } from '@src/components/template';
 import CommonHeader from '@src/components/ui/atom/Header/CommonHeader';
 import { ICafe } from '@src/core/api/apiCafe';
 import { apiGetMenuByCafeId, IMenu } from '@src/core/api/apiMenu';
+import { useSessionStorage } from '@src/hooks';
 import { NextPage } from 'next';
 import React, { useEffect } from 'react';
 
@@ -25,12 +26,6 @@ export const getServerSideProps = async (ctx) => {
 };
 
 const CafeByIdPage: NextPage<Props> = ({ cafeId, cafeMenu, cafeInfo }) => {
-  useEffect(() => {
-    (async () => {
-      const data = await apiGetMenuByCafeId(cafeId as string);
-    })();
-  }, [cafeId]);
-
   return (
     <PageLayout
       cafeId={cafeId}
