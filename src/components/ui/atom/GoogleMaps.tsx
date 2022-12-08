@@ -85,12 +85,15 @@ const GoogleMapsWrapper: FunctionComponent<GoogleMapsProps> = ({
         }}
       >
         <div className="relative w-full h-full">
-          <ImageWrapper
-            bgFilter="bg-gradient-to-b from-black/40 to-white/50"
-            layout="fill"
-            objectFit="cover"
-            src={selectedCafe?.mainImageUrl ?? ''}
-          />
+          {selectedCafe?.mainImageUrl && (
+            <ImageWrapper
+              bgFilter="bg-gradient-to-b from-black/40 to-white/50"
+              layout="fill"
+              objectFit="cover"
+              src={selectedCafe.mainImageUrl}
+            />
+          )}
+
           <div className="absolute bottom-40 left-0 text-white z-10 w-full space-y-6 px-side-padding">
             <h1 className="text-2xl font-bold">{selectedCafe?.name ?? ''}</h1>
             <p className="text-sm">{selectedCafe?.region ?? ''}</p>

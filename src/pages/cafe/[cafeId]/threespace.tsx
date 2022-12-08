@@ -4,10 +4,31 @@ import gsap from 'gsap';
 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { GameController } from '@src/components/ui/three';
+import { useRouter } from 'next/router';
+import { NextPage } from 'next';
 
-const CafeGame = () => {
+interface Props {
+  cafeId: string;
+}
+
+export const getServerSideProps = async (ctx) => {
+  const cafeId = ctx.query.cafeId;
+
+  return {
+    props: {
+      cafeId,
+    },
+  };
+};
+
+const CafeGame: NextPage<Props> = ({ cafeId }) => {
+  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    router.replace(`/cafe/${cafeId}/threespace`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -329,7 +350,7 @@ const CafeGame = () => {
   return (
     <Fragment>
       <canvas ref={canvasRef} className="fixed left-0 top-0" />
-      <GameController />
+      {/* <GameController /> */}
     </Fragment>
   );
 };

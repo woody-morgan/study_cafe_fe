@@ -1,5 +1,4 @@
 import { envConfig } from '@src/core/config/envConfig.js';
-import { IMenuInfo } from '@src/core/interface/menu-info';
 import { usePagination } from '@src/hooks';
 import dynamic from 'next/dynamic';
 import React, { Fragment, FunctionComponent, useMemo } from 'react';
@@ -7,31 +6,56 @@ import { Button } from '../ui/atom';
 import { OrderInfoCard } from '../ui/molecule/Cards';
 import { HorizontalItemList } from '../ui/wrapper';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { IMenu } from '@src/core/api/apiMenu';
+import { ToastInfo } from '@src/utils/toast';
+import { v4 as uuid } from 'uuid';
 
 const OrderPageTemplate: FunctionComponent<{
-  storedMenu: IMenuInfo;
-  onOrderRecents: (newMenu: IMenuInfo) => void;
-}> = ({ storedMenu, onOrderRecents }) => {
+  allCafeMenu: IMenu[];
+  storedMenu: IMenu;
+  onOrderRecents: (newMenu: IMenu) => void;
+}> = ({ allCafeMenu, storedMenu, onOrderRecents }) => {
   const orderTapList = useMemo(() => ['장바구니', '최근 주문'], []);
   const [[page], setPage] = usePagination();
 
   const handleOrder = async () => {
     const tossPayments = await loadTossPayments(envConfig.tossPaymentKey);
     tossPayments.requestPayment('카드', {
-      amount: 300,
-      orderId: 'HbLfnnlssN7idiLZ2LnAu',
-      orderName: '아이스 아메리카노',
+      amount: storedMenu.price,
+      orderId: 'order-' + uuid(),
+      orderName: storedMenu.beverageName,
       customerName: '익명',
-      successUrl: 'http://localhost:3000/success',
-      failUrl: 'http://localhost:3000/fail',
+      successUrl: `${envConfig.appBaseUrl}/cafe/${storedMenu.cafeId}/threespace`,
+      failUrl: `${envConfig.appBaseUrl}/cafe/${storedMenu.cafeId}/order?fail=true`,
     });
   };
+
+  const RenderRecents = useMemo(() => {
+    const _render = () => {
+      return (
+        <Fragment>
+          {allCafeMenu.map((cafeMenu, idx) => (
+            <OrderInfoCard
+              key={`order-info-card-${idx}`}
+              image={cafeMenu.mainImageUrl}
+              menuName={cafeMenu.beverageName}
+              onAddToCart={() => {
+                ToastInfo(`장바구니에 ${cafeMenu.beverageName}를 담았습니다.`);
+                onOrderRecents(cafeMenu);
+              }}
+            />
+          ))}
+        </Fragment>
+      );
+    };
+    return _render;
+  }, [allCafeMenu, onOrderRecents]);
 
   const RenderOrderItems = () => {
     if (page === 0) {
       return storedMenu ? (
         <Fragment>
-          <OrderInfoCard image="/static/coffee.png" menuName={storedMenu.name} />
+          <OrderInfoCard image={storedMenu.mainImageUrl} menuName={storedMenu.beverageName} />
           <Button fullWidth onClick={handleOrder}>
             주문하기
           </Button>
@@ -42,30 +66,7 @@ const OrderPageTemplate: FunctionComponent<{
         </div>
       );
     } else if (page === 1) {
-      return (
-        <Fragment>
-          {Array(5)
-            .fill(0)
-            .map((_, idx) => (
-              <OrderInfoCard
-                key={`order-info-card-${idx}`}
-                image="/static/coffee.png"
-                menuName="아이스 아메리카노"
-                orderDate="2021:12:24"
-                onAddToCart={() => {
-                  alert('장바구니에 담겼습니다.');
-                  onOrderRecents({
-                    id: 'alksdjflaksdjf',
-                    name: '아이스 아메리카노',
-                    description: '차갑게 즐기는 아메리카노',
-                    price: '1000원',
-                    image: '/static/coffee.png',
-                  });
-                }}
-              />
-            ))}
-        </Fragment>
-      );
+      return <RenderRecents />;
     } else {
       return <div>에러 발생</div>;
     }
