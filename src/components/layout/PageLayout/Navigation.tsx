@@ -2,15 +2,13 @@ import { IconButton } from '@src/components/ui/atom';
 import { navRouter } from '@src/core/config/navRouter';
 import cx from 'classnames';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { FunctionComponent } from 'react';
 
 const Navigation: FunctionComponent<{
+  cafeId: string;
   transparent?: boolean;
   className?: string;
-}> = ({ className, transparent = false }) => {
-  const { pathname } = useRouter();
-
+}> = ({ cafeId, className, transparent = false }) => {
   return (
     <div className="relative">
       <div
@@ -27,7 +25,7 @@ const Navigation: FunctionComponent<{
       >
         {navRouter.map((info, index) => {
           return (
-            <Link href={info.path} key={`bottom-sheet-${info.name}-index`}>
+            <Link href={`/cafe/${cafeId}/${info.path}`} key={`bottom-sheet-${info.name}-index`}>
               <div
                 key={`bottom-sheet-${index}`}
                 className="flex flex-col justify-center items-center text-center h-full"

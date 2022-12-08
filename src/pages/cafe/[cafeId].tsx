@@ -32,7 +32,12 @@ const CafeByIdPage: NextPage<Props> = ({ cafeId, cafeMenu, cafeInfo }) => {
   }, [cafeId]);
 
   return (
-    <PageLayout fullWidth showNavigation headerContent={<CommonHeader title={cafeInfo.name} />}>
+    <PageLayout
+      cafeId={cafeId}
+      fullWidth
+      showNavigation
+      headerContent={<CommonHeader title={`스터디카페 ${cafeInfo.name}`} />}
+    >
       <CafePageTemplate cafeId={cafeId as string} cafeMenu={cafeMenu} />
     </PageLayout>
   );
