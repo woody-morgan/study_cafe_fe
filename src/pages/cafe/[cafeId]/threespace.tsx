@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { House, Player } from '@src/utils/three';
 import gsap from 'gsap';
 
@@ -6,6 +6,15 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import { socketConfig } from '@src/core/config/envConfig.js';
+import useSocketIo from '@src/hooks/media/useSocketIO';
+import { usePeerClient, useUserMedia } from '@src/hooks/media';
+import useRemoteStreams from '@src/hooks/media/useRemoteStream';
+import { SocketMessagePayloadType } from '@src/core/interface/message';
+import { ToastError } from '@src/utils/toast';
+import { debounce } from 'lodash-es';
+import dynamic from 'next/dynamic';
+import { UserVoiceView } from '@src/components/ui/molecule';
 
 interface Props {
   cafeId: string;
@@ -46,24 +55,112 @@ export const getServerSideProps = async (ctx) => {
 
 const CafeGame: NextPage<Props> = ({ cafeId }) => {
   const router = useRouter();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const otherPlayerRef = useRef<Player>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const myPeerIdRef = useRef<string>(null);
+  const otherPlayersRef = useRef<Player[]>([]);
+  const gltfLoaderRef = useRef<GLTFLoader>(null);
+  const sceneRef = useRef<THREE.Scene>(null);
+  const meshesRef = useRef<THREE.Mesh[]>([]);
+
+  const onNewPeer = useCallback((peerId: string) => {
+    const otherPlayer = new Player({
+      id: peerId,
+      scene: sceneRef.current,
+      meshes: meshesRef.current,
+      gltfLoader: gltfLoaderRef.current,
+      modelSrc: '/models/ilbuni.glb',
+    });
+    otherPlayersRef.current.push(otherPlayer);
+  }, []);
+
+  const onRemovePeer = useCallback((peerId: string) => {
+    const otherPlayer = otherPlayersRef.current.find((player) => player.id === peerId);
+    if (otherPlayer) {
+      otherPlayer.dispose();
+      otherPlayersRef.current = otherPlayersRef.current.filter(
+        (player) => player.id !== otherPlayer.id
+      );
+      console.log('otherPlayersRef.current', otherPlayersRef.current);
+    }
+  }, []);
+
+  const [
+    socket,
+    initSocket,
+    disconnected,
+    sendSocketMessage,
+    recvSocketMessage,
+    sendCoordinate,
+    recvCoordinate,
+    sendJoinMessage,
+    recvJoinMessage,
+    recvLeaveMessage,
+    recvErrorMessage,
+    disconnectSocket,
+  ] = useSocketIo(socketConfig.url + cafeId);
+
+  // Init peerclient with usermedia
+  const localStream = useUserMedia();
+  const [remoteStreams, addRemoteStream, removeRemoteStream] = useRemoteStreams();
+  usePeerClient({
+    myPeerIdRef,
+    localStream,
+    addRemoteStream,
+    removeRemoteStream,
+    sendJoinMessage,
+    recvJoinMessage,
+    recvLeaveMessage,
+    recvErrorMessage,
+    disconnectSocket,
+    onNewPeer,
+    onRemovePeer,
+  });
+
+  const sendMyPostXZ = (x, z) => {
+    sendCoordinate({
+      clientId: myPeerIdRef.current,
+      x,
+      z,
+    });
+  };
+  // message send & recv handler
+  useEffect(() => {
+    if (disconnected) {
+      ToastError('서버와 연결이 끊어졌습니다.');
+      router.push(`/cafe/${cafeId}`);
+      return;
+    }
+    initSocket();
+    recvCoordinate((payload) => {
+      const { clientId, x, z } = payload;
+      const otherPlayer = otherPlayersRef.current.find((player) => player.id === clientId);
+      if (otherPlayer) {
+        otherPlayer.setDestinationPoint(x, z);
+      }
+    });
+    return () => {
+      disconnectSocket();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disconnected]);
 
   useEffect(() => {
     router.replace(`/cafe/${cafeId}/threespace`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setInterval(() => {
-      if (otherPlayerRef.current) {
-        const getRandomPoint = Math.floor(Math.random() * sampleMovePoints.length);
-        const randomPoint = sampleMovePoints[getRandomPoint];
-        otherPlayerRef.current.setDestinationPoint(randomPoint.x, randomPoint.z);
-      }
-    }, 10000);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     if (otherPlayersRef.current.length > 0) {
+  //       otherPlayersRef.current.forEach((otherPlayer) => {
+  //         const getRandomPoint = Math.floor(Math.random() * sampleMovePoints.length);
+  //         const randomPoint = sampleMovePoints[getRandomPoint];
+  //         otherPlayer.setDestinationPoint(randomPoint.x, randomPoint.z);
+  //       });
+  //     }
+  //   }, 10000);
+  // }, []);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -89,6 +186,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
 
       // Scene
       const scene = new THREE.Scene();
+      sceneRef.current = scene;
 
       // Camera
       const camera = new THREE.OrthographicCamera(
@@ -131,6 +229,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
 
       // Mesh
       const meshes = [];
+      meshesRef.current = meshes;
       const floorMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(100, 100),
         new THREE.MeshStandardMaterial({
@@ -170,6 +269,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
       scene.add(spotMesh);
 
       const gltfLoader = new GLTFLoader();
+      gltfLoaderRef.current = gltfLoader;
 
       const house = new House({
         gltfLoader,
@@ -181,16 +281,10 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
       });
 
       const player = new Player({
+        id: socket.id,
         scene,
         meshes,
-        gltfLoader,
-        modelSrc: '/models/ilbuni.glb',
-      });
-
-      otherPlayerRef.current = new Player({
-        scene,
-        meshes,
-        gltfLoader,
+        gltfLoader: gltfLoaderRef.current,
         modelSrc: '/models/ilbuni.glb',
       });
 
@@ -203,17 +297,26 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
       function draw() {
         const delta = clock.getDelta();
 
-        if (otherPlayerRef.current.mixer) otherPlayerRef.current.mixer.update(delta);
+        if (otherPlayersRef.current.length > 0) {
+          otherPlayersRef.current.forEach((otherPlayer) => {
+            if (otherPlayer.mixer) otherPlayer.mixer.update(delta);
+          });
+        }
+
         if (player.mixer) player.mixer.update(delta);
 
         if (player.modelMesh) {
           camera.lookAt(player.modelMesh.position);
         }
 
-        if (otherPlayerRef.current.moving) {
-          otherPlayerRef.current.move();
-        } else {
-          otherPlayerRef.current.stop();
+        if (otherPlayersRef.current.length > 0) {
+          otherPlayersRef.current.forEach((otherPlayer) => {
+            if (otherPlayer.moving) {
+              otherPlayer.move();
+            } else {
+              otherPlayer.stop();
+            }
+          });
         }
 
         if (player.modelMesh) {
@@ -278,7 +381,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
             player.setDestinationPoint(item.point.x, item.point.z);
 
             // send this point to other players
-            console.log(item.point);
+            sendMyPostXZ(item.point.x, item.point.z);
 
             pointerMesh.position.x = player.destinationPoint.x;
             pointerMesh.position.z = player.destinationPoint.z;
@@ -377,9 +480,12 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
   return (
     <Fragment>
       <canvas ref={canvasRef} className="fixed left-0 top-0" />
+      <div className="invisible">
+        <UserVoiceView localStream={localStream} remoteStreams={remoteStreams} />
+      </div>
       {/* <GameController /> */}
     </Fragment>
   );
 };
 
-export default CafeGame;
+export default dynamic(() => Promise.resolve(CafeGame), { ssr: false });

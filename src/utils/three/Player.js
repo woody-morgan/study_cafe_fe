@@ -2,6 +2,7 @@ import { AnimationMixer, Vector3 } from 'three';
 
 export default class Player {
   constructor(info) {
+    this.id = info.id;
     this.moving = false;
     this.destinationPoint = new Vector3();
     this.angle = 0;
@@ -26,6 +27,10 @@ export default class Player {
       this.actions[1] = this.mixer.clipAction(glb.animations[1]);
       this.actions[0].play();
     });
+  }
+
+  dispose() {
+    this.modelMesh.clear();
   }
 
   getAngle() {
