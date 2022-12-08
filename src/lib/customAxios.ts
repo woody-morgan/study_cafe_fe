@@ -1,15 +1,15 @@
+import { envConfig } from '@src/core/config/envConfig.js';
 import axios, { AxiosInstance } from 'axios';
 import qs from 'qs';
 import { useMemo } from 'react';
-import { envConfig } from '../config/envConfig.js';
 
 let axiosInstance: AxiosInstance = null;
 
 const customAxiosEnv = axios.create({
-  withCredentials: false,
+  withCredentials: true,
   baseURL: envConfig.apiBaseUrl,
   headers: {
-    'Content-Type': 'application/json; charset=utf-8',
+    'Content-Type': 'application/json',
   },
   paramsSerializer(params) {
     return qs.stringify(params);
