@@ -8,11 +8,12 @@ import { BottomSheetLayout } from '@src/components/layout';
 import ImageWrapper from './ImageWrapper';
 import Button from './Button/Button';
 import Link from 'next/link';
+import { ICafe } from '@src/core/api/apiCafe';
 
 const Marker: FunctionComponent<{
   lat: number;
   lng: number;
-  text?: string;
+  cafeInfo: ICafe;
   onClick?: () => void;
 }> = ({ onClick }) => {
   return (
@@ -32,7 +33,7 @@ const Marker: FunctionComponent<{
 
 interface GoogleMapsProps {
   center?: Coordinate;
-  pins?: Coordinate[];
+  cafeList: ICafe[];
   zoom?: number;
 }
 
@@ -40,23 +41,24 @@ const defaultCenter = { lat: 37.52974, lng: 126.962721 };
 
 const GoogleMapsWrapper: FunctionComponent<GoogleMapsProps> = ({
   center = defaultCenter,
-  pins = [],
+  cafeList,
   zoom = 15,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [selectedCafe, setSelectedCafe] = useState<ICafe | null>(null);
 
   const renderMarkers = useMemo(() => {
-    return pins.map((pin, index) => (
+    return cafeList.map((cafeInfo, index) => (
       <Marker
-        key={index}
-        lat={pin.lat}
-        lng={pin.lng}
+        key={`cafe-marker-${index}`}
+        lat={cafeInfo.latitude}
+        lng={cafeInfo.longitude}
+        cafeInfo={cafeInfo}
         onClick={() => {
-          setOpen(true);
+          setSelectedCafe(cafeInfo);
         }}
       />
     ));
-  }, [pins]);
+  }, [cafeList]);
 
   return (
     <div className="w-full h-full">
@@ -76,10 +78,10 @@ const GoogleMapsWrapper: FunctionComponent<GoogleMapsProps> = ({
         {renderMarkers}
       </GoogleMapReact>
       <BottomSheetLayout
-        open={open}
+        open={selectedCafe !== null}
         isActiveOverLay
         onClose={() => {
-          setOpen(false);
+          setSelectedCafe(null);
         }}
       >
         <div className="relative w-full h-full">
@@ -87,12 +89,12 @@ const GoogleMapsWrapper: FunctionComponent<GoogleMapsProps> = ({
             bgFilter="bg-gradient-to-b from-black/40 to-white/50"
             layout="fill"
             objectFit="cover"
-            src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
+            src={selectedCafe?.mainImageUrl ?? ''}
           />
           <div className="absolute bottom-40 left-0 text-white z-10 w-full space-y-6 px-side-padding">
-            <h1 className="text-2xl font-bold">용산 스터디 카페</h1>
-            <p className="text-sm">서울시 용산구</p>
-            <Link href="/cafe/1">
+            <h1 className="text-2xl font-bold">{selectedCafe?.name ?? ''}</h1>
+            <p className="text-sm">{selectedCafe?.region ?? ''}</p>
+            <Link href={`/cafe/${selectedCafe?.id ?? ''}`}>
               <Button fullWidth>메뉴 고르기</Button>
             </Link>
           </div>
