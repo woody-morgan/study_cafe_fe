@@ -11,6 +11,29 @@ interface Props {
   cafeId: string;
 }
 
+const sampleMovePoints = [
+  {
+    x: 1.044268310189719,
+    y: -1.006936568787798e-15,
+    z: 4.534839155978453,
+  },
+  {
+    x: 2.9209137391503512,
+    y: -5.589260442145498e-16,
+    z: 2.517179124452312,
+  },
+  {
+    x: 4.534839155978453,
+    y: -1.006936568787798e-15,
+    z: 1.044268310189719,
+  },
+  {
+    x: 2.517179124452312,
+    y: -5.589260442145498e-16,
+    z: -2.9209137391503512,
+  },
+];
+
 export const getServerSideProps = async (ctx) => {
   const cafeId = ctx.query.cafeId;
 
@@ -25,9 +48,21 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const otherPlayerRef = useRef<Player>(null);
+
   useEffect(() => {
     router.replace(`/cafe/${cafeId}/threespace`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      if (otherPlayerRef.current) {
+        const getRandomPoint = Math.floor(Math.random() * sampleMovePoints.length);
+        const randomPoint = sampleMovePoints[getRandomPoint];
+        otherPlayerRef.current.setDestinationPoint(randomPoint.x, randomPoint.z);
+      }
+    }, 10000);
   }, []);
 
   useEffect(() => {
@@ -67,7 +102,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
 
       const cameraPosition = new THREE.Vector3(1, 5, 5);
       camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-      camera.zoom = 0.2;
+      camera.zoom = 0.16;
       camera.updateProjectionMatrix();
       scene.add(camera);
 
@@ -152,21 +187,33 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
         modelSrc: '/models/ilbuni.glb',
       });
 
+      otherPlayerRef.current = new Player({
+        scene,
+        meshes,
+        gltfLoader,
+        modelSrc: '/models/ilbuni.glb',
+      });
+
       const raycaster = new THREE.Raycaster();
       const mouse = new THREE.Vector2();
-      const destinationPoint = new THREE.Vector3();
-      let angle = 0;
-      let isPressed = false; // 마우스를 누르고 있는 상태
 
+      let isPressed = false; // 마우스를 누르고 있는 상태
       const clock = new THREE.Clock();
 
       function draw() {
         const delta = clock.getDelta();
 
+        if (otherPlayerRef.current.mixer) otherPlayerRef.current.mixer.update(delta);
         if (player.mixer) player.mixer.update(delta);
 
         if (player.modelMesh) {
           camera.lookAt(player.modelMesh.position);
+        }
+
+        if (otherPlayerRef.current.moving) {
+          otherPlayerRef.current.move();
+        } else {
+          otherPlayerRef.current.stop();
         }
 
         if (player.modelMesh) {
@@ -176,26 +223,10 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
 
           if (player.moving) {
             // 걸어가는 상태
-            angle = Math.atan2(
-              destinationPoint.z - player.modelMesh.position.z,
-              destinationPoint.x - player.modelMesh.position.x
-            );
-            player.modelMesh.position.x += Math.cos(angle) * 0.05;
-            player.modelMesh.position.z += Math.sin(angle) * 0.05;
+            player.move();
 
             camera.position.x = cameraPosition.x + player.modelMesh.position.x;
             camera.position.z = cameraPosition.z + player.modelMesh.position.z;
-
-            player.actions[0].stop();
-            player.actions[1].play();
-
-            if (
-              Math.abs(destinationPoint.x - player.modelMesh.position.x) < 0.03 &&
-              Math.abs(destinationPoint.z - player.modelMesh.position.z) < 0.03
-            ) {
-              player.moving = false;
-              console.log('멈춤');
-            }
 
             if (
               Math.abs(spotMesh.position.x - player.modelMesh.position.x) < 1.5 &&
@@ -230,8 +261,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
             }
           } else {
             // 서 있는 상태
-            player.actions[1].stop();
-            player.actions[0].play();
+            player.stop();
           }
         }
 
@@ -245,17 +275,13 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
         const intersects = raycaster.intersectObjects(meshes);
         for (const item of intersects) {
           if (item.object.name === 'floor') {
-            destinationPoint.x = item.point.x;
-            destinationPoint.y = 0.3;
-            destinationPoint.z = item.point.z;
-            player.modelMesh.lookAt(destinationPoint);
+            player.setDestinationPoint(item.point.x, item.point.z);
 
-            // console.log(item.point)
+            // send this point to other players
+            console.log(item.point);
 
-            player.moving = true;
-
-            pointerMesh.position.x = destinationPoint.x;
-            pointerMesh.position.z = destinationPoint.z;
+            pointerMesh.position.x = player.destinationPoint.x;
+            pointerMesh.position.z = player.destinationPoint.z;
           }
           break;
         }
@@ -286,7 +312,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
         checkIntersects();
       }
 
-      // 마우스 이벤트
+      // Mouse Event
       canvas.addEventListener('mousedown', (e) => {
         isPressed = true;
         calculateMousePosition(e);
@@ -300,7 +326,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
         }
       });
 
-      // 터치 이벤트
+      // Touch Event
       canvas.addEventListener('touchstart', (e) => {
         isPressed = true;
         calculateMousePosition(e.touches[0]);
@@ -317,6 +343,7 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
       draw();
 
       return () => {
+        // prevent scroll
         document.body.style.overflow = 'auto';
         window.removeEventListener('resize', setSize);
         canvas.removeEventListener('mousedown', (e) => {
