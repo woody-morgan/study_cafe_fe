@@ -10,6 +10,7 @@ module.exports = withBundleAnalyzer({
     BASE_URL: process.env.BASE_URL,
     API_BASE_URL: process.env.API_BASE_URL,
     GOOGLE_MAP_KEY: process.env.GOOGLE_MAP_KEY,
+    TOSS_PAYMENT_KEY: process.env.TOSS_PAYMENT_KEY,
     APP_TITLE: process.env.APP_TITLE,
   },
   compress: true,

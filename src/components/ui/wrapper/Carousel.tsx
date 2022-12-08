@@ -14,7 +14,7 @@ const Carousel: FC<{
 
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-scroll">
-      <AnimatePresence initial={false} custom={direction} exitBeforeEnter>
+      <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={selectedPage}
           className="absolute w-full h-full"
