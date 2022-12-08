@@ -14,7 +14,9 @@ import { customAxios } from '@src/core/lib/customAxios';
 import { getAuthToken } from '@src/utils/authUtil';
 import { siteMetadata } from '@src/core/config/siteMetadata';
 
-customAxios().defaults.headers.common.Authorization = `Bearer ${getAuthToken()}`;
+customAxios().defaults.headers.common.Authorization = getAuthToken()
+  ? `Bearer ${getAuthToken()}`
+  : '';
 
 const App: NextPage = ({ Component, pageProps, router }: AppProps) => {
   return (

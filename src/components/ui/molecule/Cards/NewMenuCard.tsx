@@ -13,7 +13,7 @@ const NewMenuCard: FC<NewMenuCardProps> = ({ title, description, linkTo, image }
   return (
     <CardWrapper linkTo={linkTo}>
       <div className="relative z-0 flex p-8 h-44 justify-between overflow-hidden">
-        <div className="z-20 flex flex-col justify-between text-white">
+        <div className="z-20 flex flex-col justify-between text-white w-full">
           <h2 className="text-md font-bold w-3/5">{title}</h2>
           <a className="text-xs text-white w-4/5">{description}</a>
         </div>
@@ -23,6 +23,7 @@ const NewMenuCard: FC<NewMenuCardProps> = ({ title, description, linkTo, image }
             src={image}
             alt="coffee"
             layout="fill"
+            objectFit="cover"
           />
         </div>
       </div>

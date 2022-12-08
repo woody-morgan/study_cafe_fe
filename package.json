@@ -24,6 +24,7 @@
     ]
   },
   "dependencies": {
+    "@leecheuk/react-google-login": "^5.4.1",
     "@next/bundle-analyzer": "^12.3.1",
     "@react-three/drei": "^9.32.3",
     "axios": "^0.27.2",
