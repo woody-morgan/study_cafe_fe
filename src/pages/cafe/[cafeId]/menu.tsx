@@ -5,13 +5,27 @@ import { NextPage } from 'next';
 import { MenuPageTemplate } from '@src/components/template';
 import CommonHeader from '@src/components/ui/atom/Header/CommonHeader';
 
+interface Props {
+  cafeId: string;
+}
+
+export const getServerSideProps = async (ctx) => {
+  const cafeId = ctx.query.cafeId;
+
+  return {
+    props: {
+      cafeId,
+    },
+  };
+};
+
 const MenuPageHeader = () => (
   <CommonHeader title="Would you like to drink" titleStyle="text-base" />
 );
 
-const MenuPage: NextPage = () => {
+const MenuPage: NextPage<Props> = ({ cafeId }) => {
   return (
-    <PageLayout showNavigation fixedHeight headerContent={<MenuPageHeader />}>
+    <PageLayout cafeId={cafeId} showNavigation fixedHeight headerContent={<MenuPageHeader />}>
       <MenuPageTemplate />
     </PageLayout>
   );

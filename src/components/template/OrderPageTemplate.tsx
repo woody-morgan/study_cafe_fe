@@ -1,3 +1,4 @@
+import { envConfig } from '@src/core/config/envConfig.js';
 import { IMenuInfo } from '@src/core/interface/menu-info';
 import { usePagination } from '@src/hooks';
 import dynamic from 'next/dynamic';
@@ -5,6 +6,7 @@ import React, { Fragment, FunctionComponent, useMemo } from 'react';
 import { Button } from '../ui/atom';
 import { OrderInfoCard } from '../ui/molecule/Cards';
 import { HorizontalItemList } from '../ui/wrapper';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 const OrderPageTemplate: FunctionComponent<{
   storedMenu: IMenuInfo;
@@ -14,8 +16,15 @@ const OrderPageTemplate: FunctionComponent<{
   const [[page], setPage] = usePagination();
 
   const handleOrder = async () => {
-    // TODO: call order api
-    alert('주문이 완료되었습니다.');
+    const tossPayments = await loadTossPayments(envConfig.tossPaymentKey);
+    tossPayments.requestPayment('카드', {
+      amount: 300,
+      orderId: 'HbLfnnlssN7idiLZ2LnAu',
+      orderName: '아이스 아메리카노',
+      customerName: '익명',
+      successUrl: 'http://localhost:3000/success',
+      failUrl: 'http://localhost:3000/fail',
+    });
   };
 
   const RenderOrderItems = () => {

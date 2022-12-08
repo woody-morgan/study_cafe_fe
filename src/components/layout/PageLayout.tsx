@@ -7,6 +7,7 @@ import React, { FC, useRef } from 'react';
 import HeaderWrapper from './PageLayout/HeaderWrapper';
 
 const PageLayout: FC<{
+  cafeId?: string;
   children: React.ReactNode;
   className?: string;
   fullWidth?: boolean;
@@ -18,6 +19,7 @@ const PageLayout: FC<{
   overflowVisible?: boolean;
   showNavigation?: boolean;
 }> = ({
+  cafeId,
   children,
   className,
   fullWidth = false,
@@ -67,7 +69,7 @@ const PageLayout: FC<{
       >
         {children}
       </main>
-      {showNavigation && <Navigation />}
+      {showNavigation && cafeId && <Navigation cafeId={cafeId} />}
     </div>
   );
 };
