@@ -6,20 +6,22 @@ interface InputBoxShape {
   type: 'id' | 'email' | 'password';
   name: string;
   value: string | number;
-  label: string;
+  label?: string;
   error?: boolean;
   placeholder?: string;
   readOnly?: boolean;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   onClick?: MouseEventHandler<HTMLInputElement>;
 }
 
 const InputBox: FC<InputBoxShape> = ({ name, label, error = true, ...props }) => {
   return (
     <div>
-      <label htmlFor={name} className="block m-0 p-0 font-bold">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block m-0 p-0 font-bold">
+          {label}
+        </label>
+      )}
       <input
         className={classNames(
           `w-full h-10 pl-0 pr-4 py-2 rounded-md`,

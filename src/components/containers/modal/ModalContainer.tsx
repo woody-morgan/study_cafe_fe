@@ -7,11 +7,15 @@ import SignUpModal from './content/SignUpModal';
 import CafeInfoModal from './content/CafeInfoModal';
 import { closeModal, modalStateAtom, ModalType } from '@src/atom/modal';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import TodolistModal from './content/TodolistModal';
+import TodolistShowModal from './content/TodolistShowModal';
 
 const _selectModal: { [key in ModalType]: FunctionComponent } = {
   SIGNUP: SignUpModal,
   SIGNIN: SignInModal,
   CAFEINFO: CafeInfoModal,
+  TODOLIST: TodolistModal,
+  TODOLISTSHOW: TodolistShowModal,
 };
 
 const ModalContainer: FunctionComponent = () => {
