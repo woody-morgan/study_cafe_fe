@@ -13,6 +13,9 @@ import useRemoteStreams from '@src/hooks/media/useRemoteStream';
 import { ToastError } from '@src/utils/toast';
 import dynamic from 'next/dynamic';
 import { UserVoiceView } from '@src/components/ui/molecule';
+import { useSetRecoilState } from 'recoil';
+import { openTodolistModal, openTodolistShowModal } from '@src/atom/modal';
+import { IconButton } from '@src/components/ui/atom';
 
 interface Props {
   cafeId: string;
@@ -30,6 +33,7 @@ export const getServerSideProps = async (ctx) => {
 
 const CafeGame: NextPage<Props> = ({ cafeId }) => {
   const router = useRouter();
+  const _openTodolistModal = useSetRecoilState(openTodolistModal);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const myPeerIdRef = useRef<string>(null);
@@ -37,6 +41,12 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
   const gltfLoaderRef = useRef<GLTFLoader>(null);
   const sceneRef = useRef<THREE.Scene>(null);
   const meshesRef = useRef<THREE.Mesh[]>([]);
+
+  useEffect(() => {
+    _openTodolistModal({
+      fullScreen: false,
+    });
+  }, []);
 
   const onNewPeer = useCallback((peerId: string) => {
     const otherPlayer = new Player({
@@ -452,11 +462,25 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
     }
   }, []);
 
+  const _openTodoListShowModal = useSetRecoilState(openTodolistShowModal);
+
   return (
     <Fragment>
       <canvas ref={canvasRef} className="fixed left-0 top-0" />
       <div className="invisible">
         <UserVoiceView localStream={localStream} remoteStreams={remoteStreams} />
+      </div>
+      <div className="fixed top-4 right-4">
+        <IconButton
+          className="text-white"
+          name="logo"
+          size={36}
+          onClick={() => {
+            _openTodoListShowModal({
+              fullScreen: false,
+            });
+          }}
+        />
       </div>
       {/* <GameController /> */}
     </Fragment>

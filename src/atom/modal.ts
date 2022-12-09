@@ -3,8 +3,15 @@ import { atom, DefaultValue, selector } from 'recoil';
 export type SignInModal = 'SIGNIN';
 export type SignUpModal = 'SIGNUP';
 export type CafeInfoModal = 'CAFEINFO';
+export type TodolistModal = 'TODOLIST';
+export type TodolistShowModal = 'TODOLISTSHOW';
 
-export type ModalType = SignInModal | SignUpModal | CafeInfoModal;
+export type ModalType =
+  | SignInModal
+  | SignUpModal
+  | CafeInfoModal
+  | TodolistModal
+  | TodolistShowModal;
 
 export interface ModalInfoType {
   type: ModalType | null;
@@ -81,6 +88,42 @@ const openCafeInfoModal = selector<Pick<ModalInfoType, 'fullScreen'>>({
   },
 });
 
+const openTodolistModal = selector<Pick<ModalInfoType, 'fullScreen'>>({
+  key: 'modalStateAtom/open/todolist',
+  get: ({ get }) => {
+    return get(modalStateAtom);
+  },
+  set: ({ set }, newValue) => {
+    if (newValue instanceof DefaultValue) {
+      set(modalStateAtom, defaultState);
+    } else {
+      set(modalStateAtom, {
+        type: 'TODOLIST',
+        fullScreen: newValue.fullScreen,
+        option: newValue,
+      });
+    }
+  },
+});
+
+const openTodolistShowModal = selector<Pick<ModalInfoType, 'fullScreen'>>({
+  key: 'modalStateAtom/open/todolistshow',
+  get: ({ get }) => {
+    return get(modalStateAtom);
+  },
+  set: ({ set }, newValue) => {
+    if (newValue instanceof DefaultValue) {
+      set(modalStateAtom, defaultState);
+    } else {
+      set(modalStateAtom, {
+        type: 'TODOLISTSHOW',
+        fullScreen: newValue.fullScreen,
+        option: newValue,
+      });
+    }
+  },
+});
+
 const closeModal = selector<void>({
   key: 'modalStateAtom/close',
   get: ({ get }) => {
@@ -91,4 +134,12 @@ const closeModal = selector<void>({
   },
 });
 
-export { closeModal, modalStateAtom, openSignInModal, openSignUpModal, openCafeInfoModal };
+export {
+  closeModal,
+  modalStateAtom,
+  openSignInModal,
+  openSignUpModal,
+  openCafeInfoModal,
+  openTodolistModal,
+  openTodolistShowModal,
+};
