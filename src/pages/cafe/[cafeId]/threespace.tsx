@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef } from 'react';
 import { House, Player } from '@src/utils/three';
 import gsap from 'gsap';
 
@@ -10,38 +10,16 @@ import { socketConfig } from '@src/core/config/envConfig.js';
 import useSocketIo from '@src/hooks/media/useSocketIO';
 import { usePeerClient, useUserMedia } from '@src/hooks/media';
 import useRemoteStreams from '@src/hooks/media/useRemoteStream';
-import { SocketMessagePayloadType } from '@src/core/interface/message';
 import { ToastError } from '@src/utils/toast';
-import { debounce } from 'lodash-es';
 import dynamic from 'next/dynamic';
 import { UserVoiceView } from '@src/components/ui/molecule';
+import { useSetRecoilState } from 'recoil';
+import { openTodolistModal, openTodolistShowModal } from '@src/atom/modal';
+import { IconButton } from '@src/components/ui/atom';
 
 interface Props {
   cafeId: string;
 }
-
-const sampleMovePoints = [
-  {
-    x: 1.044268310189719,
-    y: -1.006936568787798e-15,
-    z: 4.534839155978453,
-  },
-  {
-    x: 2.9209137391503512,
-    y: -5.589260442145498e-16,
-    z: 2.517179124452312,
-  },
-  {
-    x: 4.534839155978453,
-    y: -1.006936568787798e-15,
-    z: 1.044268310189719,
-  },
-  {
-    x: 2.517179124452312,
-    y: -5.589260442145498e-16,
-    z: -2.9209137391503512,
-  },
-];
 
 export const getServerSideProps = async (ctx) => {
   const cafeId = ctx.query.cafeId;
@@ -55,6 +33,7 @@ export const getServerSideProps = async (ctx) => {
 
 const CafeGame: NextPage<Props> = ({ cafeId }) => {
   const router = useRouter();
+  const _openTodolistModal = useSetRecoilState(openTodolistModal);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const myPeerIdRef = useRef<string>(null);
@@ -62,6 +41,12 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
   const gltfLoaderRef = useRef<GLTFLoader>(null);
   const sceneRef = useRef<THREE.Scene>(null);
   const meshesRef = useRef<THREE.Mesh[]>([]);
+
+  useEffect(() => {
+    _openTodolistModal({
+      fullScreen: false,
+    });
+  }, []);
 
   const onNewPeer = useCallback((peerId: string) => {
     const otherPlayer = new Player({
@@ -477,11 +462,25 @@ const CafeGame: NextPage<Props> = ({ cafeId }) => {
     }
   }, []);
 
+  const _openTodoListShowModal = useSetRecoilState(openTodolistShowModal);
+
   return (
     <Fragment>
       <canvas ref={canvasRef} className="fixed left-0 top-0" />
       <div className="invisible">
         <UserVoiceView localStream={localStream} remoteStreams={remoteStreams} />
+      </div>
+      <div className="fixed top-4 right-4">
+        <IconButton
+          className="text-white"
+          name="logo"
+          size={36}
+          onClick={() => {
+            _openTodoListShowModal({
+              fullScreen: false,
+            });
+          }}
+        />
       </div>
       {/* <GameController /> */}
     </Fragment>
