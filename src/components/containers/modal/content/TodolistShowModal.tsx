@@ -4,7 +4,6 @@ import { addTodolistSelector } from '@src/atom/todo';
 
 const TodolistShowModal = () => {
   const todolistInfo = useRecoilValue(addTodolistSelector);
-  console.log(todolistInfo);
 
   return (
     <div className="space-y-6">
@@ -12,8 +11,8 @@ const TodolistShowModal = () => {
         todolistInfo.todoList.map((todoItem, idx) => {
           const inputKey = `show-todo-${idx}`;
           return (
-            <div key={inputKey} className="h-16 bg-slate-500/50 rounded-md">
-              <p className="text-3xl px-2 py-2">{todoItem.content}</p>
+            <div key={inputKey} className="bg-white/30 rounded-md">
+              <p className="text-black text-xl px-2 py-2">{todoItem.content}</p>
             </div>
           );
         })}
